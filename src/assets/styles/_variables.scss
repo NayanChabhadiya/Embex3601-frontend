@@ -1,0 +1,33 @@
+$primary-color: #1e1f26;
+$secondary-color: #32333d;
+$accent-color: #00cec9;
+$highlight-color: #fab1a0;
+$bg-color: #f8f9fa;
+$text-light: #ffffff;
+$text-dark: #2d3436;
+
+$radius: 12px;
+$shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+$header-height: 4rem;
+$footer-height: 2rem;
+$sidebar-width: 15rem;
+$sidebar-collapsed-width: 30px;
+$sidebar-collapsed-height: 30px;
+$transition-duration: 0.3s;
+$font-family: "Roboto", sans-serif;
+$font-size-base: 16px;
+$line-height-base: 1.5;
+$z-index-header: 1000;
+$z-index-footer: 800;
+$z-index-sidebar: 1001;
+$z-index-modal: 1100;
+$z-index-tooltip: 1200;
+$z-index-modal: 1250;
+$z-index-toast: 1300;
+$breakpoint-mobile: 768px;
+$breakpoint-tablet: 1024px;
+$breakpoint-desktop: 1440px;
+$breakpoint-large: 1920px;
+$grid-gap: 1.5rem;
+$grid-columns: repeat(auto-fill, minmax(250px, 1fr));
