@@ -1,7 +1,13 @@
-import PublicHomePage from "./modules/public/pages/home/PublicHomePage";
+import { BrowserRouter } from "react-router-dom";
+
+import AppRouter from "./routes/AppRouter";
 
 const App = () => {
-  return <PublicHomePage />;
+  return (
+    <BrowserRouter>
+      <AppRouter />
+    </BrowserRouter>
+  );
 };
 
 export default App;

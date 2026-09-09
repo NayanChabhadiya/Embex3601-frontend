@@ -5,6 +5,19 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   main.jsx
 |   
 +---components
+|   \---common
+|       |   index.js
+|       |   
+|       +---button
+|       |       Button.jsx
+|       |       button.scss
+|       |       index.js
+|       |       
+|       \---scroll-to-top
+|               index.js
+|               scroll-to-top.scss
+|               ScrollToTop.jsx
+|               
 +---config
 |       app.config.js
 |       env.js
@@ -16,22 +29,49 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |       storage.constants.js
 |       
 +---modules
-|   \---auth
-|       +---constants
-|       |       auth.constants.js
-|       |       
-|       +---services
-|       |       auth.service.js
-|       |       index.js
-|       |       
-|       +---store
-|       |       auth.selectors.js
-|       |       auth.slice.js
-|       |       auth.thunks.js
-|       |       
-|       \---validation
-|               auth.validation.js
-|               
+|   +---auth
+|   |   +---constants
+|   |   |       auth.constants.js
+|   |   |       
+|   |   +---pages
+|   |   |   \---login
+|   |   |           index.js
+|   |   |           login-page.scss
+|   |   |           LoginPage.jsx
+|   |   |           
+|   |   +---services
+|   |   |       auth.service.js
+|   |   |       index.js
+|   |   |       
+|   |   +---store
+|   |   |       auth.selectors.js
+|   |   |       auth.slice.js
+|   |   |       auth.thunks.js
+|   |   |       
+|   |   \---validation
+|   |           auth.validation.js
+|   |           
+|   \---public
+|       \---pages
+|           +---home
+|           |       index.js
+|           |       public-home.scss
+|           |       PublicHomePage.jsx
+|           |       
+|           \---not-found
+|                   index.js
+|                   not-found-page.scss
+|                   NotFoundPage.jsx
+|                   
++---routes
+|   |   AppRouter.jsx
+|   |   index.js
+|   |   
+|   \---guards
+|           index.js
+|           ProtectedRoute.jsx
+|           PublicRoute.jsx
+|           
 +---services
 |   |   index.js
 |   |   
