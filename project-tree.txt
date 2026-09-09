@@ -1,0 +1,51 @@
+Folder PATH listing for volume NAYAN
+Volume serial number is 6C19-5F7C
+F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
+|   App.jsx
+|   main.jsx
+|   
++---components
++---config
+|       app.config.js
+|       env.js
+|       index.js
+|       
++---constant
+|       index.js
+|       route.constants.js
+|       storage.constants.js
+|       
++---modules
+|   \---auth
+|       +---constants
+|       |       auth.constants.js
+|       |       
+|       +---services
+|       |       auth.service.js
+|       |       index.js
+|       |       
+|       +---store
+|       |       auth.selectors.js
+|       |       auth.slice.js
+|       |       auth.thunks.js
+|       |       
+|       \---validation
+|               auth.validation.js
+|               
++---services
+|   |   index.js
+|   |   
+|   \---api
+|           apiClient.js
+|           endpoints.js
+|           index.js
+|           interceptors.js
+|           request.js
+|           response.js
+|           
++---store
+|       index.js
+|       
+\---styles
+        main.scss
+        

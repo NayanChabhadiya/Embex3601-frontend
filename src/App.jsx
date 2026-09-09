@@ -1,27 +1,7 @@
-import "./App.css";
-import { RouterProvider } from "react-router-dom";
-import router from "./routes/router";
-import { useDispatch, useSelector } from "react-redux";
-import "./assets/styles/main.scss";
-import Loader from "./components/loader/loader";
-import { startLoading, stopLoading } from "./store/apiSlice/componentSlice";
-import { useEffect } from "react";
+import PublicHomePage from "./modules/public/pages/home/PublicHomePage";
 
-function App() {
-  const components = useSelector((state) => state.components);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(startLoading());
-
-    setTimeout(() => {
-      dispatch(stopLoading());
-    }, 1000);
-  }, [startLoading, stopLoading]);
-  return (
-    <>
-      {components.isLoading ? <Loader /> : <RouterProvider router={router} />}
-    </>
-  );
-}
+const App = () => {
+  return <PublicHomePage />;
+};
 
 export default App;

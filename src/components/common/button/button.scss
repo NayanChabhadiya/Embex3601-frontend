@@ -1,0 +1,276 @@
+.button {
+  position: relative;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  min-width: 120px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+
+  font-family: inherit;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  text-decoration: none;
+
+  cursor: pointer;
+  user-select: none;
+
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+
+  &:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 3px rgba(101, 71, 245, 0.14),
+      0 0 0 5px rgba(101, 71, 245, 0.06);
+  }
+
+  &:not(:disabled):hover {
+    transform: translateY(-1px);
+  }
+
+  &:not(:disabled):active {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+
+  /* ============================================================
+     SIZES
+     ============================================================ */
+
+  &--small {
+    min-height: 38px;
+    padding: 0 15px;
+    font-size: 13px;
+    border-radius: 9px;
+  }
+
+  &--medium {
+    min-height: 44px;
+    padding: 0 19px;
+    font-size: 14px;
+    border-radius: 10px;
+  }
+
+  &--large {
+    min-height: 50px;
+    padding: 0 23px;
+    font-size: 15px;
+    border-radius: 11px;
+  }
+
+  &--full-width {
+    width: 100%;
+  }
+
+  /* ============================================================
+     PRIMARY
+     ============================================================ */
+
+  &--primary {
+    color: #ffffff;
+    background-color: #6547f5;
+    border-color: #6547f5;
+
+    box-shadow: 0 5px 14px rgba(101, 71, 245, 0.16);
+
+    &:not(:disabled):hover {
+      background-color: #5739df;
+      border-color: #5739df;
+      box-shadow: 0 7px 18px rgba(101, 71, 245, 0.21);
+    }
+
+    &:not(:disabled):active {
+      background-color: #4d32d8;
+      border-color: #4d32d8;
+      box-shadow: 0 3px 8px rgba(101, 71, 245, 0.15);
+    }
+  }
+
+  /* ============================================================
+     SECONDARY
+     ============================================================ */
+
+  &--secondary {
+    color: #4435a8;
+    background-color: #efedff;
+    border-color: #dfdbff;
+
+    &:not(:disabled):hover {
+      background-color: #e6e2ff;
+      border-color: #d2ccff;
+    }
+
+    &:not(:disabled):active {
+      background-color: #ddd7ff;
+    }
+  }
+
+  /* ============================================================
+     OUTLINE
+     ============================================================ */
+
+  &--outline {
+    color: #40358c;
+    background-color: #ffffff;
+    border-color: #d9dce8;
+
+    box-shadow: 0 3px 10px rgba(26, 32, 62, 0.04);
+
+    &:not(:disabled):hover {
+      color: #6547f5;
+      background-color: #faf9ff;
+      border-color: #bdb6ef;
+      box-shadow: 0 5px 14px rgba(26, 32, 62, 0.07);
+    }
+
+    &:not(:disabled):active {
+      background-color: #f5f3ff;
+    }
+  }
+
+  /* ============================================================
+     GHOST
+     ============================================================ */
+
+  &--ghost {
+    min-width: auto;
+
+    color: #59617d;
+    background-color: transparent;
+    border-color: transparent;
+    box-shadow: none;
+
+    &:not(:disabled):hover {
+      color: #4d3bc4;
+      background-color: #f4f2ff;
+    }
+
+    &:not(:disabled):active {
+      background-color: #ece9ff;
+    }
+  }
+
+  /* ============================================================
+     DANGER
+     ============================================================ */
+
+  &--danger {
+    color: #ffffff;
+    background-color: #dc3f4b;
+    border-color: #dc3f4b;
+
+    box-shadow: 0 5px 14px rgba(220, 63, 75, 0.14);
+
+    &:not(:disabled):hover {
+      background-color: #c9323e;
+      border-color: #c9323e;
+    }
+
+    &:not(:disabled):active {
+      background-color: #b72b36;
+      border-color: #b72b36;
+    }
+  }
+
+  /* ============================================================
+     SUCCESS
+     ============================================================ */
+
+  &--success {
+    color: #ffffff;
+    background-color: #20a878;
+    border-color: #20a878;
+
+    box-shadow: 0 5px 14px rgba(32, 168, 120, 0.14);
+
+    &:not(:disabled):hover {
+      background-color: #188e64;
+      border-color: #188e64;
+    }
+
+    &:not(:disabled):active {
+      background-color: #147b56;
+      border-color: #147b56;
+    }
+  }
+
+  /* ============================================================
+     ICON
+     ============================================================ */
+
+  &__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    svg {
+      display: block;
+      width: 16px;
+      height: 16px;
+    }
+
+    &--left {
+      margin-left: -2px;
+    }
+
+    &--right {
+      margin-right: -2px;
+    }
+  }
+
+  /* ============================================================
+     LOADING
+     ============================================================ */
+
+  &__loader {
+    width: 16px;
+    height: 16px;
+
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+
+    animation: embex-button-spin 650ms linear infinite;
+  }
+
+  &--outline &__loader,
+  &--secondary &__loader,
+  &--ghost &__loader {
+    border-color: currentColor;
+    border-right-color: transparent;
+  }
+}
+
+@keyframes embex-button-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ================================================================
+   RESPONSIVE
+   ================================================================ */
+
+@media (max-width: 640px) {
+  .button {
+    &--large {
+      min-height: 48px;
+      padding: 0 20px;
+      font-size: 14px;
+    }
+  }
+}
