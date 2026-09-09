@@ -6,86 +6,10 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   
 +---components
 |   \---common
-|       |   index.js
-|       |   
-|       +---button
-|       |       Button.jsx
-|       |       button.scss
-|       |       index.js
-|       |       
-|       \---scroll-to-top
-|               index.js
-|               scroll-to-top.scss
-|               ScrollToTop.jsx
+|       \---toast
+|               Toast.jsx
+|               toast.scss
 |               
-+---config
-|       app.config.js
-|       env.js
-|       index.js
-|       
-+---constant
-|       index.js
-|       route.constants.js
-|       storage.constants.js
-|       
-+---modules
-|   +---auth
-|   |   +---constants
-|   |   |       auth.constants.js
-|   |   |       
-|   |   +---pages
-|   |   |   \---login
-|   |   |           index.js
-|   |   |           login-page.scss
-|   |   |           LoginPage.jsx
-|   |   |           
-|   |   +---services
-|   |   |       auth.service.js
-|   |   |       index.js
-|   |   |       
-|   |   +---store
-|   |   |       auth.selectors.js
-|   |   |       auth.slice.js
-|   |   |       auth.thunks.js
-|   |   |       
-|   |   \---validation
-|   |           auth.validation.js
-|   |           
-|   \---public
-|       \---pages
-|           +---home
-|           |       index.js
-|           |       public-home.scss
-|           |       PublicHomePage.jsx
-|           |       
-|           \---not-found
-|                   index.js
-|                   not-found-page.scss
-|                   NotFoundPage.jsx
-|                   
-+---routes
-|   |   AppRouter.jsx
-|   |   index.js
-|   |   
-|   \---guards
-|           index.js
-|           ProtectedRoute.jsx
-|           PublicRoute.jsx
-|           
-+---services
-|   |   index.js
-|   |   
-|   \---api
-|           apiClient.js
-|           endpoints.js
-|           index.js
-|           interceptors.js
-|           request.js
-|           response.js
-|           
-+---store
-|       index.js
-|       
 \---styles
         main.scss
         
