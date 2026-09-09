@@ -2,6 +2,9 @@
   position: relative;
 
   width: min(420px, calc(100vw - 32px));
+
+  overflow: hidden;
+
   display: flex;
   align-items: flex-start;
   gap: 12px;

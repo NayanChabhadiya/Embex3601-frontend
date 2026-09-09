@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useToast } from "../../../../components/common/toast/ToastProvider";
 
 import { Checkbox } from "../../../../components/common/form/checkbox";
 import { Input } from "../../../../components/common/form/input";
@@ -6,11 +7,41 @@ import { Input } from "../../../../components/common/form/input";
 import "./login.scss";
 
 function Login() {
+  const { showToast } = useToast();
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
     rememberMe: false,
   });
+
+  const [errors, setErrors] = useState({
+    email: "",
+    password: "",
+  });
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    const email = formData.email.trim();
+    const password = formData.password;
+
+    if (!email) {
+      newErrors.email = "Email address is required.";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      newErrors.email = "Enter a valid email address.";
+    }
+
+    if (!password) {
+      newErrors.password = "Password is required.";
+    } else if (password.length < 8) {
+      newErrors.password = "Password must be at least 8 characters.";
+    }
+
+    setErrors(newErrors);
+
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target;
@@ -19,12 +50,27 @@ function Login() {
       ...current,
       [name]: type === "checkbox" ? checked : value,
     }));
+
+    if (errors[name]) {
+      setErrors((current) => ({
+        ...current,
+        [name]: "",
+      }));
+    }
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    console.log(formData);
+    if (!validateForm()) {
+      return;
+    }
+
+    showToast({
+      type: "success",
+      title: "Validation successful",
+      message: "Login form is ready.",
+    });
   };
 
   return (
@@ -98,6 +144,7 @@ function Login() {
               placeholder="you@company.com"
               value={formData.email}
               onChange={handleChange}
+              error={errors.email}
               required
               autoComplete="email"
             />
@@ -109,6 +156,7 @@ function Login() {
               placeholder="Enter your password"
               value={formData.password}
               onChange={handleChange}
+              error={errors.password}
               required
               autoComplete="current-password"
             />
