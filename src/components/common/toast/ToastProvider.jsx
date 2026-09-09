@@ -1,135 +1,54 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { createContext, useContext, useState } from "react";
 
 import Toast from "./Toast";
 
 const ToastContext = createContext(null);
 
-const MAX_VISIBLE_TOASTS = 5;
-const DEFAULT_DURATION = 5000;
-
-const createToastId = () => {
-  if (
-    typeof crypto !== "undefined" &&
-    typeof crypto.randomUUID === "function"
-  ) {
-    return crypto.randomUUID();
-  }
-
-  return `${Date.now()}-${Math.random().toString(36).slice(2)}`;
-};
-
-const ToastProvider = ({ children }) => {
+function ToastProvider({ children }) {
   const [toasts, setToasts] = useState([]);
-  const timersRef = useRef(new Map());
 
-  const removeToast = useCallback((id) => {
-    const timer = timersRef.current.get(id);
+  const showToast = ({
+    type = "info",
+    title,
+    message,
+    duration = 4000,
+  } = {}) => {
+    const id = Date.now();
 
-    if (timer) {
-      window.clearTimeout(timer);
-      timersRef.current.delete(id);
-    }
-
-    setToasts((currentToasts) =>
-      currentToasts.filter((toast) => toast.id !== id),
-    );
-  }, []);
-
-  const showToast = useCallback(
-    ({
-      type = "info",
-      title,
-      message,
-      duration = DEFAULT_DURATION,
-      action,
-      showClose = true,
-    } = {}) => {
-      const id = createToastId();
-
-      const toast = {
+    setToasts((current) => [
+      ...current.slice(-4),
+      {
         id,
         type,
         title,
         message,
         duration,
-        action,
-        showClose,
-      };
+      },
+    ]);
 
-      setToasts((currentToasts) => {
-        const nextToasts = [...currentToasts, toast];
+    if (duration > 0) {
+      window.setTimeout(() => {
+        setToasts((current) => current.filter((toast) => toast.id !== id));
+      }, duration);
+    }
+  };
 
-        if (nextToasts.length <= MAX_VISIBLE_TOASTS) {
-          return nextToasts;
-        }
+  const removeToast = (id) => {
+    setToasts((current) => current.filter((toast) => toast.id !== id));
+  };
 
-        const removedToast = nextToasts.shift();
-
-        const timer = timersRef.current.get(removedToast.id);
-
-        if (timer) {
-          window.clearTimeout(timer);
-          timersRef.current.delete(removedToast.id);
-        }
-
-        return nextToasts;
-      });
-
-      if (type !== "loading" && duration > 0) {
-        const timer = window.setTimeout(() => {
-          removeToast(id);
-        }, duration);
-
-        timersRef.current.set(id, timer);
-      }
-
-      return id;
-    },
-    [removeToast],
-  );
-
-  const updateToast = useCallback((id, updates = {}) => {
-    setToasts((currentToasts) =>
-      currentToasts.map((toast) =>
-        toast.id === id
-          ? {
-              ...toast,
-              ...updates,
-            }
-          : toast,
-      ),
-    );
-  }, []);
-
-  const dismissAllToasts = useCallback(() => {
-    timersRef.current.forEach((timer) => {
-      window.clearTimeout(timer);
-    });
-
-    timersRef.current.clear();
-
+  const removeAllToasts = () => {
     setToasts([]);
-  }, []);
-
-  const contextValue = useMemo(
-    () => ({
-      showToast,
-      removeToast,
-      updateToast,
-      dismissAllToasts,
-    }),
-    [showToast, removeToast, updateToast, dismissAllToasts],
-  );
+  };
 
   return (
-    <ToastContext.Provider value={contextValue}>
+    <ToastContext.Provider
+      value={{
+        showToast,
+        removeToast,
+        removeAllToasts,
+      }}
+    >
       {children}
 
       <div className="toast-container" aria-label="Notifications">
@@ -140,17 +59,15 @@ const ToastProvider = ({ children }) => {
             title={toast.title}
             message={toast.message}
             duration={toast.duration}
-            action={toast.action}
-            showClose={toast.showClose}
             onClose={() => removeToast(toast.id)}
           />
         ))}
       </div>
     </ToastContext.Provider>
   );
-};
+}
 
-export const useToast = () => {
+export function useToast() {
   const context = useContext(ToastContext);
 
   if (!context) {
@@ -158,6 +75,6 @@ export const useToast = () => {
   }
 
   return context;
-};
+}
 
 export default ToastProvider;

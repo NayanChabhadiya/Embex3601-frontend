@@ -6,10 +6,31 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   
 +---components
 |   \---common
+|       +---form
+|       |   \---input
+|       |           Input.jsx
+|       |           input.scss
+|       |           
+|       +---loader
+|       |       Loader.jsx
+|       |       loader.scss
+|       |       LoaderProvider.jsx
+|       |       
 |       \---toast
 |               Toast.jsx
 |               toast.scss
+|               ToastProvider.jsx
 |               
++---modules
+|   \---auth
+|       \---pages
+|           |   index.js
+|           |   
+|           \---login
+|                   index.js
+|                   Login.jsx
+|                   login.scss
+|                   
 \---styles
         main.scss
         

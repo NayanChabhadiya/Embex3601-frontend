@@ -1,120 +1,68 @@
 .loader {
-  --loader-primary: #2563eb;
-  --loader-secondary: #dbeafe;
-  --loader-text: #334155;
-  --loader-background: #ffffff;
-
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
 
-  color: var(--loader-text);
-
+  color: #475467;
   font-family: inherit;
 
-  box-sizing: border-box;
-
-  // ---------------------------------------------------------------------------
-  // SPINNER
-  // ---------------------------------------------------------------------------
+  /* -----------------------------------------------------------------------
+     Spinner
+     ----------------------------------------------------------------------- */
 
   &__spinner {
-    position: relative;
-
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    width: 24px;
+    height: 24px;
 
     flex: 0 0 auto;
 
-    width: 36px;
-    height: 36px;
-  }
-
-  &__spinner-ring {
-    position: absolute;
-    inset: 0;
-
-    display: block;
-
-    border: 4px solid var(--loader-secondary);
-    border-top-color: var(--loader-primary);
-
+    border: 3px solid #dbeafe;
+    border-top-color: #2563eb;
     border-radius: 50%;
 
-    animation: loader-spin 0.8s linear infinite;
+    animation: loader-spin 0.75s linear infinite;
   }
 
-  // ---------------------------------------------------------------------------
-  // TEXT
-  // ---------------------------------------------------------------------------
+  /* -----------------------------------------------------------------------
+     Text
+     ----------------------------------------------------------------------- */
 
   &__text {
-    display: inline-block;
+    color: #475467;
 
-    color: var(--loader-text);
-
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 500;
     line-height: 1.4;
   }
 
-  // ---------------------------------------------------------------------------
-  // BRAND
-  // ---------------------------------------------------------------------------
-
-  &__brand {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  &__brand-name {
-    color: #102a56;
-
-    font-size: 24px;
-    font-weight: 800;
-    line-height: 1;
-
-    letter-spacing: -0.04em;
-
-    span {
-      color: #2563eb;
-    }
-  }
-
-  // ---------------------------------------------------------------------------
-  // SIZE - SMALL
-  // ---------------------------------------------------------------------------
+  /* -----------------------------------------------------------------------
+     Small
+     ----------------------------------------------------------------------- */
 
   &--small {
+    gap: 8px;
+
     .loader__spinner {
       width: 18px;
       height: 18px;
-    }
 
-    .loader__spinner-ring {
       border-width: 2px;
     }
 
     .loader__text {
-      font-size: 13px;
+      font-size: 12px;
     }
   }
 
-  // ---------------------------------------------------------------------------
-  // SIZE - MEDIUM
-  // ---------------------------------------------------------------------------
+  /* -----------------------------------------------------------------------
+     Medium
+     ----------------------------------------------------------------------- */
 
   &--medium {
     .loader__spinner {
-      width: 28px;
-      height: 28px;
-    }
-
-    .loader__spinner-ring {
-      border-width: 3px;
+      width: 24px;
+      height: 24px;
     }
 
     .loader__text {
@@ -122,235 +70,76 @@
     }
   }
 
-  // ---------------------------------------------------------------------------
-  // SIZE - LARGE
-  // ---------------------------------------------------------------------------
+  /* -----------------------------------------------------------------------
+     Large
+     ----------------------------------------------------------------------- */
 
   &--large {
-    .loader__spinner {
-      width: 48px;
-      height: 48px;
-    }
+    gap: 12px;
 
-    .loader__spinner-ring {
-      border-width: 5px;
+    .loader__spinner {
+      width: 38px;
+      height: 38px;
+
+      border-width: 4px;
     }
 
     .loader__text {
-      font-size: 16px;
+      font-size: 15px;
     }
   }
 
-  // ---------------------------------------------------------------------------
-  // INLINE LOADER
-  // ---------------------------------------------------------------------------
+  /* -----------------------------------------------------------------------
+     Inline
+     ----------------------------------------------------------------------- */
 
   &--inline {
     min-height: 32px;
   }
 
-  // ---------------------------------------------------------------------------
-  // SECTION LOADER
-  // ---------------------------------------------------------------------------
+  /* -----------------------------------------------------------------------
+     Section
+     ----------------------------------------------------------------------- */
 
   &--section {
     width: 100%;
-    min-height: 180px;
+    min-height: 160px;
 
     flex-direction: column;
 
-    gap: 14px;
+    border: 1px solid #eaecf0;
+    border-radius: 14px;
 
-    border: 1px dashed #d8e1ed;
-    border-radius: 12px;
-
-    background: rgba(248, 250, 252, 0.75);
-
-    .loader__spinner {
-      width: 34px;
-      height: 34px;
-    }
-
-    .loader__text {
-      font-size: 14px;
-    }
+    background: #f8fafc;
   }
 
-  // ---------------------------------------------------------------------------
-  // BUTTON LOADER
-  // ---------------------------------------------------------------------------
+  /* -----------------------------------------------------------------------
+     Button
+     ----------------------------------------------------------------------- */
 
   &--button {
     width: 100%;
     min-height: 44px;
 
-    gap: 9px;
-
     .loader__spinner {
-      width: 20px;
-      height: 20px;
-    }
+      width: 18px;
+      height: 18px;
 
-    .loader__spinner-ring {
-      border-width: 2.5px;
+      border-width: 2px;
       border-color: rgba(255, 255, 255, 0.35);
       border-top-color: #ffffff;
     }
 
     .loader__text {
       color: #ffffff;
-      font-size: 14px;
       font-weight: 600;
-    }
-  }
-
-  // ---------------------------------------------------------------------------
-  // PAGE LOADER
-  // ---------------------------------------------------------------------------
-
-  &__page {
-    position: fixed;
-    inset: 0;
-    z-index: 99999;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    gap: 18px;
-
-    min-height: 100vh;
-
-    background: var(--loader-background);
-
-    .loader__spinner {
-      width: 56px;
-      height: 56px;
-    }
-
-    .loader__spinner-ring {
-      border-width: 5px;
-    }
-
-    .loader__brand {
-      margin-top: 2px;
-    }
-
-    .loader__brand-name {
-      font-size: 32px;
-    }
-
-    .loader__text {
-      font-size: 15px;
-      color: #475569;
-    }
-  }
-
-  // ---------------------------------------------------------------------------
-  // OVERLAY LOADER
-  // ---------------------------------------------------------------------------
-
-  &__overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 99998;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: rgba(15, 23, 42, 0.48);
-
-    backdrop-filter: blur(3px);
-    -webkit-backdrop-filter: blur(3px);
-  }
-
-  &__overlay-content {
-    min-width: 210px;
-    min-height: 150px;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    gap: 14px;
-
-    padding: 28px;
-
-    border: 1px solid rgba(255, 255, 255, 0.7);
-    border-radius: 14px;
-
-    background: #ffffff;
-
-    box-shadow:
-      0 24px 60px rgba(15, 23, 42, 0.18),
-      0 8px 24px rgba(15, 23, 42, 0.1);
-
-    .loader__spinner {
-      width: 42px;
-      height: 42px;
-    }
-
-    .loader__text {
-      font-size: 14px;
-      color: #334155;
-    }
-
-    .loader__brand-name {
-      font-size: 22px;
-    }
-  }
-
-  // ---------------------------------------------------------------------------
-  // FULL PAGE / OVERLAY BRAND
-  // ---------------------------------------------------------------------------
-
-  &--full-page,
-  &--overlay {
-    flex-direction: column;
-  }
-
-  // ---------------------------------------------------------------------------
-  // DARK MODE
-  // ---------------------------------------------------------------------------
-
-  @media (prefers-color-scheme: dark) {
-    --loader-text: #cbd5e1;
-    --loader-background: #0f172a;
-
-    &__page {
-      background: #0f172a;
-
-      .loader__text {
-        color: #94a3b8;
-      }
-    }
-
-    &__overlay-content {
-      background: #172033;
-      border-color: rgba(255, 255, 255, 0.08);
-
-      .loader__text {
-        color: #cbd5e1;
-      }
-    }
-
-    &__brand-name {
-      color: #f8fafc;
-    }
-
-    &--section {
-      background: rgba(30, 41, 59, 0.5);
-      border-color: #334155;
     }
   }
 }
 
-// -----------------------------------------------------------------------------
-// LOADING ANIMATION
-// -----------------------------------------------------------------------------
+/* ==========================================================================
+   Animation
+   ========================================================================== */
 
 @keyframes loader-spin {
   from {
@@ -362,78 +151,24 @@
   }
 }
 
-// -----------------------------------------------------------------------------
-// FULL PAGE DOTS
-// -----------------------------------------------------------------------------
-
-.loader__dots {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-
-  margin-top: 2px;
-
-  span {
-    width: 6px;
-    height: 6px;
-
-    border-radius: 50%;
-
-    background: #2563eb;
-
-    animation: loader-dot 1.2s ease-in-out infinite;
-
-    &:nth-child(2) {
-      animation-delay: 0.15s;
-    }
-
-    &:nth-child(3) {
-      animation-delay: 0.3s;
-    }
-  }
-}
-
-@keyframes loader-dot {
-  0%,
-  60%,
-  100% {
-    opacity: 0.35;
-    transform: translateY(0);
-  }
-
-  30% {
-    opacity: 1;
-    transform: translateY(-3px);
-  }
-}
-
-// -----------------------------------------------------------------------------
-// REDUCED MOTION
-// -----------------------------------------------------------------------------
+/* ==========================================================================
+   Reduced Motion
+   ========================================================================== */
 
 @media (prefers-reduced-motion: reduce) {
-  .loader__spinner-ring,
-  .loader__dots span {
+  .loader__spinner {
     animation: none;
   }
 }
 
-// -----------------------------------------------------------------------------
-// MOBILE
-// -----------------------------------------------------------------------------
+/* ==========================================================================
+   Mobile
+   ========================================================================== */
 
 @media (max-width: 640px) {
-  .loader__overlay-content {
-    min-width: 180px;
-
-    padding: 24px;
-
-    border-radius: 12px;
-  }
-
-  .loader__page {
-    .loader__brand-name {
-      font-size: 28px;
+  .loader {
+    &--section {
+      min-height: 130px;
     }
   }
 }

@@ -1,0 +1,190 @@
+.common-input {
+  width: 100%;
+
+  label {
+    display: block;
+    margin-bottom: 7px;
+
+    color: #344054;
+
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  &__required {
+    margin-left: 3px;
+    color: #dc2626;
+  }
+
+  &__field {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    width: 100%;
+    min-height: 46px;
+
+    border: 1px solid #d0d5dd;
+    border-radius: 10px;
+
+    background: #ffffff;
+
+    overflow: hidden;
+
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+
+    &:focus-within {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    &--error {
+      border-color: #dc2626;
+
+      &:focus-within {
+        border-color: #dc2626;
+        box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+      }
+    }
+
+    input {
+      width: 100%;
+      min-width: 0;
+      height: 44px;
+
+      padding: 0 13px;
+
+      border: 0;
+      border-radius: 9px;
+
+      outline: 0;
+
+      background: #ffffff;
+
+      color: #101828;
+
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 400;
+
+      &::placeholder {
+        color: #98a2b3;
+      }
+
+      &:disabled {
+        cursor: not-allowed;
+        opacity: 0.6;
+      }
+
+      /* ================================================
+         Browser Autofill
+         ================================================ */
+
+      &:-webkit-autofill,
+      &:-webkit-autofill:hover,
+      &:-webkit-autofill:focus,
+      &:-webkit-autofill:active {
+        -webkit-text-fill-color: #101828;
+
+        -webkit-box-shadow: 0 0 0 1000px #ffffff inset;
+
+        box-shadow: 0 0 0 1000px #ffffff inset;
+
+        caret-color: #101828;
+
+        border-radius: 9px;
+
+        transition:
+          background-color 9999s ease-out,
+          color 9999s ease-out;
+      }
+
+      &:autofill {
+        background-color: #ffffff !important;
+        color: #101828 !important;
+
+        border-radius: 9px;
+      }
+    }
+  }
+
+  /* =====================================================
+     Password Show / Hide
+     ===================================================== */
+
+  &__password-toggle {
+    flex: 0 0 auto;
+
+    margin-right: 6px;
+    padding: 7px 9px;
+
+    border: 0;
+    border-radius: 7px;
+
+    background: #ffffff;
+
+    color: #475467;
+
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    &:hover {
+      background: #f2f4f7;
+      color: #2563eb;
+    }
+
+    &:focus-visible {
+      outline: 2px solid #2563eb;
+      outline-offset: -2px;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+  }
+
+  /* =====================================================
+     Error
+     ===================================================== */
+
+  &__error {
+    display: block;
+
+    margin-top: 5px;
+
+    color: #dc2626;
+
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+}
+
+/* =========================================================
+   Mobile
+   ========================================================= */
+
+@media (max-width: 640px) {
+  .common-input {
+    label {
+      font-size: 12px;
+    }
+
+    &__field {
+      min-height: 44px;
+
+      input {
+        height: 42px;
+        font-size: 14px;
+      }
+    }
+  }
+}
