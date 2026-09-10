@@ -7,7 +7,13 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 +---components
 |   \---common
 |       +---form
+|       |   +---checkbox
+|       |   |       Checkbox.jsx
+|       |   |       checkbox.scss
+|       |   |       index.js
+|       |   |       
 |       |   \---input
+|       |           index.js
 |       |           Input.jsx
 |       |           input.scss
 |       |           
@@ -23,14 +29,31 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |               
 +---modules
 |   \---auth
-|       \---pages
-|           |   index.js
-|           |   
-|           \---login
-|                   index.js
-|                   Login.jsx
-|                   login.scss
-|                   
+|       +---pages
+|       |   |   index.js
+|       |   |   
+|       |   \---login
+|       |           index.js
+|       |           Login.jsx
+|       |           login.scss
+|       |           
+|       +---services
+|       |       auth.service.js
+|       |       
+|       \---store
+|               auth.slice.js
+|               auth.thunks.js
+|               
++---router
+|       index.js
+|       
++---services
+|   \---api
+|           apiClient.js
+|           
++---store
+|       index.js
+|       
 \---styles
         main.scss
         

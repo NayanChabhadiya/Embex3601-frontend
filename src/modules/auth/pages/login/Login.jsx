@@ -5,9 +5,14 @@ import { Checkbox } from "../../../../components/common/form/checkbox";
 import { Input } from "../../../../components/common/form/input";
 
 import "./login.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../../store/auth.thunks";
 
 function Login() {
   const { showToast } = useToast();
+  const dispatch = useDispatch();
+  const { status, error } = useSelector((state) => state.auth);
+  const isLoading = status === "loading";
 
   const [formData, setFormData] = useState({
     email: "",
@@ -59,18 +64,45 @@ function Login() {
     }
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (!validateForm()) {
+      showToast({
+        type: "error",
+        title: "Validation failed",
+        message: "Please correct the highlighted fields.",
+      });
+
       return;
     }
 
-    showToast({
-      type: "success",
-      title: "Validation successful",
-      message: "Login form is ready.",
-    });
+    const result = await dispatch(
+      login({
+        email: formData.email.trim(),
+        password: formData.password,
+      }),
+    );
+
+    if (login.fulfilled.match(result)) {
+      showToast({
+        type: "success",
+        title: "Login successful",
+        message: "Welcome back to Embex360.",
+      });
+
+      return;
+    }
+
+    if (login.rejected.match(result)) {
+      showToast({
+        type: "error",
+        title: "Login failed",
+        message:
+          result.payload ||
+          "Unable to sign in. Please check your credentials and try again.",
+      });
+    }
   };
 
   return (
@@ -174,8 +206,12 @@ function Login() {
               </button>
             </div>
 
-            <button type="submit" className="login-form__submit">
-              Sign in
+            <button
+              type="submit"
+              className="login-form__submit"
+              disabled={isLoading}
+            >
+              {isLoading ? "Signing in..." : "Sign In"}
             </button>
 
             <div className="login-form__divider">

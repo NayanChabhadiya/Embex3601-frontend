@@ -7,6 +7,8 @@ import ToastProvider from "./components/common/toast/ToastProvider";
 import LoaderProvider from "./components/common/loader/LoaderProvider";
 
 import "./styles/main.scss";
+import store from "./store";
+import { Provider } from "react-redux";
 
 const rootElement = document.getElementById("root");
 
@@ -16,10 +18,12 @@ if (!rootElement) {
 
 createRoot(rootElement).render(
   <StrictMode>
-    <ToastProvider>
-      <LoaderProvider>
-        <App />
-      </LoaderProvider>
-    </ToastProvider>
+    <Provider store={store}>
+      <ToastProvider>
+        <LoaderProvider>
+          <App />
+        </LoaderProvider>
+      </ToastProvider>
+    </Provider>
   </StrictMode>,
 );
