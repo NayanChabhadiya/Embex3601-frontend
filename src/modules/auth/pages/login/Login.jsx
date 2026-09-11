@@ -5,19 +5,24 @@ import { Checkbox } from "../../../../components/common/form/checkbox";
 import { Input } from "../../../../components/common/form/input";
 
 import "./login.scss";
+
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../store/auth.thunks";
 
 function Login() {
-  const { showToast } = useToast();
   const dispatch = useDispatch();
-  const { status, error } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+
+  const { status } = useSelector((state) => state.auth);
+
   const isLoading = status === "loading";
+
+  const { showToast } = useToast();
 
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    rememberMe: false,
   });
 
   const [errors, setErrors] = useState({
@@ -90,6 +95,8 @@ function Login() {
         title: "Login successful",
         message: "Welcome back to Embex360.",
       });
+
+      navigate("/", { replace: true });
 
       return;
     }

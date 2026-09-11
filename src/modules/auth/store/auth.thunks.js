@@ -1,39 +1,171 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import {
-  login as loginApi,
-  refreshSession as refreshSessionApi,
+  login as loginRequest,
+  refreshToken as refreshTokenRequest,
+  logout as logoutRequest,
 } from "../services/auth.service";
 
+import {
+  initializeAuth,
+  loginSuccess,
+  updateAccessToken,
+  setLoading,
+  authFailure,
+  logoutSuccess,
+} from "./auth.slice";
+
+const getAuthData = (response) => {
+  return response?.data?.data ?? null;
+};
+
+const getAccessToken = (auth) => {
+  return auth?.accessToken ?? null;
+};
+
+/**
+ * Restore existing authentication session.
+ *
+ * Refresh token is handled automatically by the browser
+ * through the HttpOnly cookie.
+ */
+export const initializeSession = createAsyncThunk(
+  "auth/initializeSession",
+  async (_, { dispatch }) => {
+    dispatch(setLoading());
+
+    try {
+      const response = await refreshTokenRequest();
+
+      const auth = getAuthData(response);
+      const accessToken = getAccessToken(auth);
+
+      if (!accessToken) {
+        throw new Error(
+          "Authentication refresh did not return an access token.",
+        );
+      }
+
+      dispatch(
+        initializeAuth({
+          isAuthenticated: true,
+          accessToken,
+          user: auth?.user ?? auth?.account ?? null,
+          workspace: auth?.workspace ?? null,
+          company: auth?.company ?? null,
+          permissions: Array.isArray(auth?.permissions) ? auth.permissions : [],
+        }),
+      );
+
+      return auth;
+    } catch {
+      dispatch(
+        initializeAuth({
+          isAuthenticated: false,
+          accessToken: null,
+          user: null,
+          workspace: null,
+          company: null,
+          permissions: [],
+        }),
+      );
+
+      return null;
+    }
+  },
+);
+
+/**
+ * Login
+ */
 export const login = createAsyncThunk(
   "auth/login",
-  async (credentials, { rejectWithValue }) => {
+  async (credentials, { dispatch, rejectWithValue }) => {
     try {
-      const response = await loginApi(credentials);
+      dispatch(setLoading());
 
-      return response.data;
+      const response = await loginRequest(credentials);
+
+      const auth = getAuthData(response);
+      const accessToken = getAccessToken(auth);
+
+      if (!accessToken) {
+        throw new Error("Authentication login did not return an access token.");
+      }
+
+      dispatch(
+        loginSuccess({
+          accessToken,
+          user: auth?.user ?? auth?.account ?? null,
+          workspace: auth?.workspace ?? null,
+          company: auth?.company ?? null,
+          permissions: Array.isArray(auth?.permissions) ? auth.permissions : [],
+        }),
+      );
+
+      return auth;
     } catch (error) {
       const message =
-        error.response?.data?.message || "Unable to sign in. Please try again.";
+        error?.response?.data?.message ??
+        "Unable to sign in. Please try again.";
+
+      dispatch(authFailure(message));
 
       return rejectWithValue(message);
     }
   },
 );
 
-export const refreshSession = createAsyncThunk(
-  "auth/refreshSession",
-  async (_, { rejectWithValue }) => {
+/**
+ * Refresh access token after an expired access token.
+ *
+ * Normally this is handled automatically by the Axios interceptor.
+ * This thunk remains available for explicit session refresh operations.
+ */
+export const refreshToken = createAsyncThunk(
+  "auth/refreshToken",
+  async (_, { dispatch, rejectWithValue }) => {
     try {
-      const response = await refreshSessionApi();
+      const response = await refreshTokenRequest();
 
-      return response.data;
+      const auth = getAuthData(response);
+      const accessToken = getAccessToken(auth);
+
+      if (!accessToken) {
+        throw new Error(
+          "Authentication refresh did not return an access token.",
+        );
+      }
+
+      dispatch(
+        updateAccessToken({
+          accessToken,
+        }),
+      );
+
+      return auth;
     } catch (error) {
+      dispatch(logoutSuccess());
+
       const message =
-        error.response?.data?.message ||
-        "Session expired. Please sign in again.";
+        error?.response?.data?.message ??
+        "Your session has expired. Please sign in again.";
 
       return rejectWithValue(message);
+    }
+  },
+);
+
+/**
+ * Logout
+ */
+export const logout = createAsyncThunk(
+  "auth/logout",
+  async (_, { dispatch }) => {
+    try {
+      await logoutRequest();
+    } finally {
+      dispatch(logoutSuccess());
     }
   },
 );

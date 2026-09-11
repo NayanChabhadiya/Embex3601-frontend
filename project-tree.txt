@@ -28,28 +28,47 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |               ToastProvider.jsx
 |               
 +---modules
-|   \---auth
-|       +---pages
-|       |   |   index.js
-|       |   |   
-|       |   \---login
-|       |           index.js
-|       |           Login.jsx
-|       |           login.scss
-|       |           
-|       +---services
-|       |       auth.service.js
-|       |       
-|       \---store
-|               auth.slice.js
-|               auth.thunks.js
-|               
+|   +---auth
+|   |   +---hooks
+|   |   |       useAuth.js
+|   |   |       
+|   |   +---pages
+|   |   |   |   index.js
+|   |   |   |   
+|   |   |   \---login
+|   |   |           index.js
+|   |   |           Login.jsx
+|   |   |           login.scss
+|   |   |           
+|   |   +---services
+|   |   |       auth.service.js
+|   |   |       
+|   |   \---store
+|   |           auth.slice.js
+|   |           auth.thunks.js
+|   |           
+|   +---dashboard
+|   |   \---pages
+|   |       \---dashboard
+|   |               Dashboard.jsx
+|   |               index.js
+|   |               
+|   \---public
+|       \---pages
+|           \---not-found
+|                   index.js
+|                   NotFound.jsx
+|                   
 +---router
-|       index.js
+|       index.jsx
+|       ProtectedRoutes.jsx
+|       PublicRoutes.jsx
 |       
 +---services
 |   \---api
 |           apiClient.js
+|           endpoints.js
+|           interceptors.js
 |           
 +---store
 |       index.js
