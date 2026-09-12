@@ -5,6 +5,7 @@ import PublicRoutes from "./PublicRoutes";
 import { NotFound } from "../modules/public/pages/not-found";
 import ProtectedRoutes from "./ProtectedRoutes";
 import { Dashboard } from "../modules/dashboard/pages/dashboard";
+import AppLayout from "../components/layout/AppLayout";
 
 const router = createBrowserRouter([
   {
@@ -19,7 +20,9 @@ const router = createBrowserRouter([
     path: "/",
     element: (
       <ProtectedRoutes>
-        <Dashboard />
+        <AppLayout>
+          <Dashboard />
+        </AppLayout>
       </ProtectedRoutes>
     ),
   },

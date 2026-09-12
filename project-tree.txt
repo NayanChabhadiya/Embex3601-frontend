@@ -5,28 +5,51 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   main.jsx
 |   
 +---components
-|   \---common
-|       +---form
-|       |   +---checkbox
-|       |   |       Checkbox.jsx
-|       |   |       checkbox.scss
-|       |   |       index.js
-|       |   |       
-|       |   \---input
-|       |           index.js
-|       |           Input.jsx
-|       |           input.scss
-|       |           
-|       +---loader
-|       |       Loader.jsx
-|       |       loader.scss
-|       |       LoaderProvider.jsx
+|   +---common
+|   |   +---button
+|   |   |       Button.jsx
+|   |   |       button.scss
+|   |   |       index.js
+|   |   |       
+|   |   +---form
+|   |   |   +---checkbox
+|   |   |   |       Checkbox.jsx
+|   |   |   |       checkbox.scss
+|   |   |   |       index.js
+|   |   |   |       
+|   |   |   \---input
+|   |   |           index.js
+|   |   |           Input.jsx
+|   |   |           input.scss
+|   |   |           
+|   |   +---loader
+|   |   |       Loader.jsx
+|   |   |       loader.scss
+|   |   |       LoaderProvider.jsx
+|   |   |       
+|   |   \---toast
+|   |           Toast.jsx
+|   |           toast.scss
+|   |           ToastProvider.jsx
+|   |           
+|   \---layout
+|       |   app-layout.scss
+|       |   AppLayout.jsx
+|       |   
+|       +---header
+|       |       Header.jsx
+|       |       header.scss
 |       |       
-|       \---toast
-|               Toast.jsx
-|               toast.scss
-|               ToastProvider.jsx
-|               
+|       \---sidebar
+|           |   Sidebar.jsx
+|           |   sidebar.scss
+|           |   
+|           \---components
+|                   sidebar-footer.scss
+|                   sidebar-header.scss
+|                   SidebarFooter.jsx
+|                   SidebarHeader.jsx
+|                   
 +---modules
 |   +---auth
 |   |   +---hooks
@@ -51,6 +74,7 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   |   \---pages
 |   |       \---dashboard
 |   |               Dashboard.jsx
+|   |               dashboard.scss
 |   |               index.js
 |   |               
 |   \---public

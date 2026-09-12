@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import Loader from "./components/common/loader/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { RouterProvider } from "react-router-dom";
 
@@ -22,7 +23,7 @@ function App() {
   }, [dispatch]);
 
   if (!initialized) {
-    return null;
+    return <Loader />;
   }
 
   return <RouterProvider router={router} />;

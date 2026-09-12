@@ -6,6 +6,7 @@ function Button({
   variant = "primary",
   disabled = false,
   loading = false,
+  loadingText = "Loading...",
   onClick,
   className = "",
   ...props
@@ -19,10 +20,11 @@ function Button({
       type={type}
       className={buttonClassName}
       disabled={disabled || loading}
+      aria-busy={loading}
       onClick={onClick}
       {...props}
     >
-      {loading ? "Loading..." : children}
+      {loading ? loadingText : children}
     </button>
   );
 }

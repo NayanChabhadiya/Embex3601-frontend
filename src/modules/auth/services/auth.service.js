@@ -22,6 +22,6 @@ export const logout = async () => {
   return apiClient.post(API_ENDPOINTS.AUTH.LOGOUT);
 };
 
-export const getCurrentUser = async () => {
-  return apiClient.get(API_ENDPOINTS.AUTH.ME);
+export const logoutAll = async () => {
+  return apiClient.post(API_ENDPOINTS.AUTH.LOGOUT_ALL);
 };

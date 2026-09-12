@@ -3,7 +3,7 @@ const API_ENDPOINTS = Object.freeze({
     LOGIN: "/auth/login",
     REFRESH: "/auth/refresh",
     LOGOUT: "/auth/logout",
-    ME: "/auth/me",
+    LOGOUT_ALL: "/auth/logout-all",
   }),
 });
 

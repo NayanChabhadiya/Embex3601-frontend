@@ -1,0 +1,42 @@
+.sidebar-header {
+  height: 64px;
+  flex: 0 0 64px;
+
+  display: flex;
+  align-items: center;
+
+  padding: 0 18px;
+
+  border-bottom: 1px solid #eaecf0;
+}
+
+.sidebar-header__logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sidebar-header__logo-mark {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 8px;
+
+  background: #2563eb;
+  color: #ffffff;
+
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.sidebar-header__logo-text {
+  color: #101828;
+
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+}

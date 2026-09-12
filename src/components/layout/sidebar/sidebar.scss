@@ -1,0 +1,16 @@
+.app-sidebar {
+  width: 240px;
+  min-width: 240px;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+
+  background: #ffffff;
+  border-right: 1px solid #eaecf0;
+}
+
+.app-sidebar__content {
+  flex: 1;
+  min-height: 0;
+}

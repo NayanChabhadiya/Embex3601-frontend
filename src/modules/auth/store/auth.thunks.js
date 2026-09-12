@@ -4,6 +4,7 @@ import {
   login as loginRequest,
   refreshToken as refreshTokenRequest,
   logout as logoutRequest,
+  logoutAll as logoutAllRequest,
 } from "../services/auth.service";
 
 import {
@@ -166,6 +167,23 @@ export const logout = createAsyncThunk(
       await logoutRequest();
     } finally {
       dispatch(logoutSuccess());
+    }
+  },
+);
+
+export const logoutAll = createAsyncThunk(
+  "auth/logoutAll",
+  async (_, { dispatch, rejectWithValue }) => {
+    try {
+      await logoutAllRequest();
+      dispatch(logoutSuccess());
+      return true;
+    } catch (error) {
+      const message =
+        error?.response?.data?.message ??
+        "Unable to sign out from all sessions.";
+
+      return rejectWithValue(message);
     }
   },
 );

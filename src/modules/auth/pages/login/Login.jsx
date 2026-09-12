@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useToast } from "../../../../components/common/toast/ToastProvider";
 
-import { Checkbox } from "../../../../components/common/form/checkbox";
 import { Input } from "../../../../components/common/form/input";
+import { Button } from "../../../../components/common/button";
 
 import "./login.scss";
 
@@ -201,38 +201,45 @@ function Login() {
             />
 
             <div className="login-form__options">
-              <Checkbox
-                label="Remember me"
-                name="rememberMe"
-                checked={formData.rememberMe}
-                onChange={handleChange}
-              />
-
-              <button type="button" className="login-form__forgot">
+              <Button
+                type="button"
+                variant="ghost"
+                className="login-form__forgot"
+              >
                 Forgot password?
-              </button>
+              </Button>
             </div>
 
-            <button
+            <Button
               type="submit"
+              variant="primary"
               className="login-form__submit"
-              disabled={isLoading}
+              loading={isLoading}
+              loadingText="Signing in..."
             >
-              {isLoading ? "Signing in..." : "Sign In"}
-            </button>
+              Sign In
+            </Button>
 
             <div className="login-form__divider">
               <span>or continue with</span>
             </div>
 
             <div className="login-form__social">
-              <button type="button" className="login-form__social-button">
+              <Button
+                type="button"
+                variant="secondary"
+                className="login-form__social-button"
+              >
                 Google
-              </button>
+              </Button>
 
-              <button type="button" className="login-form__social-button">
+              <Button
+                type="button"
+                variant="secondary"
+                className="login-form__social-button"
+              >
                 Microsoft
-              </button>
+              </Button>
             </div>
           </form>
 
