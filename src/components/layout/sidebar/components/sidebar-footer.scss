@@ -16,3 +16,17 @@
   font-size: 12px;
   font-weight: 500;
 }
+
+.sidebar-footer__content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+}
+
+.sidebar-footer__version {
+  color: #98a2b3;
+  font-size: 11px;
+  font-weight: 500;
+}

@@ -1,79 +1,34 @@
-// export const SIDEBAR_MENU = [
-//   {
-//     key: "dashboard",
-//     label: "Dashboard",
-//     path: "/",
-//     permission: "dashboard.view",
-//   },
-
-//   {
-//     key: "customers",
-//     label: "Customers",
-//     path: "/customers",
-//     permission: "customers.view",
-//   },
-
-//   {
-//     key: "vendors",
-//     label: "Vendors",
-//     path: "/vendors",
-//     permission: "vendors.view",
-//   },
-
-//   {
-//     key: "products",
-//     label: "Products",
-//     path: "/products",
-//     permission: "products.view",
-//   },
-
-//   {
-//     key: "invoices",
-//     label: "Invoices",
-//     path: "/invoices",
-//     permission: "invoices.view",
-//   },
-
-//   {
-//     key: "sales",
-//     label: "Sales",
-//     path: "/sales",
-//     permission: "sales.view",
-//   },
-
-//   {
-//     key: "purchases",
-//     label: "Purchases",
-//     path: "/purchases",
-//     permission: "purchases.view",
-//   },
-// ];
 export const SIDEBAR_MENU = [
   {
     key: "dashboard",
+    type: "item",
     label: "Dashboard",
     path: "/",
     icon: "dashboard",
   },
 
   {
-    key: "business",
-    label: "Business",
+    key: "masters",
+    type: "group",
+    label: "Masters",
     children: [
       {
         key: "customers",
+        type: "item",
         label: "Customers",
         path: "/customers",
         icon: "customers",
       },
       {
         key: "vendors",
+        type: "item",
         label: "Vendors",
         path: "/vendors",
         icon: "vendors",
       },
       {
         key: "products",
+        type: "item",
         label: "Products",
         path: "/products",
         icon: "products",
@@ -82,25 +37,37 @@ export const SIDEBAR_MENU = [
   },
 
   {
-    key: "transactions",
-    label: "Transactions",
+    key: "sales",
+    type: "group",
+    label: "Sales",
     children: [
       {
         key: "invoices",
+        type: "item",
         label: "Invoices",
         path: "/invoices",
         icon: "invoices",
       },
       {
-        key: "sales",
-        label: "Sales",
-        path: "/sales",
+        key: "sales-orders",
+        type: "item",
+        label: "Sales Orders",
+        path: "/sales-orders",
         icon: "sales",
       },
+    ],
+  },
+
+  {
+    key: "purchase",
+    type: "group",
+    label: "Purchase",
+    children: [
       {
-        key: "purchases",
-        label: "Purchases",
-        path: "/purchases",
+        key: "purchase-orders",
+        type: "item",
+        label: "Purchase Orders",
+        path: "/purchase-orders",
         icon: "purchases",
       },
     ],

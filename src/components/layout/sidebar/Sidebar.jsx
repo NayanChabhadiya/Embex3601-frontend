@@ -1,48 +1,103 @@
+import { useEffect, useState } from "react";
 import SidebarHeader from "./components/SidebarHeader";
 import SidebarFooter from "./components/SidebarFooter";
 import "./sidebar.scss";
-import { useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { SIDEBAR_MENU } from "./config/sidebar-menu";
-import { filterSidebarMenu } from "./utils/filter-sidebar-menu";
 import SidebarIcon from "./components/SidebarIcon";
+import { isSidebarSectionActive } from "./utils/is-sidebar-section-active";
 
 function Sidebar() {
-  // const permissions = useSelector((state) => state.auth.permissions);
-  // const menuItems = filterSidebarMenu(SIDEBAR_MENU, permissions);
   const menuItems = SIDEBAR_MENU;
+  const location = useLocation();
+
+  const [openSections, setOpenSections] = useState(() =>
+    Object.fromEntries(
+      SIDEBAR_MENU.filter((item) => item.children?.length).map((item) => [
+        item.key,
+        true,
+      ]),
+    ),
+  );
+
+  const toggleSection = (key) => {
+    setOpenSections((current) => ({
+      ...current,
+      [key]: !current[key],
+    }));
+  };
+
+  useEffect(() => {
+    const activeSections = menuItems
+      .filter(
+        (item) =>
+          item.children?.length &&
+          isSidebarSectionActive(item.children, location.pathname),
+      )
+      .map((item) => item.key);
+
+    if (activeSections.length === 0) {
+      return;
+    }
+
+    setOpenSections((current) => ({
+      ...current,
+      ...Object.fromEntries(activeSections.map((key) => [key, true])),
+    }));
+  }, [location.pathname, menuItems]);
   return (
     <aside className="app-sidebar">
       <SidebarHeader />
 
       <nav className="app-sidebar__content">
         {menuItems.map((item) => {
-          if (item.children?.length) {
+          if (item.type === "group" && item.children?.length) {
             return (
               <div key={item.key} className="app-sidebar__menu-section">
-                <span className="app-sidebar__menu-section-title">
-                  {item.label}
-                </span>
+                <button
+                  type="button"
+                  className={`app-sidebar__menu-section-title ${
+                    isSidebarSectionActive(item.children, location.pathname)
+                      ? "app-sidebar__menu-section-title--active"
+                      : ""
+                  }`}
+                  onClick={() => toggleSection(item.key)}
+                >
+                  <span>{item.label}</span>
 
-                <div className="app-sidebar__menu-items">
-                  {item.children.map((child) => (
-                    <NavLink
-                      key={child.key}
-                      to={child.path}
-                      className={({ isActive }) =>
-                        `app-sidebar__menu-item ${
-                          isActive ? "app-sidebar__menu-item--active" : ""
-                        }`
-                      }
-                    >
-                      <SidebarIcon name={child.icon} />
+                  <span
+                    className={`app-sidebar__menu-section-arrow ${
+                      openSections[item.key]
+                        ? "app-sidebar__menu-section-arrow--open"
+                        : ""
+                    }`}
+                  >
+                    ›
+                  </span>
+                </button>
 
-                      <span className="app-sidebar__menu-label">
-                        {child.label}
-                      </span>
-                    </NavLink>
-                  ))}
-                </div>
+                {openSections[item.key] && (
+                  <div className="app-sidebar__menu-items">
+                    {item.children.map((child) => (
+                      <NavLink
+                        key={child.key}
+                        to={child.path}
+                        end={child.path === "/"}
+                        className={({ isActive }) =>
+                          `app-sidebar__menu-item ${
+                            isActive ? "app-sidebar__menu-item--active" : ""
+                          }`
+                        }
+                      >
+                        <SidebarIcon name={child.icon} />
+
+                        <span className="app-sidebar__menu-label">
+                          {child.label}
+                        </span>
+                      </NavLink>
+                    ))}
+                  </div>
+                )}
               </div>
             );
           }
