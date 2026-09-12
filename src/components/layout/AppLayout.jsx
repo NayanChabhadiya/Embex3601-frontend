@@ -1,5 +1,6 @@
 import Header from "./header/Header";
 import Sidebar from "./sidebar/Sidebar";
+import PageContainer from "./page/PageContainer";
 import "./app-layout.scss";
 
 function AppLayout({ children }) {
@@ -10,7 +11,9 @@ function AppLayout({ children }) {
       <div className="app-layout__main">
         <Header />
 
-        <main className="app-layout__content">{children}</main>
+        <main className="app-layout__content">
+          <PageContainer>{children}</PageContainer>
+        </main>
       </div>
     </div>
   );

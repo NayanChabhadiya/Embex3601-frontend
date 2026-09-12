@@ -1,0 +1,52 @@
+.summary-card {
+  padding: 20px;
+}
+
+.summary-card__title {
+  color: #667085;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+.summary-card__value {
+  margin-top: 8px;
+
+  color: #101828;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 32px;
+}
+
+.summary-card__footer {
+  margin-top: 8px;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.summary-card__description {
+  color: #667085;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.summary-card__trend {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 18px;
+}
+
+.summary-card__trend--positive {
+  color: #067647;
+}
+
+.summary-card__trend--negative {
+  color: #b42318;
+}
+
+.summary-card__trend--neutral {
+  color: #667085;
+}

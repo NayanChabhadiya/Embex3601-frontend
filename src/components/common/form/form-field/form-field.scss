@@ -1,0 +1,41 @@
+.form-field {
+  width: 100%;
+}
+
+.form-field__label {
+  display: block;
+
+  margin-bottom: 6px;
+
+  color: #344054;
+
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+.form-field__required {
+  margin-left: 3px;
+
+  color: #b42318;
+}
+
+.form-field__control {
+  width: 100%;
+}
+
+.form-field__helper,
+.form-field__error {
+  margin-top: 5px;
+
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.form-field__helper {
+  color: #667085;
+}
+
+.form-field__error {
+  color: #b42318;
+}

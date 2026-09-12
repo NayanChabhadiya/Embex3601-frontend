@@ -1,0 +1,38 @@
+.form-actions {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  padding-top: 20px;
+
+  border-top: 1px solid #eaecf0;
+}
+
+.form-actions--left {
+  justify-content: flex-start;
+}
+
+.form-actions--center {
+  justify-content: center;
+}
+
+.form-actions--right {
+  justify-content: flex-end;
+}
+
+.form-actions--between {
+  justify-content: space-between;
+}
+
+@media (max-width: 640px) {
+  .form-actions {
+    flex-wrap: wrap;
+  }
+
+  .form-actions > * {
+    flex: 1 1 auto;
+  }
+}

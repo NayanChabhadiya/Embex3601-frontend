@@ -1,0 +1,33 @@
+.form-select {
+  width: 100%;
+  min-height: 40px;
+
+  padding: 8px 12px;
+
+  color: #101828;
+  background: #ffffff;
+
+  border: 1px solid #d0d5dd;
+  border-radius: 8px;
+
+  font-size: 14px;
+  line-height: 20px;
+
+  outline: none;
+
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.form-select:focus {
+  border-color: #84adff;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.form-select:disabled {
+  cursor: not-allowed;
+
+  background: #f2f4f7;
+  color: #98a2b3;
+}
