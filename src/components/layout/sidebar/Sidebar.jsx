@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { SIDEBAR_MENU } from "./config/sidebar-menu";
 import { filterSidebarMenu } from "./utils/filter-sidebar-menu";
+import SidebarIcon from "./components/SidebarIcon";
 
 function Sidebar() {
   // const permissions = useSelector((state) => state.auth.permissions);
@@ -34,6 +35,8 @@ function Sidebar() {
                         }`
                       }
                     >
+                      <SidebarIcon name={child.icon} />
+
                       <span className="app-sidebar__menu-label">
                         {child.label}
                       </span>
@@ -54,6 +57,8 @@ function Sidebar() {
                 }`
               }
             >
+              <SidebarIcon name={item.icon} />
+
               <span className="app-sidebar__menu-label">{item.label}</span>
             </NavLink>
           );

@@ -53,6 +53,7 @@ export const SIDEBAR_MENU = [
     key: "dashboard",
     label: "Dashboard",
     path: "/",
+    icon: "dashboard",
   },
 
   {
@@ -63,16 +64,19 @@ export const SIDEBAR_MENU = [
         key: "customers",
         label: "Customers",
         path: "/customers",
+        icon: "customers",
       },
       {
         key: "vendors",
         label: "Vendors",
         path: "/vendors",
+        icon: "vendors",
       },
       {
         key: "products",
         label: "Products",
         path: "/products",
+        icon: "products",
       },
     ],
   },
@@ -85,16 +89,19 @@ export const SIDEBAR_MENU = [
         key: "invoices",
         label: "Invoices",
         path: "/invoices",
+        icon: "invoices",
       },
       {
         key: "sales",
         label: "Sales",
         path: "/sales",
+        icon: "sales",
       },
       {
         key: "purchases",
         label: "Purchases",
         path: "/purchases",
+        icon: "purchases",
       },
     ],
   },
