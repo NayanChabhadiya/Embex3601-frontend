@@ -1,0 +1,168 @@
+.table-pagination {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+
+  padding: 12px 16px;
+
+  border-top: 1px solid #eaecf0;
+  background: #ffffff;
+}
+
+.table-pagination__summary {
+  color: #667085;
+
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+
+  white-space: nowrap;
+}
+
+.table-pagination__controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.table-pagination__select {
+  min-height: 34px;
+
+  padding: 6px 30px 6px 10px;
+
+  color: #344054;
+  background: #ffffff;
+
+  border: 1px solid #d0d5dd;
+  border-radius: 7px;
+
+  font-size: 12px;
+  line-height: 18px;
+
+  cursor: pointer;
+}
+
+.table-pagination__select:focus {
+  outline: none;
+  border-color: #98a2b3;
+}
+
+.table-pagination__button {
+  min-height: 34px;
+
+  padding: 6px 12px;
+
+  color: #344054;
+  background: #ffffff;
+
+  border: 1px solid #d0d5dd;
+  border-radius: 7px;
+
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+}
+
+.table-pagination__button:hover:not(:disabled) {
+  background: #f9fafb;
+}
+
+.table-pagination__button:disabled {
+  color: #98a2b3;
+  background: #f9fafb;
+
+  cursor: not-allowed;
+}
+
+.table-pagination__page {
+  min-width: 80px;
+
+  color: #475467;
+
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+
+  text-align: center;
+  white-space: nowrap;
+}
+
+.table-pagination__pages {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+@media (max-width: 640px) {
+  .table-pagination {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .table-pagination__controls {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+.table-pagination__page-numbers {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.table-pagination__page-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.table-pagination__number {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  color: #344054;
+  background: #ffffff;
+
+  border: 1px solid transparent;
+  border-radius: 7px;
+
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+
+  cursor: pointer;
+}
+
+.table-pagination__number:hover {
+  background: #f9fafb;
+  border-color: #d0d5dd;
+}
+
+.table-pagination__number--active {
+  color: #2563eb;
+  background: #eff4ff;
+  border-color: #bfdbfe;
+  font-weight: 600;
+}
+
+.table-pagination__ellipsis {
+  width: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #667085;
+
+  font-size: 13px;
+  line-height: 18px;
+}

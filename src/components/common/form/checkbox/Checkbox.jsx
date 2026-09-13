@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import "./checkbox.scss";
 
 function Checkbox({
@@ -7,7 +8,15 @@ function Checkbox({
   onChange,
   disabled = false,
   required = false,
+  indeterminate = false,
 }) {
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.indeterminate = indeterminate;
+    }
+  }, [indeterminate]);
   return (
     <label className="common-checkbox">
       <input
@@ -17,6 +26,7 @@ function Checkbox({
         onChange={onChange}
         disabled={disabled}
         required={required}
+        ref={inputRef}
       />
 
       <span className="common-checkbox__box" />

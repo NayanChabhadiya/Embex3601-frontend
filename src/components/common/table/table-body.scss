@@ -1,0 +1,72 @@
+.table-body {
+  background: #ffffff;
+}
+
+.table-body__row {
+  transition: background-color 120ms ease;
+}
+
+.table-body__row:hover {
+  background: #f9fafb;
+}
+
+.table-body__row--selected {
+  background: #eff4ff;
+}
+
+.table-body__row--selected:hover {
+  background: #eaf2ff;
+}
+
+.table-body td {
+  padding: 14px 16px;
+
+  color: #344054;
+
+  font-size: 13px;
+  line-height: 20px;
+
+  border-bottom: 1px solid #f2f4f7;
+}
+
+.table-body__row:last-child td {
+  border-bottom: 0;
+}
+
+.table-body__selection {
+  width: 48px;
+
+  padding-right: 8px !important;
+  padding-left: 16px !important;
+
+  text-align: center;
+}
+
+.table-body__cell--left {
+  text-align: left !important;
+}
+
+.table-body__cell--center {
+  text-align: center !important;
+}
+
+.table-body__cell--right {
+  text-align: right !important;
+}
+
+.table-body__empty {
+  padding: 40px 16px !important;
+
+  color: #667085 !important;
+
+  text-align: center !important;
+}
+
+.table-body__loading {
+  padding: 40px 16px !important;
+  color: #667085 !important;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 20px;
+  text-align: center !important;
+}
