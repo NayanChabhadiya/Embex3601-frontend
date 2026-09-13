@@ -8,6 +8,7 @@ import AppLayout from "../components/layout/AppLayout";
 
 import PublicRoutes from "./PublicRoutes";
 import ProtectedRoutes from "./ProtectedRoutes";
+import PlatformAdminRoute from "./PlatformAdminRoute";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,16 @@ const router = createBrowserRouter([
           {
             path: "/",
             element: <Dashboard />,
+          },
+
+          {
+            element: <PlatformAdminRoute />,
+            children: [
+              {
+                path: "/platform-admin",
+                element: <Dashboard />,
+              },
+            ],
           },
         ],
       },

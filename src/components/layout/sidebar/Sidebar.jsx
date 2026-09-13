@@ -6,17 +6,21 @@ import { NavLink, useLocation } from "react-router-dom";
 import { SIDEBAR_MENU } from "./config/sidebar-menu";
 import SidebarIcon from "./components/SidebarIcon";
 import { isSidebarSectionActive } from "./utils/is-sidebar-section-active";
+import { selectIsPlatformAdmin } from "../../../modules/platform-admin/store/platform-admin.selectors";
+import { useSelector } from "react-redux";
+import { filterSidebarMenu } from "./utils/filter-sidebar-menu";
 
 function Sidebar() {
-  const menuItems = SIDEBAR_MENU;
+  const isPlatformAdmin = useSelector(selectIsPlatformAdmin);
+
+  const menuItems = filterSidebarMenu(SIDEBAR_MENU, [], isPlatformAdmin);
   const location = useLocation();
 
   const [openSections, setOpenSections] = useState(() =>
     Object.fromEntries(
-      SIDEBAR_MENU.filter((item) => item.children?.length).map((item) => [
-        item.key,
-        true,
-      ]),
+      menuItems
+        .filter((item) => item.children?.length)
+        .map((item) => [item.key, true]),
     ),
   );
 

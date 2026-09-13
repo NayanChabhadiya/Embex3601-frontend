@@ -72,4 +72,20 @@ export const SIDEBAR_MENU = [
       },
     ],
   },
+  {
+    key: "platform-admin",
+    type: "group",
+    label: "Platform Administration",
+    access: "platform-admin",
+    children: [
+      {
+        key: "platform-admin-dashboard",
+        type: "item",
+        label: "Platform Dashboard",
+        path: "/platform-admin",
+        icon: "dashboard",
+        access: "platform-admin",
+      },
+    ],
+  },
 ];
