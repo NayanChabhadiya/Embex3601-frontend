@@ -15,6 +15,7 @@ import {
   authFailure,
   logoutSuccess,
 } from "./auth.slice";
+import { fetchPlatformAdminAccess } from "../../platform-admin/store/platform-admin.thunks.js";
 
 const getAuthData = (response) => {
   return response?.data?.data ?? null;
@@ -57,6 +58,8 @@ export const initializeSession = createAsyncThunk(
           permissions: Array.isArray(auth?.permissions) ? auth.permissions : [],
         }),
       );
+
+      dispatch(fetchPlatformAdminAccess());
 
       return auth;
     } catch {
@@ -103,6 +106,8 @@ export const login = createAsyncThunk(
           permissions: Array.isArray(auth?.permissions) ? auth.permissions : [],
         }),
       );
+
+      dispatch(fetchPlatformAdminAccess());
 
       return auth;
     } catch (error) {

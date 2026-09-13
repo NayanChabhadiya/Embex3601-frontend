@@ -11,21 +11,78 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   |   |       button.scss
 |   |   |       index.js
 |   |   |       
+|   |   +---card
+|   |   |       Card.jsx
+|   |   |       card.scss
+|   |   |       index.js
+|   |   |       summary-card.scss
+|   |   |       SummaryCard.jsx
+|   |   |       
 |   |   +---form
+|   |   |   |   index.js
+|   |   |   |   
 |   |   |   +---checkbox
 |   |   |   |       Checkbox.jsx
 |   |   |   |       checkbox.scss
 |   |   |   |       index.js
 |   |   |   |       
-|   |   |   \---input
+|   |   |   +---form-actions
+|   |   |   |       form-actions.scss
+|   |   |   |       FormActions.jsx
+|   |   |   |       index.js
+|   |   |   |       
+|   |   |   +---form-card
+|   |   |   |       form-card.scss
+|   |   |   |       FormCard.jsx
+|   |   |   |       index.js
+|   |   |   |       
+|   |   |   +---form-field
+|   |   |   |       form-field.scss
+|   |   |   |       FormField.jsx
+|   |   |   |       index.js
+|   |   |   |       
+|   |   |   +---form-grid
+|   |   |   |       form-grid.scss
+|   |   |   |       FormGrid.jsx
+|   |   |   |       index.js
+|   |   |   |       
+|   |   |   +---form-section
+|   |   |   |       form-section.scss
+|   |   |   |       FormSection.jsx
+|   |   |   |       index.js
+|   |   |   |       
+|   |   |   +---input
+|   |   |   |       index.js
+|   |   |   |       Input.jsx
+|   |   |   |       input.scss
+|   |   |   |       
+|   |   |   \---select
 |   |   |           index.js
-|   |   |           Input.jsx
-|   |   |           input.scss
+|   |   |           Select.jsx
+|   |   |           select.scss
 |   |   |           
+|   |   +---grid
+|   |   |       Grid.jsx
+|   |   |       grid.scss
+|   |   |       index.js
+|   |   |       
 |   |   +---loader
 |   |   |       Loader.jsx
 |   |   |       loader.scss
 |   |   |       LoaderProvider.jsx
+|   |   |       
+|   |   +---table
+|   |   |       index.js
+|   |   |       table-body.scss
+|   |   |       table-header.scss
+|   |   |       table-pagination.scss
+|   |   |       table-toolbar.scss
+|   |   |       Table.jsx
+|   |   |       table.scss
+|   |   |       TableBody.jsx
+|   |   |       TableHeader.jsx
+|   |   |       TablePagination.jsx
+|   |   |       TableToolbar.jsx
 |   |   |       
 |   |   \---toast
 |   |           Toast.jsx
@@ -40,15 +97,33 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |       |       Header.jsx
 |       |       header.scss
 |       |       
+|       +---page
+|       |   |   page-container.scss
+|       |   |   PageContainer.jsx
+|       |   |   
+|       |   \---components
+|       |           page-header.scss
+|       |           page-section.scss
+|       |           PageHeader.jsx
+|       |           PageSection.jsx
+|       |           
 |       \---sidebar
 |           |   Sidebar.jsx
 |           |   sidebar.scss
 |           |   
-|           \---components
-|                   sidebar-footer.scss
-|                   sidebar-header.scss
-|                   SidebarFooter.jsx
-|                   SidebarHeader.jsx
+|           +---components
+|           |       sidebar-footer.scss
+|           |       sidebar-header.scss
+|           |       SidebarFooter.jsx
+|           |       SidebarHeader.jsx
+|           |       SidebarIcon.jsx
+|           |       
+|           +---config
+|           |       sidebar-menu.js
+|           |       
+|           \---utils
+|                   filter-sidebar-menu.js
+|                   is-sidebar-section-active.js
 |                   
 +---modules
 |   +---auth
@@ -77,6 +152,15 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   |               dashboard.scss
 |   |               index.js
 |   |               
+|   +---platform-admin
+|   |   +---services
+|   |   |       platform-admin.service.js
+|   |   |       
+|   |   \---store
+|   |           platform-admin.selectors.js
+|   |           platform-admin.slice.js
+|   |           platform-admin.thunks.js
+|   |           
 |   \---public
 |       \---pages
 |           \---not-found
@@ -85,6 +169,7 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |                   
 +---router
 |       index.jsx
+|       PlatformAdminRoute.jsx
 |       ProtectedRoutes.jsx
 |       PublicRoutes.jsx
 |       
