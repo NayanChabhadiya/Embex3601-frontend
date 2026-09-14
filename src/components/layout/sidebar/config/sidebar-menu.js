@@ -6,7 +6,30 @@ export const SIDEBAR_MENU = [
     path: "/",
     icon: "dashboard",
   },
-
+  {
+    key: "platform-admin",
+    type: "group",
+    label: "Platform Administration",
+    access: "platform-admin",
+    children: [
+      {
+        key: "platform-admin-dashboard",
+        type: "item",
+        label: "Platform Dashboard",
+        path: "/platform-admin",
+        icon: "dashboard",
+        access: "platform-admin",
+      },
+      {
+        key: "subscription-plan",
+        type: "item",
+        label: "Subscription Plan",
+        path: "/subscription-plan",
+        icon: "dashboard",
+        access: "platform-admin",
+      },
+    ],
+  },
   {
     key: "masters",
     type: "group",
@@ -69,22 +92,6 @@ export const SIDEBAR_MENU = [
         label: "Purchase Orders",
         path: "/purchase-orders",
         icon: "purchases",
-      },
-    ],
-  },
-  {
-    key: "platform-admin",
-    type: "group",
-    label: "Platform Administration",
-    access: "platform-admin",
-    children: [
-      {
-        key: "platform-admin-dashboard",
-        type: "item",
-        label: "Platform Dashboard",
-        path: "/platform-admin",
-        icon: "dashboard",
-        access: "platform-admin",
       },
     ],
   },

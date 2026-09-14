@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import SidebarHeader from "./components/SidebarHeader";
 import SidebarFooter from "./components/SidebarFooter";
 import "./sidebar.scss";
@@ -13,7 +13,10 @@ import { filterSidebarMenu } from "./utils/filter-sidebar-menu";
 function Sidebar() {
   const isPlatformAdmin = useSelector(selectIsPlatformAdmin);
 
-  const menuItems = filterSidebarMenu(SIDEBAR_MENU, [], isPlatformAdmin);
+  const menuItems = useMemo(
+    () => filterSidebarMenu(SIDEBAR_MENU, [], isPlatformAdmin),
+    [isPlatformAdmin],
+  );
   const location = useLocation();
 
   const [openSections, setOpenSections] = useState(() =>
@@ -32,23 +35,16 @@ function Sidebar() {
   };
 
   useEffect(() => {
-    const activeSections = menuItems
-      .filter(
-        (item) =>
-          item.children?.length &&
-          isSidebarSectionActive(item.children, location.pathname),
-      )
-      .map((item) => item.key);
+    setOpenSections((current) => {
+      const next = Object.fromEntries(
+        menuItems
+          .filter((item) => item.children?.length)
+          .map((item) => [item.key, current[item.key] ?? true]),
+      );
 
-    if (activeSections.length === 0) {
-      return;
-    }
-
-    setOpenSections((current) => ({
-      ...current,
-      ...Object.fromEntries(activeSections.map((key) => [key, true])),
-    }));
-  }, [location.pathname, menuItems]);
+      return next;
+    });
+  }, [menuItems]);
   return (
     <aside className="app-sidebar">
       <SidebarHeader />

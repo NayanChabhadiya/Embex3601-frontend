@@ -1,0 +1,272 @@
+.platform-admin-dashboard {
+  width: 100%;
+  min-width: 0;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Summary                                                                    */
+/* -------------------------------------------------------------------------- */
+
+.platform-admin-dashboard__summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Main Content                                                               */
+/* -------------------------------------------------------------------------- */
+
+.platform-admin-dashboard__content {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.65fr);
+  align-items: start;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Panel                                                                      */
+/* -------------------------------------------------------------------------- */
+
+.platform-admin-dashboard__panel {
+  min-width: 0;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Panel Header                                                               */
+/* -------------------------------------------------------------------------- */
+
+.platform-admin-dashboard__panel-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #f2f4f7;
+}
+
+.platform-admin-dashboard__panel-header > div {
+  min-width: 0;
+}
+
+.platform-admin-dashboard__panel-header h2,
+.platform-admin-dashboard__scope-header h2 {
+  margin: 0;
+  color: #101828;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.platform-admin-dashboard__panel-header p,
+.platform-admin-dashboard__scope-header p {
+  margin: 5px 0 0;
+  color: #667085;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Administration Status                                                     */
+/* -------------------------------------------------------------------------- */
+
+.platform-admin-dashboard__status-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.platform-admin-dashboard__status-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 13px 0;
+  border-bottom: 1px solid #f2f4f7;
+}
+
+.platform-admin-dashboard__status-item:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.platform-admin-dashboard__status-item > div {
+  min-width: 0;
+}
+
+.platform-admin-dashboard__status-item > div > span {
+  display: block;
+  margin-bottom: 4px;
+  color: #667085;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.platform-admin-dashboard__status-item strong {
+  display: block;
+  overflow: hidden;
+  color: #101828;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Administrator Identity                                                     */
+/* -------------------------------------------------------------------------- */
+
+.platform-admin-dashboard__identity {
+  display: flex;
+  flex-direction: column;
+}
+
+.platform-admin-dashboard__identity-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 14px 0;
+  border-bottom: 1px solid #f2f4f7;
+}
+
+.platform-admin-dashboard__identity-item:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.platform-admin-dashboard__identity-item span {
+  color: #667085;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.platform-admin-dashboard__identity-item strong {
+  color: #101828;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Platform Administration Scope                                             */
+/* -------------------------------------------------------------------------- */
+
+.platform-admin-dashboard__scope {
+  margin-top: 20px;
+}
+
+.platform-admin-dashboard__scope-header {
+  padding-bottom: 14px;
+  border-bottom: 1px solid #f2f4f7;
+}
+
+.platform-admin-dashboard__scope-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin-top: 16px;
+  overflow: hidden;
+  border: 1px solid #eaecf0;
+  border-radius: 8px;
+  background: #eaecf0;
+}
+
+.platform-admin-dashboard__scope-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  min-width: 0;
+  padding: 16px;
+  background: #ffffff;
+}
+
+.platform-admin-dashboard__scope-indicator {
+  flex: 0 0 8px;
+  width: 8px;
+  height: 8px;
+  margin-top: 5px;
+  border-radius: 50%;
+  background: #2e90fa;
+}
+
+.platform-admin-dashboard__scope-item > div {
+  min-width: 0;
+}
+
+.platform-admin-dashboard__scope-item strong {
+  display: block;
+  color: #101828;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.platform-admin-dashboard__scope-item p {
+  margin: 4px 0 0;
+  color: #667085;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Loading / Empty State                                                      */
+/* -------------------------------------------------------------------------- */
+
+.platform-admin-dashboard__state {
+  margin-top: 24px;
+}
+
+.platform-admin-dashboard__state h2 {
+  margin: 0 0 8px;
+  color: #101828;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.platform-admin-dashboard__state p {
+  margin: 0;
+  color: #667085;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Responsive                                                                 */
+/* -------------------------------------------------------------------------- */
+
+@media (max-width: 1200px) {
+  .platform-admin-dashboard__summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .platform-admin-dashboard__content {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .platform-admin-dashboard__summary {
+    grid-template-columns: 1fr;
+  }
+
+  .platform-admin-dashboard__scope-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .platform-admin-dashboard__panel-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .platform-admin-dashboard__status-item {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

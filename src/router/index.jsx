@@ -9,6 +9,8 @@ import AppLayout from "../components/layout/AppLayout";
 import PublicRoutes from "./PublicRoutes";
 import ProtectedRoutes from "./ProtectedRoutes";
 import PlatformAdminRoute from "./PlatformAdminRoute";
+import PlatformAdminDashboard from "../modules/platform-admin/pages/dashboard/PlatformAdminDashboard";
+import { SubscriptionPlan } from "../modules/subscription-plan";
 
 const router = createBrowserRouter([
   {
@@ -37,7 +39,11 @@ const router = createBrowserRouter([
             children: [
               {
                 path: "/platform-admin",
-                element: <Dashboard />,
+                element: <PlatformAdminDashboard />,
+              },
+              {
+                path: "/subscription-plan",
+                element: <SubscriptionPlan />,
               },
             ],
           },
