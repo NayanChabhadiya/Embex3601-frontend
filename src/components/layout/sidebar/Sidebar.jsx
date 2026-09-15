@@ -82,7 +82,7 @@ function Sidebar() {
                       <NavLink
                         key={child.key}
                         to={child.path}
-                        end={child.path === "/"}
+                        end
                         className={({ isActive }) =>
                           `app-sidebar__menu-item ${
                             isActive ? "app-sidebar__menu-item--active" : ""

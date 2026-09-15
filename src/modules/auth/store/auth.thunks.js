@@ -38,7 +38,6 @@ export const initializeSession = createAsyncThunk(
 
     try {
       const response = await refreshTokenRequest();
-
       const auth = getAuthData(response);
       const accessToken = getAccessToken(auth);
 
@@ -76,6 +75,13 @@ export const initializeSession = createAsyncThunk(
 
       return null;
     }
+  },
+  {
+    condition: (_, { getState }) => {
+      const status = getState().auth?.status;
+
+      return status !== "loading";
+    },
   },
 );
 

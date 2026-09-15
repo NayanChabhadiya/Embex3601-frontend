@@ -1,4 +1,3 @@
-import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
 import App from "./App";
@@ -17,13 +16,11 @@ if (!rootElement) {
 }
 
 createRoot(rootElement).render(
-  <StrictMode>
-    <Provider store={store}>
-      <ToastProvider>
-        <LoaderProvider>
-          <App />
-        </LoaderProvider>
-      </ToastProvider>
-    </Provider>
-  </StrictMode>,
+  <Provider store={store}>
+    <ToastProvider>
+      <LoaderProvider>
+        <App />
+      </LoaderProvider>
+    </ToastProvider>
+  </Provider>,
 );

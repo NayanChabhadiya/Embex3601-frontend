@@ -6,6 +6,11 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   
 +---components
 |   +---common
+|   |   +---badge
+|   |   |       Badge.jsx
+|   |   |       badge.scss
+|   |   |       index.js
+|   |   |       
 |   |   +---button
 |   |   |       Button.jsx
 |   |   |       button.scss
@@ -142,6 +147,7 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   |   |       auth.service.js
 |   |   |       
 |   |   \---store
+|   |           auth.selectors.js
 |   |           auth.slice.js
 |   |           auth.thunks.js
 |   |           
@@ -153,14 +159,33 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   |               index.js
 |   |               
 |   +---platform-admin
+|   |   +---pages
+|   |   |   \---dashboard
+|   |   |           platform-admin-dashboard.scss
+|   |   |           PlatformAdminDashboard.jsx
+|   |   |           
 |   |   +---services
 |   |   |       platform-admin.service.js
 |   |   |       
-|   |   \---store
-|   |           platform-admin.selectors.js
-|   |           platform-admin.slice.js
-|   |           platform-admin.thunks.js
-|   |           
+|   |   +---store
+|   |   |       platform-admin.selectors.js
+|   |   |       platform-admin.slice.js
+|   |   |       platform-admin.thunks.js
+|   |   |       
+|   |   \---subscription-plans
+|   |       +---pages
+|   |       |   \---list
+|   |       |           index.js
+|   |       |           SubscriptionPlanListPage.jsx
+|   |       |           
+|   |       +---services
+|   |       |       subscription-plan.service.js
+|   |       |       
+|   |       \---store
+|   |               subscription-plan.selectors.js
+|   |               subscription-plan.slice.js
+|   |               subscription-plan.thunks.js
+|   |               
 |   \---public
 |       \---pages
 |           \---not-found
