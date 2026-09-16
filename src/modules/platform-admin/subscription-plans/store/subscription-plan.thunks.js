@@ -26,3 +26,37 @@ export const fetchSubscriptionPlans = createAsyncThunk(
     },
   },
 );
+
+export const fetchSubscriptionPlanById = createAsyncThunk(
+  "subscriptionPlans/fetchById",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response =
+        await subscriptionPlanService.getSubscriptionPlanById(id);
+
+      return response.data?.data ?? null;
+    } catch (error) {
+      return rejectWithValue(
+        error?.response?.data?.message ?? "Unable to fetch subscription plan.",
+      );
+    }
+  },
+);
+
+export const updateSubscriptionPlan = createAsyncThunk(
+  "subscriptionPlans/update",
+  async ({ id, payload }, { rejectWithValue }) => {
+    try {
+      const response = await subscriptionPlanService.updateSubscriptionPlan(
+        id,
+        payload,
+      );
+
+      return response.data?.data ?? null;
+    } catch (error) {
+      return rejectWithValue(
+        error?.response?.data?.message ?? "Unable to update subscription plan.",
+      );
+    }
+  },
+);

@@ -61,10 +61,19 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   |   |   |       Input.jsx
 |   |   |   |       input.scss
 |   |   |   |       
-|   |   |   \---select
+|   |   |   +---multi-select
+|   |   |   |       multi-select.scss
+|   |   |   |       MultiSelect.jsx
+|   |   |   |       
+|   |   |   +---select
+|   |   |   |       index.js
+|   |   |   |       Select.jsx
+|   |   |   |       select.scss
+|   |   |   |       
+|   |   |   \---textarea
 |   |   |           index.js
-|   |   |           Select.jsx
-|   |   |           select.scss
+|   |   |           Textarea.jsx
+|   |   |           textarea.scss
 |   |   |           
 |   |   +---grid
 |   |   |       Grid.jsx
@@ -159,6 +168,15 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   |               index.js
 |   |               
 |   +---platform-admin
+|   |   +---features
+|   |   |   +---services
+|   |   |   |       feature.service.js
+|   |   |   |       
+|   |   |   \---store
+|   |   |           feature.selectors.js
+|   |   |           feature.slice.js
+|   |   |           feature.thunks.js
+|   |   |           
 |   |   +---pages
 |   |   |   \---dashboard
 |   |   |           platform-admin-dashboard.scss
@@ -173,15 +191,26 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   |   |       platform-admin.thunks.js
 |   |   |       
 |   |   \---subscription-plans
+|   |       |   SubscriptionPlanPage.jsx
+|   |       |   
+|   |       +---components
+|   |       |       SubscriptionPlanForm.jsx
+|   |       |       
 |   |       +---pages
-|   |       |   \---list
-|   |       |           index.js
-|   |       |           SubscriptionPlanListPage.jsx
+|   |       |   +---details
+|   |       |   |       SubscriptionPlanDetailsPage.jsx
+|   |       |   |       
+|   |       |   \---edit
+|   |       |           SubscriptionPlanEditPage.jsx
 |   |       |           
 |   |       +---services
+|   |       |       plan-feature.service.js
 |   |       |       subscription-plan.service.js
 |   |       |       
 |   |       \---store
+|   |               plan-feature.selectors.js
+|   |               plan-feature.slice.js
+|   |               plan-feature.thunks.js
 |   |               subscription-plan.selectors.js
 |   |               subscription-plan.slice.js
 |   |               subscription-plan.thunks.js
@@ -207,6 +236,9 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 +---store
 |       index.js
 |       
-\---styles
-        main.scss
++---styles
+|       main.scss
+|       
+\---utils
+        formatLabel.js
         

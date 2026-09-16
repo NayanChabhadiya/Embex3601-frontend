@@ -1,5 +1,6 @@
 export { default as Checkbox } from "./checkbox/Checkbox";
 export { default as Input } from "./input/Input";
+export { default as Textarea } from "./textarea/Textarea";
 export { default as FormSection } from "./form-section/FormSection";
 export { default as FormGrid } from "./form-grid/FormGrid";
 export { default as FormActions } from "./form-actions/FormActions";

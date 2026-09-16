@@ -1,3 +1,5 @@
+// Get All
+
 const selectSubscriptionPlanState = (state) => state.subscriptionPlans;
 
 export const selectSubscriptionPlans = (state) =>
@@ -17,3 +19,20 @@ export const selectSubscriptionPlansLoaded = (state) =>
 
 export const selectSubscriptionPlansMeta = (state) =>
   selectSubscriptionPlanState(state).meta;
+
+// Get By Id
+
+export const selectSelectedSubscriptionPlan = (state) =>
+  selectSubscriptionPlanState(state).selectedPlan;
+
+export const selectSelectedSubscriptionPlanStatus = (state) =>
+  selectSubscriptionPlanState(state).selectedPlanStatus;
+
+export const selectSelectedSubscriptionPlanError = (state) =>
+  selectSubscriptionPlanState(state).selectedPlanError;
+
+export const selectSubscriptionPlanUpdateStatus = (state) =>
+  selectSubscriptionPlanState(state).updateStatus;
+
+export const selectSubscriptionPlanUpdateError = (state) =>
+  selectSubscriptionPlanState(state).updateError;

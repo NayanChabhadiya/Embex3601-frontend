@@ -1,33 +1,73 @@
 .form-select {
+  display: block;
   width: 100%;
   min-height: 40px;
-
   padding: 8px 12px;
-
   color: #101828;
   background: #ffffff;
-
   border: 1px solid #d0d5dd;
   border-radius: 8px;
-
+  font-family: inherit;
   font-size: 14px;
+  font-weight: 400;
   line-height: 20px;
-
   outline: none;
-
+  cursor: pointer;
   transition:
     border-color 0.15s ease,
     box-shadow 0.15s ease;
+
+  &:focus {
+    border-color: #84adff;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    background: #f2f4f7;
+    color: #98a2b3;
+  }
+
+  &--error {
+    border-color: #dc2626;
+
+    &:focus {
+      border-color: #dc2626;
+      box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+    }
+  }
 }
 
-.form-select:focus {
-  border-color: #84adff;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+.form-select__required {
+  margin-left: 3px;
+  color: #dc2626;
 }
 
-.form-select:disabled {
-  cursor: not-allowed;
+.form-select__error {
+  display: block;
+  margin-top: 5px;
+  color: #dc2626;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+}
 
-  background: #f2f4f7;
-  color: #98a2b3;
+label {
+  display: block;
+  margin-bottom: 7px;
+  color: #344054;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+@media (max-width: 640px) {
+  .form-select {
+    min-height: 40px;
+    font-size: 14px;
+  }
+
+  label {
+    font-size: 12px;
+  }
 }

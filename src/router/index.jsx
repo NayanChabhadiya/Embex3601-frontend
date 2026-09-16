@@ -10,7 +10,9 @@ import PublicRoutes from "./PublicRoutes";
 import ProtectedRoutes from "./ProtectedRoutes";
 import PlatformAdminRoute from "./PlatformAdminRoute";
 import PlatformAdminDashboard from "../modules/platform-admin/pages/dashboard/PlatformAdminDashboard";
-import { SubscriptionPlanListPage } from "../modules/platform-admin/subscription-plans/pages/list";
+import SubscriptionPlanDetailsPage from "../modules/platform-admin/subscription-plans/pages/details/SubscriptionPlanDetailsPage";
+import SubscriptionPlanEditPage from "../modules/platform-admin/subscription-plans/pages/edit/SubscriptionPlanEditPage";
+import SubscriptionPlanPage from "../modules/platform-admin/subscription-plans/SubscriptionPlanPage";
 
 const router = createBrowserRouter([
   {
@@ -43,7 +45,15 @@ const router = createBrowserRouter([
               },
               {
                 path: "/platform-admin/subscription-plans",
-                element: <SubscriptionPlanListPage />,
+                element: <SubscriptionPlanPage />,
+              },
+              {
+                path: "/platform-admin/subscription-plans/:id",
+                element: <SubscriptionPlanDetailsPage />,
+              },
+              {
+                path: "/platform-admin/subscription-plans/:id/edit",
+                element: <SubscriptionPlanEditPage />,
               },
             ],
           },

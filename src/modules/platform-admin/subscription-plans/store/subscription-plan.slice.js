@@ -1,6 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { fetchSubscriptionPlans } from "./subscription-plan.thunks.js";
+import {
+  fetchSubscriptionPlans,
+  fetchSubscriptionPlanById,
+  updateSubscriptionPlan,
+} from "./subscription-plan.thunks.js";
 
 const initialState = Object.freeze({
   plans: [],
@@ -8,6 +12,13 @@ const initialState = Object.freeze({
   status: "idle",
   error: null,
   currentRequestId: null,
+
+  selectedPlan: null,
+  selectedPlanStatus: "idle",
+  selectedPlanError: null,
+
+  updateStatus: "idle",
+  updateError: null,
 });
 
 const subscriptionPlanSlice = createSlice({
@@ -20,6 +31,10 @@ const subscriptionPlanSlice = createSlice({
       state.status = "idle";
       state.error = null;
       state.currentRequestId = null;
+
+      state.selectedPlan = null;
+      state.selectedPlanStatus = "idle";
+      state.selectedPlanError = null;
     },
 
     clearSubscriptionPlanError(state) {
@@ -57,6 +72,40 @@ const subscriptionPlanSlice = createSlice({
         state.meta = null;
         state.error = action.payload ?? "Unable to fetch subscription plans.";
         state.currentRequestId = null;
+      })
+
+      .addCase(fetchSubscriptionPlanById.pending, (state) => {
+        state.selectedPlanStatus = "loading";
+        state.selectedPlanError = null;
+      })
+      .addCase(fetchSubscriptionPlanById.fulfilled, (state, action) => {
+        state.selectedPlanStatus = "succeeded";
+        state.selectedPlan = action.payload ?? null;
+        state.selectedPlanError = null;
+      })
+      .addCase(fetchSubscriptionPlanById.rejected, (state, action) => {
+        state.selectedPlanStatus = "failed";
+        state.selectedPlan = null;
+        state.selectedPlanError =
+          action.payload ?? "Unable to fetch subscription plan.";
+      })
+
+      .addCase(updateSubscriptionPlan.pending, (state) => {
+        state.updateStatus = "loading";
+        state.updateError = null;
+      })
+      .addCase(updateSubscriptionPlan.fulfilled, (state, action) => {
+        state.updateStatus = "succeeded";
+        state.updateError = null;
+
+        if (action.payload) {
+          state.selectedPlan = action.payload;
+        }
+      })
+      .addCase(updateSubscriptionPlan.rejected, (state, action) => {
+        state.updateStatus = "failed";
+        state.updateError =
+          action.payload ?? "Unable to update subscription plan.";
       });
   },
 });

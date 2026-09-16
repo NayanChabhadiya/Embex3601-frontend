@@ -5,9 +5,28 @@ const API_ENDPOINTS = Object.freeze({
     LOGOUT: "/auth/logout",
     LOGOUT_ALL: "/auth/logout-all",
   }),
+
   PLATFORM_ADMIN: Object.freeze({
     ACCESS: "/platform-admin/access",
   }),
+
+  FEATURES: Object.freeze({
+    LIST: "/features",
+  }),
+
+  PLAN_FEATURES: Object.freeze({
+    LIST: (subscriptionPlanId) =>
+      `/subscription-plans/${subscriptionPlanId}/features`,
+    CREATE: (subscriptionPlanId) =>
+      `/subscription-plans/${subscriptionPlanId}/features`,
+    BY_FEATURE_ID: (subscriptionPlanId, featureId) =>
+      `/subscription-plans/${subscriptionPlanId}/features/${featureId}`,
+    UPDATE: (subscriptionPlanId, featureId) =>
+      `/subscription-plans/${subscriptionPlanId}/features/${featureId}`,
+    DELETE: (subscriptionPlanId, featureId) =>
+      `/subscription-plans/${subscriptionPlanId}/features/${featureId}`,
+  }),
+
   SUBSCRIPTION_PLANS: Object.freeze({
     LIST: "/subscription-plans",
     ACTIVE: "/subscription-plans/active",
