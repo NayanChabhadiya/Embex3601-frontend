@@ -7,3 +7,4 @@ export { default as FormActions } from "./form-actions/FormActions";
 export { default as FormCard } from "./form-card/FormCard";
 export { default as FormField } from "./form-field/FormField";
 export { default as Select } from "./select/Select";
+export { default as MultiSelect } from "./multi-select/MultiSelect";
