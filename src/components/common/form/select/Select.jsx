@@ -19,6 +19,7 @@ function Select({
   const [search, setSearch] = useState("");
 
   const containerRef = useRef(null);
+  const inputRef = useRef(null);
 
   const selectedOption = options.find(
     (option) => String(option.value) === String(value),
@@ -56,85 +57,112 @@ function Select({
     };
   }, []);
 
-  const handleToggle = () => {
-    if (disabled) {
-      return;
-    }
+  const handleOpen = () => {
+    if (disabled) return;
 
-    setIsOpen((current) => !current);
+    setIsOpen(true);
 
-    if (isOpen) {
-      setSearch("");
-    }
+    requestAnimationFrame(() => {
+      inputRef.current?.focus();
+    });
   };
 
-  const handleSelectOption = (optionValue) => {
+  const handleSelectOption = (option) => {
     onChange({
       target: {
         name,
-        value: optionValue,
+        value: option.value,
       },
     });
 
-    setIsOpen(false);
     setSearch("");
+    setIsOpen(false);
 
-    if (onBlur) {
-      onBlur();
+    onBlur?.();
+  };
+
+  const handleInputChange = (event) => {
+    setSearch(event.target.value);
+    setIsOpen(true);
+  };
+
+  const handleInputFocus = () => {
+    if (disabled) return;
+
+    setIsOpen(true);
+  };
+
+  const handleKeyDown = (event) => {
+    if (disabled) return;
+
+    if (event.key === "Escape") {
+      setIsOpen(false);
+      setSearch("");
+      return;
+    }
+
+    if (event.key === "ArrowDown") {
+      event.preventDefault();
+      setIsOpen(true);
     }
   };
 
   return (
     <div
       ref={containerRef}
-      className={`form-select-wrapper ${
-        error ? "form-select-wrapper--error" : ""
-      }`}
+      className={`form-select ${error ? "form-select--error" : ""}`}
     >
       {label && (
         <label htmlFor={id || name}>
           {label}
-          {required && <span className="form-select-wrapper__required">*</span>}
+          {required && <span className="form-select__required">*</span>}
         </label>
       )}
 
-      <button
-        type="button"
-        id={id || name}
-        className="form-select__control"
-        onClick={handleToggle}
-        disabled={disabled}
-        aria-expanded={isOpen}
-        aria-haspopup="listbox"
-      >
-        <span
-          className={
-            selectedOption ? "form-select__value" : "form-select__placeholder"
-          }
-        >
-          {selectedOption?.label || placeholder}
-        </span>
+      <div className="form-select__wrapper">
+        <input
+          ref={inputRef}
+          id={id || name}
+          name={name}
+          type="text"
+          value={isOpen ? search : (selectedOption?.label ?? "")}
+          placeholder={placeholder}
+          disabled={disabled}
+          autoComplete="off"
+          className="form-select__input"
+          aria-invalid={Boolean(error)}
+          aria-expanded={isOpen}
+          aria-haspopup="listbox"
+          onClick={handleOpen}
+          onFocus={handleInputFocus}
+          onChange={handleInputChange}
+          onBlur={() => {
+            setTimeout(() => {
+              if (!containerRef.current?.contains(document.activeElement)) {
+                setIsOpen(false);
+                setSearch("");
+                onBlur?.();
+              }
+            }, 0);
+          }}
+          onKeyDown={handleKeyDown}
+        />
 
-        <span className="form-select__arrow">{isOpen ? "▲" : "▼"}</span>
-      </button>
+        <button
+          type="button"
+          className="form-select__arrow"
+          onClick={handleOpen}
+          disabled={disabled}
+          tabIndex={-1}
+          aria-label="Open select"
+        >
+          {isOpen ? "▲" : "▼"}
+        </button>
+      </div>
 
       {isOpen && (
         <div className="form-select__dropdown">
-          <div className="form-select__search">
-            <input
-              type="text"
-              value={search}
-              onChange={(event) => setSearch(event.target.value)}
-              placeholder={searchPlaceholder}
-              autoFocus
-            />
-          </div>
-
-          <div
-            className="form-select__options"
-            role="listbox"
-            aria-label={label || name}
-          >
+          <div className="form-select__options" role="listbox">
             {filteredOptions.length > 0 ? (
               filteredOptions.map((option) => {
                 const isSelected = String(option.value) === String(value);
@@ -143,10 +171,15 @@ function Select({
                   <button
                     key={option.value}
                     type="button"
+                    role="option"
+                    aria-selected={isSelected}
                     className={`form-select__option ${
                       isSelected ? "form-select__option--selected" : ""
                     }`}
-                    onClick={() => handleSelectOption(option.value)}
+                    onMouseDown={(event) => {
+                      event.preventDefault();
+                    }}
+                    onClick={() => handleSelectOption(option)}
                   >
                     <span>
                       <strong>{option.label}</strong>

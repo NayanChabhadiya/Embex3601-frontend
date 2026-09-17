@@ -340,7 +340,7 @@ function SubscriptionPlanPage() {
             </p>
           </div>
         ) : modalType === "edit" && planData ? (
-          <Grid columns={4} gap={16}>
+          <Grid columns={3} gap={16}>
             <Input
               label="Plan Name"
               name="name"

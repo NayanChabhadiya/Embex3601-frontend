@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-
 import "./multi-select.scss";
 
 function MultiSelect({
@@ -10,7 +9,7 @@ function MultiSelect({
   onChange,
   options = [],
   placeholder = "Select options",
-  searchPlaceholder = "Search...",
+  searchPlaceholder = "Select options",
   error,
   required = false,
   disabled = false,
@@ -19,6 +18,7 @@ function MultiSelect({
   const [search, setSearch] = useState("");
 
   const containerRef = useRef(null);
+  const inputRef = useRef(null);
 
   const selectedValues = Array.isArray(value) ? value : [];
 
@@ -29,12 +29,20 @@ function MultiSelect({
       return options;
     }
 
-    return options.filter((option) =>
-      String(option.label ?? "")
-        .toLowerCase()
-        .includes(searchValue),
-    );
+    return options.filter((option) => {
+      const labelValue = String(option.label ?? "").toLowerCase();
+      const descriptionValue = String(option.description ?? "").toLowerCase();
+
+      return (
+        labelValue.includes(searchValue) ||
+        descriptionValue.includes(searchValue)
+      );
+    });
   }, [options, search]);
+
+  const selectedOptions = options.filter((option) =>
+    selectedValues.includes(option.value),
+  );
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
@@ -43,6 +51,7 @@ function MultiSelect({
         !containerRef.current.contains(event.target)
       ) {
         setIsOpen(false);
+        setSearch("");
       }
     };
 
@@ -52,6 +61,18 @@ function MultiSelect({
       document.removeEventListener("mousedown", handleOutsideClick);
     };
   }, []);
+
+  const handleOpen = () => {
+    if (disabled) {
+      return;
+    }
+
+    setIsOpen(true);
+
+    requestAnimationFrame(() => {
+      inputRef.current?.focus();
+    });
+  };
 
   const handleToggleOption = (optionValue) => {
     if (selectedValues.includes(optionValue)) {
@@ -63,6 +84,12 @@ function MultiSelect({
     }
 
     onChange([...selectedValues, optionValue]);
+
+    setSearch("");
+
+    requestAnimationFrame(() => {
+      inputRef.current?.focus();
+    });
   };
 
   const handleRemoveOption = (optionValue) => {
@@ -71,9 +98,33 @@ function MultiSelect({
     );
   };
 
-  const selectedOptions = options.filter((option) =>
-    selectedValues.includes(option.value),
-  );
+  const handleSearchChange = (event) => {
+    const value = event.target.value;
+
+    setSearch(value);
+
+    if (!isOpen) {
+      setIsOpen(true);
+    }
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Escape") {
+      setIsOpen(false);
+      setSearch("");
+      return;
+    }
+
+    if (
+      event.key === "Backspace" &&
+      search === "" &&
+      selectedValues.length > 0
+    ) {
+      const lastSelectedValue = selectedValues[selectedValues.length - 1];
+
+      handleRemoveOption(lastSelectedValue);
+    }
+  };
 
   return (
     <div
@@ -83,66 +134,80 @@ function MultiSelect({
       {label && (
         <label htmlFor={id || name}>
           {label}
+
           {required && <span className="multi-select__required">*</span>}
         </label>
       )}
 
-      <button
-        type="button"
-        id={id || name}
-        className="multi-select__control"
-        onClick={() => !disabled && setIsOpen((current) => !current)}
-        disabled={disabled}
+      <div
+        className={`multi-select__control ${
+          isOpen ? "multi-select__control--open" : ""
+        } ${disabled ? "multi-select__control--disabled" : ""}`}
+        onClick={handleOpen}
+        role="combobox"
         aria-expanded={isOpen}
         aria-haspopup="listbox"
+        aria-controls={`${id || name}-listbox`}
       >
         <div className="multi-select__value">
-          {selectedOptions.length > 0 ? (
-            selectedOptions.map((option) => (
-              <span key={option.value} className="multi-select__tag">
-                {option.label}
+          {selectedOptions.map((option) => (
+            <span key={option.value} className="multi-select__tag">
+              <span className="multi-select__tag-label">{option.label}</span>
 
-                <span
-                  role="button"
-                  tabIndex={0}
-                  className="multi-select__tag-remove"
-                  onClick={(event) => {
-                    event.stopPropagation();
+              <button
+                type="button"
+                className="multi-select__tag-remove"
+                onClick={(event) => {
+                  event.stopPropagation();
+
+                  if (!disabled) {
                     handleRemoveOption(option.value);
-                  }}
-                  onKeyDown={(event) => {
-                    if (event.key === "Enter" || event.key === " ") {
-                      event.preventDefault();
-                      event.stopPropagation();
-                      handleRemoveOption(option.value);
-                    }
-                  }}
-                  aria-label={`Remove ${option.label}`}
-                >
-                  ×
-                </span>
-              </span>
-            ))
-          ) : (
-            <span className="multi-select__placeholder">{placeholder}</span>
-          )}
+                  }
+                }}
+                disabled={disabled}
+                aria-label={`Remove ${option.label}`}
+              >
+                ×
+              </button>
+            </span>
+          ))}
+
+          <input
+            ref={inputRef}
+            id={id || name}
+            name={name}
+            type="text"
+            value={search}
+            onChange={handleSearchChange}
+            onFocus={() => {
+              if (!disabled) {
+                setIsOpen(true);
+              }
+            }}
+            onKeyDown={handleKeyDown}
+            placeholder={
+              selectedOptions.length === 0
+                ? placeholder || searchPlaceholder
+                : ""
+            }
+            disabled={disabled}
+            autoComplete="off"
+            className="multi-select__input"
+            aria-autocomplete="list"
+          />
         </div>
 
-        <span className="multi-select__arrow">{isOpen ? "▲" : "▼"}</span>
-      </button>
+        <span
+          className={`multi-select__arrow ${
+            isOpen ? "multi-select__arrow--open" : ""
+          }`}
+        >
+          {isOpen ? "▲" : "▼"}
+        </span>
+      </div>
 
-      {isOpen && (
-        <div className="multi-select__dropdown">
-          <div className="multi-select__search">
-            <input
-              type="text"
-              value={search}
-              onChange={(event) => setSearch(event.target.value)}
-              placeholder={searchPlaceholder}
-              autoFocus
-            />
-          </div>
-
+      {isOpen && !disabled && (
+        <div className="multi-select__dropdown" id={`${id || name}-listbox`}>
           <div
             className="multi-select__options"
             role="listbox"
@@ -165,7 +230,7 @@ function MultiSelect({
                       {isSelected ? "✓" : ""}
                     </span>
 
-                    <span>
+                    <span className="multi-select__option-content">
                       <strong>{option.label}</strong>
 
                       {option.description && (
