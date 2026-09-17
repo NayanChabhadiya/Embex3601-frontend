@@ -9,6 +9,7 @@ import {
   Input,
   MultiSelect,
   Select,
+  Textarea,
 } from "../../../components/common/form/index.js";
 
 import {
@@ -27,6 +28,7 @@ import {
 } from "./store/subscription-plan.selectors.js";
 import { selectFeatures } from "../features/store/feature.selectors.js";
 import { Button } from "../../../components/common/index.js";
+import GridItem from "../../../components/common/grid/GridItem.jsx";
 
 function SubscriptionPlanPage() {
   const dispatch = useDispatch();
@@ -340,135 +342,175 @@ function SubscriptionPlanPage() {
             </p>
           </div>
         ) : modalType === "edit" && planData ? (
-          <Grid columns={3} gap={16}>
-            <Input
-              label="Plan Name"
-              name="name"
-              type="text"
-              placeholder="Enter plan name"
-              value={planData.name}
-              onChange={handleChangePlanData}
-              required
-            />
+          <Grid columns={4} gap={16}>
+            <GridItem>
+              <Input
+                label="Plan Name"
+                name="name"
+                type="text"
+                placeholder="Enter plan name"
+                value={planData.name}
+                onChange={handleChangePlanData}
+                required
+              />
+            </GridItem>
 
-            <Input
-              label="Plan Code"
-              name="code"
-              type="text"
-              placeholder="Enter plan code"
-              value={planData.code}
-              onChange={handleChangePlanData}
-              required
-            />
+            <GridItem>
+              <Input
+                label="Plan Code"
+                name="code"
+                type="text"
+                placeholder="Enter plan code"
+                value={planData.code}
+                onChange={handleChangePlanData}
+                required
+              />
+            </GridItem>
 
-            <Input
-              label="Price"
-              name="price"
-              type="number"
-              placeholder="Enter price"
-              value={planData.price}
-              onChange={handleChangePlanData}
-              required
-            />
+            <GridItem>
+              <Input
+                label="Price"
+                name="price"
+                type="number"
+                placeholder="Enter price"
+                value={planData.price}
+                onChange={handleChangePlanData}
+                required
+              />
+            </GridItem>
 
-            <Input
-              label="Currency"
-              name="currency"
-              type="text"
-              placeholder="INR"
-              value={planData.currency}
-              onChange={handleChangePlanData}
-              required
-            />
-            <Input
-              label="Description"
-              name="description"
-              type="text"
-              placeholder="Enter plan description"
-              value={planData.description}
-              onChange={handleChangePlanData}
-            />
+            <GridItem>
+              <Select
+                label="Currency"
+                name="currency"
+                value={planData.currency}
+                onChange={handleChangePlanData}
+                placeholder="Select currency"
+                options={[
+                  { value: "INR", label: "INR - Indian Rupee" },
+                  { value: "USD", label: "USD - US Dollar" },
+                  { value: "EUR", label: "EUR - Euro" },
+                ]}
+                required
+              />
+            </GridItem>
 
-            <Select
-              label="Plan Type"
-              name="planType"
-              value={planData.planType}
-              onChange={handleChangePlanData}
-              placeholder="Select plan type"
-              options={[
-                { value: "FREE", label: "Free" },
-                { value: "PAID", label: "Paid" },
-                { value: "CUSTOM", label: "Custom" },
-              ]}
-              required
-            />
+            {/* Full row */}
+            <GridItem columnSpan={4}>
+              <Textarea
+                label="Description"
+                name="description"
+                placeholder="Enter plan description"
+                value={planData.description}
+                onChange={handleChangePlanData}
+                rows={4}
+              />
+            </GridItem>
 
-            <Select
-              label="Billing Interval"
-              name="billingInterval"
-              value={planData.billingInterval}
-              onChange={handleChangePlanData}
-              placeholder="Select billing interval"
-              options={[
-                { value: "MONTHLY", label: "Monthly" },
-                { value: "YEARLY", label: "Yearly" },
-              ]}
-              required
-            />
+            <GridItem>
+              <Select
+                label="Plan Type"
+                name="planType"
+                value={planData.planType}
+                onChange={handleChangePlanData}
+                placeholder="Select plan type"
+                options={[
+                  { value: "free", label: "Free" },
+                  { value: "basic", label: "Basic" },
+                  { value: "professional", label: "Professional" },
+                  { value: "business", label: "Business" },
+                  { value: "enterprise", label: "Enterprise" },
+                  { value: "custom", label: "Custom" },
+                ]}
+                required
+              />
+            </GridItem>
 
-            <Input
-              label="Trial Days"
-              name="trialDays"
-              type="number"
-              placeholder="Enter trial days"
-              value={planData.trialDays}
-              onChange={handleChangePlanData}
-            />
+            <GridItem>
+              <Select
+                label="Billing Interval"
+                name="billingInterval"
+                value={planData.billingInterval}
+                onChange={handleChangePlanData}
+                placeholder="Select billing interval"
+                options={[
+                  { value: "monthly", label: "Monthly" },
+                  { value: "quarterly", label: "Quarterly" },
+                  { value: "half_yearly", label: "Half Yearly" },
+                  { value: "yearly", label: "Yearly" },
+                  { value: "lifetime", label: "Lifetime" },
+                ]}
+                required
+              />
+            </GridItem>
 
-            <Input
-              label="Maximum Companies"
-              name="maxCompanies"
-              type="number"
-              placeholder="Enter maximum companies"
-              value={planData.maxCompanies}
-              onChange={handleChangePlanData}
-            />
+            <GridItem>
+              <Input
+                label="Trial Days"
+                name="trialDays"
+                type="number"
+                placeholder="Enter trial days"
+                value={planData.trialDays}
+                onChange={handleChangePlanData}
+              />
+            </GridItem>
 
-            <Input
-              label="Maximum Users"
-              name="maxUsers"
-              type="number"
-              placeholder="Enter maximum users"
-              value={planData.maxUsers}
-              onChange={handleChangePlanData}
-            />
+            <GridItem>
+              <Input
+                label="Maximum Companies"
+                name="maxCompanies"
+                type="number"
+                placeholder="Enter maximum companies"
+                value={planData.maxCompanies}
+                onChange={handleChangePlanData}
+              />
+            </GridItem>
 
-            <Input
-              label="Storage Limit (GB)"
-              name="storageLimitGB"
-              type="number"
-              placeholder="Enter storage limit"
-              value={planData.storageLimitGB}
-              onChange={handleChangePlanData}
-            />
+            <GridItem>
+              <Input
+                label="Maximum Users"
+                name="maxUsers"
+                type="number"
+                placeholder="Enter maximum users"
+                value={planData.maxUsers}
+                onChange={handleChangePlanData}
+              />
+            </GridItem>
 
-            <Input
-              label="Display Order"
-              name="displayOrder"
-              type="number"
-              placeholder="Enter display order"
-              value={planData.displayOrder}
-              onChange={handleChangePlanData}
-            />
-            <MultiSelect
-              label="Features"
-              name="features"
-              value={planData.features}
-              onChange={handleChangePlanFeatures}
-              options={featureOptions}
-              placeholder="Select features"
-              searchPlaceholder="Search features..."
-            />
+            <GridItem>
+              <Input
+                label="Storage Limit (GB)"
+                name="storageLimitGB"
+                type="number"
+                placeholder="Enter storage limit"
+                value={planData.storageLimitGB}
+                onChange={handleChangePlanData}
+              />
+            </GridItem>
+
+            <GridItem>
+              <Input
+                label="Display Order"
+                name="displayOrder"
+                type="number"
+                placeholder="Enter display order"
+                value={planData.displayOrder}
+                onChange={handleChangePlanData}
+              />
+            </GridItem>
+
+            {/* Full row */}
+            <GridItem columnSpan={4}>
+              <MultiSelect
+                label="Features"
+                name="features"
+                value={planData.features}
+                onChange={handleChangePlanFeatures}
+                options={featureOptions}
+                placeholder="Select features"
+                searchPlaceholder="Search features..."
+              />
+            </GridItem>
           </Grid>
         ) : modalType === "delete" && planData ? (
           <p>

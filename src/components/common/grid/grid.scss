@@ -1,22 +1,58 @@
 .grid {
-  width: 100%;
-
   display: grid;
   grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
   gap: var(--grid-gap);
+
+  width: 100%;
+
+  /*
+   * Important:
+   * Grid items must keep their own content height.
+   * They should NOT stretch vertically because another
+   * item in the same row is taller.
+   */
+  align-items: start;
+  align-content: start;
+
+  &__item {
+    width: 100%;
+    min-width: 0;
+
+    /*
+     * Prevent vertical stretching.
+     */
+    align-self: start;
+
+    /*
+     * Keep item height based on its own content.
+     */
+    height: fit-content;
+
+    grid-column: span var(--grid-column-span);
+    grid-row: span var(--grid-row-span);
+  }
 }
+
+/* -------------------------------------------------------
+   Tablet
+------------------------------------------------------- */
 
 @media (max-width: 1024px) {
   .grid {
-    grid-template-columns: repeat(
-      minmax(1, var(--grid-columns)),
-      minmax(0, 1fr)
-    );
+    grid-template-columns: repeat(min(var(--grid-columns), 2), minmax(0, 1fr));
   }
 }
+
+/* -------------------------------------------------------
+   Mobile
+------------------------------------------------------- */
 
 @media (max-width: 640px) {
   .grid {
     grid-template-columns: 1fr;
+  }
+
+  .grid__item {
+    grid-column: span 1;
   }
 }
