@@ -11,6 +11,7 @@ import ProtectedRoutes from "./ProtectedRoutes";
 import PlatformAdminRoute from "./PlatformAdminRoute";
 import PlatformAdminDashboard from "../modules/platform-admin/pages/dashboard/PlatformAdminDashboard";
 import SubscriptionPlanPage from "../modules/platform-admin/subscription-plans/SubscriptionPlanPage";
+import Features from "../modules/platform-admin/features/Features";
 
 const router = createBrowserRouter([
   {
@@ -33,13 +34,16 @@ const router = createBrowserRouter([
             path: "/",
             element: <Dashboard />,
           },
-
           {
             element: <PlatformAdminRoute />,
             children: [
               {
                 path: "/platform-admin",
                 element: <PlatformAdminDashboard />,
+              },
+              {
+                path: "/platform-admin/features",
+                element: <Features />,
               },
               {
                 path: "/platform-admin/subscription-plans",

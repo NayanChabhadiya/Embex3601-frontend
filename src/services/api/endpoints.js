@@ -12,6 +12,16 @@ const API_ENDPOINTS = Object.freeze({
 
   FEATURES: Object.freeze({
     LIST: "/features",
+
+    CREATE: "/features",
+
+    BY_ID: (id) => `/features/${id}`,
+
+    ACTIVATE: (id) => `/features/${id}/activate`,
+
+    DEACTIVATE: (id) => `/features/${id}/deactivate`,
+
+    RESTORE: (id) => `/features/${id}/restore`,
   }),
 
   PLAN_FEATURES: Object.freeze({

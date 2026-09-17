@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { fetchFeatures } from "./feature.thunks.js";
+import { fetchFeatures, updateFeature } from "./feature.thunks.js";
 
 const initialState = Object.freeze({
   features: [],
@@ -8,12 +8,31 @@ const initialState = Object.freeze({
   status: "idle",
   error: null,
   currentRequestId: null,
+
+  updateStatus: "idle",
+  updateError: null,
 });
 
 const featureSlice = createSlice({
   name: "features",
   initialState,
-  reducers: {},
+  reducers: {
+    resetFeatures(state) {
+      state.features = [];
+      state.meta = null;
+      state.status = "idle";
+      state.error = null;
+      state.currentRequestId = null;
+
+      state.selectedPlan = null;
+      state.selectedPlanStatus = "idle";
+      state.selectedPlanError = null;
+    },
+
+    clearFeaturesError(state) {
+      state.error = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchFeatures.pending, (state, action) => {
@@ -43,8 +62,26 @@ const featureSlice = createSlice({
         state.status = "failed";
         state.error = action.payload ?? "Unable to fetch features.";
         state.currentRequestId = null;
+      })
+
+      .addCase(updateFeature.pending, (state) => {
+        state.updateStatus = "loading";
+        state.updateError = null;
+      })
+      .addCase(updateFeature.fulfilled, (state, action) => {
+        state.updateStatus = "succeeded";
+        state.updateError = null;
+
+        if (action.payload) {
+          state.selectedPlan = action.payload;
+        }
+      })
+      .addCase(updateFeature.rejected, (state, action) => {
+        state.updateStatus = "failed";
+        state.updateError = action.payload ?? "Unable to update feature.";
       });
   },
 });
 
+export const { resetFeatures, clearFeaturesError } = featureSlice.actions;
 export default featureSlice.reducer;

@@ -24,7 +24,6 @@ import {
   selectSubscriptionPlansError,
   selectSubscriptionPlansMeta,
   selectSubscriptionPlanUpdateStatus,
-  selectSubscriptionPlanUpdateError,
 } from "./store/subscription-plan.selectors.js";
 import { selectFeatures } from "../features/store/feature.selectors.js";
 import { Button } from "../../../components/common/index.js";
@@ -47,7 +46,6 @@ function SubscriptionPlanPage() {
   }));
 
   const updateStatus = useSelector(selectSubscriptionPlanUpdateStatus);
-  const updateError = useSelector(selectSubscriptionPlanUpdateError);
 
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);

@@ -21,6 +21,13 @@ export const SIDEBAR_MENU = [
         access: "platform-admin",
       },
       {
+        key: "platform-admin-features",
+        label: "Features",
+        path: "/platform-admin/features",
+        icon: "credit-card",
+        access: "platform-admin",
+      },
+      {
         key: "platform-admin-subscription-plans",
         label: "Subscription Plans",
         path: "/platform-admin/subscription-plans",
