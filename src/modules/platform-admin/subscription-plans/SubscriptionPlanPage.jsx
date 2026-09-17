@@ -5,7 +5,11 @@ import PageHeader from "../../../components/layout/page/components/PageHeader.js
 import Table from "../../../components/common/table/Table.jsx";
 import Modal from "../../../components/common/modal/Modal.jsx";
 import Grid from "../../../components/common/grid/Grid.jsx";
-import { Input, MultiSelect } from "../../../components/common/form/index.js";
+import {
+  Input,
+  MultiSelect,
+  Select,
+} from "../../../components/common/form/index.js";
 
 import {
   fetchSubscriptionPlans,
@@ -385,25 +389,33 @@ function SubscriptionPlanPage() {
               onChange={handleChangePlanData}
             />
 
-            <Input
+            <Select
               label="Plan Type"
               name="planType"
-              type="text"
-              placeholder="Enter plan type"
               value={planData.planType}
               onChange={handleChangePlanData}
+              placeholder="Select plan type"
+              options={[
+                { value: "FREE", label: "Free" },
+                { value: "PAID", label: "Paid" },
+                { value: "CUSTOM", label: "Custom" },
+              ]}
               required
             />
 
-            <Input
+            <Select
               label="Billing Interval"
               name="billingInterval"
-              type="text"
-              placeholder="Enter billing interval"
               value={planData.billingInterval}
               onChange={handleChangePlanData}
+              placeholder="Select billing interval"
+              options={[
+                { value: "MONTHLY", label: "Monthly" },
+                { value: "YEARLY", label: "Yearly" },
+              ]}
               required
             />
+
             <Input
               label="Trial Days"
               name="trialDays"
