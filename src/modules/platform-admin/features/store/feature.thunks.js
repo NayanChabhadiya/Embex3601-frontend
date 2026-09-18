@@ -46,6 +46,26 @@ export const createFeature = createAsyncThunk(
 
 /**
  * =============================================================================
+ * Get Feature By ID
+ * =============================================================================
+ */
+export const getFeatureById = createAsyncThunk(
+  "features/getById",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await featureService.getFeatureById(id);
+
+      return response.data?.data ?? null;
+    } catch (error) {
+      return rejectWithValue(
+        error?.response?.data?.message ?? "Unable to fetch feature.",
+      );
+    }
+  },
+);
+
+/**
+ * =============================================================================
  * Update Feature
  * =============================================================================
  */
@@ -59,6 +79,89 @@ export const updateFeature = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(
         error?.response?.data?.message ?? "Unable to update feature.",
+      );
+    }
+  },
+);
+
+/**
+ * =============================================================================
+ * Activate Feature
+ * =============================================================================
+ */
+export const activateFeature = createAsyncThunk(
+  "features/activate",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await featureService.activateFeature(id);
+
+      return response.data?.data ?? null;
+    } catch (error) {
+      return rejectWithValue(
+        error?.response?.data?.message ?? "Unable to activate feature.",
+      );
+    }
+  },
+);
+
+/**
+ * =============================================================================
+ * Deactivate Feature
+ * =============================================================================
+ */
+export const deactivateFeature = createAsyncThunk(
+  "features/deactivate",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await featureService.deactivateFeature(id);
+
+      return response.data?.data ?? null;
+    } catch (error) {
+      return rejectWithValue(
+        error?.response?.data?.message ?? "Unable to deactivate feature.",
+      );
+    }
+  },
+);
+
+/**
+ * =============================================================================
+ * Delete Feature
+ * =============================================================================
+ */
+export const deleteFeature = createAsyncThunk(
+  "features/delete",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await featureService.deleteFeature(id);
+
+      return {
+        id,
+        data: response.data?.data ?? null,
+      };
+    } catch (error) {
+      return rejectWithValue(
+        error?.response?.data?.message ?? "Unable to delete feature.",
+      );
+    }
+  },
+);
+
+/**
+ * =============================================================================
+ * Restore Feature
+ * =============================================================================
+ */
+export const restoreFeature = createAsyncThunk(
+  "features/restore",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await featureService.restoreFeature(id);
+
+      return response.data?.data ?? null;
+    } catch (error) {
+      return rejectWithValue(
+        error?.response?.data?.message ?? "Unable to restore feature.",
       );
     }
   },

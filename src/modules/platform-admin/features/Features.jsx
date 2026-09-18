@@ -19,42 +19,121 @@ import { useToast } from "../../../components/common/toast/ToastProvider";
 
 import {
   selectFeatures,
-  selectFeaturesError,
   selectFeaturesMeta,
   selectFeaturesStatus,
+  selectFeaturesError,
+  selectSelectedFeature,
+  selectFeaturesCreateStatus,
+  selectFeaturesCreateError,
+  selectFeaturesUpdateStatus,
+  selectFeaturesUpdateError,
+  selectFeaturesActivateStatus,
+  selectFeaturesActivateError,
+  selectFeaturesDeactivateStatus,
+  selectFeaturesDeactivateError,
+  selectFeaturesDeleteStatus,
+  selectFeaturesDeleteError,
+  selectFeaturesRestoreStatus,
+  selectFeaturesRestoreError,
 } from "./store/feature.selectors";
 
 import {
   fetchFeatures,
   createFeature,
+  getFeatureById,
   updateFeature,
-} from "./store/feature.thunks";
+  activateFeature,
+  deactivateFeature,
+  deleteFeature,
+  restoreFeature,
+} from "./store/feature.thunks.js";
+
+const FEATURE_TYPES = [
+  {
+    value: "module",
+    label: "Module",
+  },
+  {
+    value: "capability",
+    label: "Capability",
+  },
+];
+
+const FEATURE_STATUSES = [
+  {
+    value: "active",
+    label: "Active",
+  },
+  {
+    value: "inactive",
+    label: "Inactive",
+  },
+];
+
+const EMPTY_FEATURE = {
+  _id: "",
+  name: "",
+  code: "",
+  description: "",
+  type: "",
+  status: "active",
+  sortOrder: 0,
+};
 
 function Features() {
   const dispatch = useDispatch();
   const { showToast } = useToast();
 
+  // ===========================================================================
+  // Redux State
+  // ===========================================================================
+
   const features = useSelector(selectFeatures);
-  const status = useSelector(selectFeaturesStatus);
-  const error = useSelector(selectFeaturesError);
   const meta = useSelector(selectFeaturesMeta);
+
+  const listStatus = useSelector(selectFeaturesStatus);
+  const listError = useSelector(selectFeaturesError);
+
+  const selectedFeature = useSelector(selectSelectedFeature);
+
+  const createStatus = useSelector(selectFeaturesCreateStatus);
+  const createError = useSelector(selectFeaturesCreateError);
+
+  const updateStatus = useSelector(selectFeaturesUpdateStatus);
+  const updateError = useSelector(selectFeaturesUpdateError);
+
+  const activateStatus = useSelector(selectFeaturesActivateStatus);
+  const activateError = useSelector(selectFeaturesActivateError);
+
+  const deactivateStatus = useSelector(selectFeaturesDeactivateStatus);
+  const deactivateError = useSelector(selectFeaturesDeactivateError);
+
+  const deleteStatus = useSelector(selectFeaturesDeleteStatus);
+  const deleteError = useSelector(selectFeaturesDeleteError);
+
+  const restoreStatus = useSelector(selectFeaturesRestoreStatus);
+  const restoreError = useSelector(selectFeaturesRestoreError);
+
+  // ===========================================================================
+  // List State
+  // ===========================================================================
 
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(20);
 
+  // ===========================================================================
+  // Modal State
+  // ===========================================================================
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState(null);
 
-  const [featureData, setFeatureData] = useState({
-    _id: "",
-    name: "",
-    code: "",
-    description: "",
-    type: "",
-    status: "active",
-    sortOrder: 0,
-  });
+  const [featureData, setFeatureData] = useState(EMPTY_FEATURE);
+
+  // ===========================================================================
+  // Fetch Features
+  // ===========================================================================
 
   useEffect(() => {
     dispatch(
@@ -66,17 +145,20 @@ function Features() {
     );
   }, [dispatch, page, limit, search]);
 
-  const resetFeatureData = () => {
-    setFeatureData({
-      _id: "",
-      name: "",
-      code: "",
-      description: "",
-      type: "",
-      status: "active",
-      sortOrder: 0,
-    });
-  };
+  // ===========================================================================
+  // Loading States
+  // ===========================================================================
+
+  const isCreateLoading = createStatus === "loading";
+  const isUpdateLoading = updateStatus === "loading";
+  const isActivateLoading = activateStatus === "loading";
+  const isDeactivateLoading = deactivateStatus === "loading";
+  const isDeleteLoading = deleteStatus === "loading";
+  const isRestoreLoading = restoreStatus === "loading";
+
+  // ===========================================================================
+  // Modal Helpers
+  // ===========================================================================
 
   const openModal = (type, feature = null) => {
     setModalType(type);
@@ -97,8 +179,12 @@ function Features() {
   const closeModal = () => {
     setIsModalOpen(false);
     setModalType(null);
-    resetFeatureData();
+    setFeatureData(EMPTY_FEATURE);
   };
+
+  // ===========================================================================
+  // Feature Form Change
+  // ===========================================================================
 
   const handleChangeFeatureData = (event) => {
     const { name, value } = event.target;
@@ -108,6 +194,24 @@ function Features() {
       [name]: value,
     }));
   };
+
+  // ===========================================================================
+  // Refresh List
+  // ===========================================================================
+
+  const refreshFeatures = () => {
+    dispatch(
+      fetchFeatures({
+        page,
+        limit,
+        search,
+      }),
+    );
+  };
+
+  // ===========================================================================
+  // Create Feature
+  // ===========================================================================
 
   const handleCreate = async () => {
     const payload = {
@@ -129,14 +233,7 @@ function Features() {
       });
 
       closeModal();
-
-      dispatch(
-        fetchFeatures({
-          page,
-          limit,
-          search,
-        }),
-      );
+      refreshFeatures();
 
       return;
     }
@@ -147,19 +244,52 @@ function Features() {
         title: "Feature creation failed",
         message:
           result.payload ||
-          "Unable to create feature. Please check the entered details and try again.",
+          "Unable to create feature. Please check the entered details.",
       });
     }
   };
 
-  const handleUpdate = async () => {
-    if (!featureData._id) {
-      showToast({
-        type: "error",
-        title: "Update failed",
-        message: "Feature identifier is missing.",
+  // ===========================================================================
+  // Get Feature By ID
+  // ===========================================================================
+
+  const handleView = async (feature) => {
+    const result = await dispatch(getFeatureById(feature._id));
+
+    if (getFeatureById.fulfilled.match(result)) {
+      const data = result.payload;
+
+      setFeatureData({
+        _id: data?._id ?? "",
+        name: data?.name ?? "",
+        code: data?.code ?? "",
+        description: data?.description ?? "",
+        type: data?.type ?? "",
+        status: data?.status ?? "active",
+        sortOrder: data?.sortOrder ?? 0,
       });
 
+      setModalType("view");
+      setIsModalOpen(true);
+
+      return;
+    }
+
+    if (getFeatureById.rejected.match(result)) {
+      showToast({
+        type: "error",
+        title: "Unable to load feature",
+        message: result.payload || "Unable to fetch feature details.",
+      });
+    }
+  };
+
+  // ===========================================================================
+  // Update Feature
+  // ===========================================================================
+
+  const handleUpdate = async () => {
+    if (!featureData._id) {
       return;
     }
 
@@ -185,14 +315,7 @@ function Features() {
       });
 
       closeModal();
-
-      dispatch(
-        fetchFeatures({
-          page,
-          limit,
-          search,
-        }),
-      );
+      refreshFeatures();
 
       return;
     }
@@ -202,52 +325,212 @@ function Features() {
         type: "error",
         title: "Feature update failed",
         message:
-          result.payload ||
-          "Unable to update feature. Please check the entered details and try again.",
+          result.payload || "Unable to update feature. Please try again.",
       });
     }
   };
+
+  // ===========================================================================
+  // Activate Feature
+  // ===========================================================================
+
+  const handleActivate = async () => {
+    if (!featureData._id) {
+      return;
+    }
+
+    const result = await dispatch(activateFeature(featureData._id));
+
+    if (activateFeature.fulfilled.match(result)) {
+      showToast({
+        type: "success",
+        title: "Feature activated",
+        message: "Feature has been activated successfully.",
+      });
+
+      closeModal();
+      refreshFeatures();
+
+      return;
+    }
+
+    if (activateFeature.rejected.match(result)) {
+      showToast({
+        type: "error",
+        title: "Activation failed",
+        message:
+          result.payload || "Unable to activate feature. Please try again.",
+      });
+    }
+  };
+
+  // ===========================================================================
+  // Deactivate Feature
+  // ===========================================================================
+
+  const handleDeactivate = async () => {
+    if (!featureData._id) {
+      return;
+    }
+
+    const result = await dispatch(deactivateFeature(featureData._id));
+
+    if (deactivateFeature.fulfilled.match(result)) {
+      showToast({
+        type: "success",
+        title: "Feature deactivated",
+        message: "Feature has been deactivated successfully.",
+      });
+
+      closeModal();
+      refreshFeatures();
+
+      return;
+    }
+
+    if (deactivateFeature.rejected.match(result)) {
+      showToast({
+        type: "error",
+        title: "Deactivation failed",
+        message:
+          result.payload || "Unable to deactivate feature. Please try again.",
+      });
+    }
+  };
+
+  // ===========================================================================
+  // Delete Feature
+  // ===========================================================================
+
+  const handleDelete = async () => {
+    if (!featureData._id) {
+      return;
+    }
+
+    const result = await dispatch(deleteFeature(featureData._id));
+
+    if (deleteFeature.fulfilled.match(result)) {
+      showToast({
+        type: "success",
+        title: "Feature deleted",
+        message: "Feature has been deleted successfully.",
+      });
+
+      closeModal();
+      refreshFeatures();
+
+      return;
+    }
+
+    if (deleteFeature.rejected.match(result)) {
+      showToast({
+        type: "error",
+        title: "Feature deletion failed",
+        message:
+          result.payload || "Unable to delete feature. Please try again.",
+      });
+    }
+  };
+
+  // ===========================================================================
+  // Restore Feature
+  // ===========================================================================
+
+  const handleRestore = async () => {
+    if (!featureData._id) {
+      return;
+    }
+
+    const result = await dispatch(restoreFeature(featureData._id));
+
+    if (restoreFeature.fulfilled.match(result)) {
+      showToast({
+        type: "success",
+        title: "Feature restored",
+        message: "Feature has been restored successfully.",
+      });
+
+      closeModal();
+      refreshFeatures();
+
+      return;
+    }
+
+    if (restoreFeature.rejected.match(result)) {
+      showToast({
+        type: "error",
+        title: "Feature restore failed",
+        message:
+          result.payload || "Unable to restore feature. Please try again.",
+      });
+    }
+  };
+
+  // ===========================================================================
+  // Table Columns
+  // ===========================================================================
 
   const columns = [
     {
       key: "_id",
       label: "ID",
     },
+
     {
       key: "name",
       label: "Feature Name",
       render: (row) => row.name,
     },
+
     {
       key: "code",
       label: "Code",
       render: (row) => row.code,
     },
+
     {
       key: "type",
       label: "Type",
       render: (row) => row.type,
     },
+
     {
       key: "status",
       label: "Status",
+      render: (row) => row.status,
     },
+
     {
       key: "actions",
       label: "Actions",
+
       render: (row) => (
         <>
-          <ViewIcon
-            size={5}
-            onClick={() => openModal("view", row)}
-            title="View"
-          />
+          <ViewIcon size={5} onClick={() => handleView(row)} title="View" />
 
           <EditIcon
             size={5}
             onClick={() => openModal("edit", row)}
             title="Edit"
           />
+
+          {row.status === "active" ? (
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={() => openModal("deactivate", row)}
+            >
+              Deactivate
+            </Button>
+          ) : (
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={() => openModal("activate", row)}
+            >
+              Activate
+            </Button>
+          )}
 
           <DeleteIcon
             size={5}
@@ -259,18 +542,44 @@ function Features() {
     },
   ];
 
+  // ===========================================================================
+  // Modal Title
+  // ===========================================================================
+
+  const modalTitle =
+    modalType === "view"
+      ? "View Feature"
+      : modalType === "edit"
+        ? "Edit Feature"
+        : modalType === "delete"
+          ? "Delete Feature"
+          : modalType === "activate"
+            ? "Activate Feature"
+            : modalType === "deactivate"
+              ? "Deactivate Feature"
+              : modalType === "restore"
+                ? "Restore Feature"
+                : "Create Feature";
+
+  // ===========================================================================
+  // Render
+  // ===========================================================================
+
   return (
     <section>
-      <PageHeader title="Features" description="Manage Embex360 features." />
+      <PageHeader
+        title="Features"
+        description="Manage Embex360 platform features."
+      />
 
-      {error && <p>{error}</p>}
+      {listError && <p>{listError}</p>}
 
       <Table
         title="Features"
         columns={columns}
         data={features}
         rowKey="_id"
-        loading={status === "loading"}
+        loading={listStatus === "loading"}
         emptyMessage="No features found."
         pagination={meta}
         onPageChange={setPage}
@@ -284,94 +593,139 @@ function Features() {
           setPage(1);
         }}
         searchPlaceholder="Search features..."
+        actions={
+          <Button
+            type="button"
+            variant="primary"
+            onClick={() => openModal("add")}
+          >
+            Add Feature
+          </Button>
+        }
       />
 
       <Modal
         isOpen={isModalOpen}
         onClose={closeModal}
-        title={
-          modalType === "view"
-            ? "View Feature"
-            : modalType === "edit"
-              ? "Edit Feature"
-              : modalType === "delete"
-                ? "Delete Feature"
-                : "Create Feature"
-        }
+        title={modalTitle}
         size="large"
         footer={
-          modalType === "add" ? (
-            <>
-              <Button type="button" onClick={closeModal}>
-                Cancel
-              </Button>
+          <>
+            {modalType === "add" && (
+              <>
+                <Button type="button" onClick={closeModal}>
+                  Cancel
+                </Button>
 
-              <Button
-                type="button"
-                onClick={handleCreate}
-                loading={status === "loading"}
-                loadingText="Creating..."
-              >
-                Create Feature
-              </Button>
-            </>
-          ) : modalType === "edit" ? (
-            <>
-              <Button type="button" onClick={closeModal}>
-                Cancel
-              </Button>
+                <Button
+                  type="button"
+                  variant="primary"
+                  onClick={handleCreate}
+                  loading={isCreateLoading}
+                  loadingText="Creating..."
+                >
+                  Create Feature
+                </Button>
+              </>
+            )}
 
-              <Button
-                type="button"
-                onClick={handleUpdate}
-                loading={status === "loading"}
-                loadingText="Updating..."
-              >
-                Update Feature
-              </Button>
-            </>
-          ) : null
+            {modalType === "edit" && (
+              <>
+                <Button type="button" onClick={closeModal}>
+                  Cancel
+                </Button>
+
+                <Button
+                  type="button"
+                  variant="primary"
+                  onClick={handleUpdate}
+                  loading={isUpdateLoading}
+                  loadingText="Updating..."
+                >
+                  Update Feature
+                </Button>
+              </>
+            )}
+
+            {modalType === "delete" && (
+              <>
+                <Button type="button" onClick={closeModal}>
+                  Cancel
+                </Button>
+
+                <Button
+                  type="button"
+                  variant="primary"
+                  onClick={handleDelete}
+                  loading={isDeleteLoading}
+                  loadingText="Deleting..."
+                >
+                  Delete Feature
+                </Button>
+              </>
+            )}
+
+            {modalType === "activate" && (
+              <>
+                <Button type="button" onClick={closeModal}>
+                  Cancel
+                </Button>
+
+                <Button
+                  type="button"
+                  variant="primary"
+                  onClick={handleActivate}
+                  loading={isActivateLoading}
+                  loadingText="Activating..."
+                >
+                  Activate Feature
+                </Button>
+              </>
+            )}
+
+            {modalType === "deactivate" && (
+              <>
+                <Button type="button" onClick={closeModal}>
+                  Cancel
+                </Button>
+
+                <Button
+                  type="button"
+                  variant="primary"
+                  onClick={handleDeactivate}
+                  loading={isDeactivateLoading}
+                  loadingText="Deactivating..."
+                >
+                  Deactivate Feature
+                </Button>
+              </>
+            )}
+
+            {modalType === "restore" && (
+              <>
+                <Button type="button" onClick={closeModal}>
+                  Cancel
+                </Button>
+
+                <Button
+                  type="button"
+                  variant="primary"
+                  onClick={handleRestore}
+                  loading={isRestoreLoading}
+                  loadingText="Restoring..."
+                >
+                  Restore Feature
+                </Button>
+              </>
+            )}
+          </>
         }
       >
-        {modalType === "view" && featureData ? (
-          <Grid columns={4} gap={16}>
-            <GridItem>
-              <p>
-                <strong>Name:</strong> {featureData.name}
-              </p>
-            </GridItem>
+        {/* ================================================================== */}
+        {/* CREATE / EDIT */}
+        {/* ================================================================== */}
 
-            <GridItem>
-              <p>
-                <strong>Code:</strong> {featureData.code}
-              </p>
-            </GridItem>
-
-            <GridItem>
-              <p>
-                <strong>Type:</strong> {featureData.type}
-              </p>
-            </GridItem>
-
-            <GridItem>
-              <p>
-                <strong>Status:</strong> {featureData.status}
-              </p>
-            </GridItem>
-
-            <GridItem columnSpan={4}>
-              <p>
-                <strong>Description:</strong> {featureData.description || "-"}
-              </p>
-            </GridItem>
-
-            <GridItem>
-              <p>
-                <strong>Sort Order:</strong> {featureData.sortOrder}
-              </p>
-            </GridItem>
-          </Grid>
-        ) : (modalType === "add" || modalType === "edit") && featureData ? (
+        {(modalType === "add" || modalType === "edit") && (
           <Grid columns={4} gap={16}>
             <GridItem>
               <Input
@@ -405,17 +759,19 @@ function Features() {
                 value={featureData.type}
                 onChange={handleChangeFeatureData}
                 placeholder="Select feature type"
-                options={[
-                  {
-                    value: "module",
-                    label: "Module",
-                  },
-                  {
-                    value: "capability",
-                    label: "Capability",
-                  },
-                ]}
+                options={FEATURE_TYPES}
                 required
+              />
+            </GridItem>
+
+            <GridItem>
+              <Select
+                label="Status"
+                name="status"
+                value={featureData.status}
+                onChange={handleChangeFeatureData}
+                options={FEATURE_STATUSES}
+                disabled={modalType === "edit"}
               />
             </GridItem>
 
@@ -441,11 +797,97 @@ function Features() {
               />
             </GridItem>
           </Grid>
-        ) : modalType === "delete" && featureData ? (
-          <p>
-            Are you sure you want to delete <strong>{featureData.name}</strong>?
-          </p>
-        ) : null}
+        )}
+
+        {/* ================================================================== */}
+        {/* VIEW */}
+        {/* ================================================================== */}
+
+        {modalType === "view" && (
+          <Grid columns={2} gap={16}>
+            <GridItem>
+              <strong>Name</strong>
+              <p>{featureData.name || "-"}</p>
+            </GridItem>
+
+            <GridItem>
+              <strong>Code</strong>
+              <p>{featureData.code || "-"}</p>
+            </GridItem>
+
+            <GridItem>
+              <strong>Type</strong>
+              <p>{featureData.type || "-"}</p>
+            </GridItem>
+
+            <GridItem>
+              <strong>Status</strong>
+              <p>{featureData.status || "-"}</p>
+            </GridItem>
+
+            <GridItem>
+              <strong>Sort Order</strong>
+              <p>{featureData.sortOrder ?? "-"}</p>
+            </GridItem>
+
+            <GridItem columnSpan={2}>
+              <strong>Description</strong>
+              <p>{featureData.description || "-"}</p>
+            </GridItem>
+          </Grid>
+        )}
+
+        {/* ================================================================== */}
+        {/* DELETE */}
+        {/* ================================================================== */}
+
+        {modalType === "delete" && (
+          <div>
+            <p>
+              Are you sure you want to delete{" "}
+              <strong>{featureData.name}</strong>?
+            </p>
+          </div>
+        )}
+
+        {/* ================================================================== */}
+        {/* ACTIVATE */}
+        {/* ================================================================== */}
+
+        {modalType === "activate" && (
+          <div>
+            <p>
+              Are you sure you want to activate{" "}
+              <strong>{featureData.name}</strong>?
+            </p>
+          </div>
+        )}
+
+        {/* ================================================================== */}
+        {/* DEACTIVATE */}
+        {/* ================================================================== */}
+
+        {modalType === "deactivate" && (
+          <div>
+            <p>
+              Are you sure you want to deactivate{" "}
+              <strong>{featureData.name}</strong>?
+            </p>
+          </div>
+        )}
+
+        {/* ================================================================== */}
+        {/* RESTORE */}
+        {/* ================================================================== */}
+
+        {modalType === "restore" && (
+          <div>
+            <p>
+              Are you sure you want to restore{" "}
+              <strong>{featureData.name}</strong>?
+            </p>
+          </div>
+        )}
       </Modal>
     </section>
   );
