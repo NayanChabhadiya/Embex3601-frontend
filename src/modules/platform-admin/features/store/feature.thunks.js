@@ -6,8 +6,10 @@ import featureService from "../services/feature.service.js";
  * Fetch Features
  * =============================================================================
  */
+
 export const fetchFeatures = createAsyncThunk(
   "features/fetchAll",
+
   async (params = {}, { rejectWithValue }) => {
     try {
       const response = await featureService.getFeatures(params);
@@ -22,35 +24,25 @@ export const fetchFeatures = createAsyncThunk(
       );
     }
   },
-);
 
-/**
- * =============================================================================
- * Create Feature
- * =============================================================================
- */
-export const createFeature = createAsyncThunk(
-  "features/create",
-  async (payload, { rejectWithValue }) => {
-    try {
-      const response = await featureService.createFeature(payload);
+  {
+    condition: (_, { getState }) => {
+      const status = getState().features?.status;
 
-      return response.data?.data ?? null;
-    } catch (error) {
-      return rejectWithValue(
-        error?.response?.data?.message ?? "Unable to create feature.",
-      );
-    }
+      return status !== "loading";
+    },
   },
 );
 
 /**
  * =============================================================================
- * Get Feature By ID
+ * Fetch Feature By ID
  * =============================================================================
  */
-export const getFeatureById = createAsyncThunk(
-  "features/getById",
+
+export const fetchFeatureById = createAsyncThunk(
+  "features/fetchById",
+
   async (id, { rejectWithValue }) => {
     try {
       const response = await featureService.getFeatureById(id);
@@ -66,11 +58,35 @@ export const getFeatureById = createAsyncThunk(
 
 /**
  * =============================================================================
+ * Create Feature
+ * =============================================================================
+ */
+
+export const createFeature = createAsyncThunk(
+  "features/create",
+
+  async (payload, { rejectWithValue }) => {
+    try {
+      const response = await featureService.createFeature(payload);
+
+      return response.data?.data ?? null;
+    } catch (error) {
+      return rejectWithValue(
+        error?.response?.data?.message ?? "Unable to create feature.",
+      );
+    }
+  },
+);
+
+/**
+ * =============================================================================
  * Update Feature
  * =============================================================================
  */
+
 export const updateFeature = createAsyncThunk(
   "features/update",
+
   async ({ id, payload }, { rejectWithValue }) => {
     try {
       const response = await featureService.updateFeature(id, payload);
@@ -89,8 +105,10 @@ export const updateFeature = createAsyncThunk(
  * Activate Feature
  * =============================================================================
  */
+
 export const activateFeature = createAsyncThunk(
   "features/activate",
+
   async (id, { rejectWithValue }) => {
     try {
       const response = await featureService.activateFeature(id);
@@ -109,8 +127,10 @@ export const activateFeature = createAsyncThunk(
  * Deactivate Feature
  * =============================================================================
  */
+
 export const deactivateFeature = createAsyncThunk(
   "features/deactivate",
+
   async (id, { rejectWithValue }) => {
     try {
       const response = await featureService.deactivateFeature(id);
@@ -129,8 +149,10 @@ export const deactivateFeature = createAsyncThunk(
  * Delete Feature
  * =============================================================================
  */
+
 export const deleteFeature = createAsyncThunk(
   "features/delete",
+
   async (id, { rejectWithValue }) => {
     try {
       const response = await featureService.deleteFeature(id);
@@ -152,8 +174,10 @@ export const deleteFeature = createAsyncThunk(
  * Restore Feature
  * =============================================================================
  */
+
 export const restoreFeature = createAsyncThunk(
   "features/restore",
+
   async (id, { rejectWithValue }) => {
     try {
       const response = await featureService.restoreFeature(id);

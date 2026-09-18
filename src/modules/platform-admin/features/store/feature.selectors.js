@@ -1,46 +1,24 @@
-/**
- * =============================================================================
- * EMBEX360 ERP
- * Feature Selectors
- * =============================================================================
- *
- * Centralized selectors for the Feature Redux state.
- *
- * Supported operations:
- * - Fetch Features
- * - Get Feature By ID
- * - Create Feature
- * - Update Feature
- * - Activate Feature
- * - Deactivate Feature
- * - Delete Feature
- * - Restore Feature
- * =============================================================================
- */
-
-/**
- * =============================================================================
- * Feature State
- * =============================================================================
- */
+// =============================================================================
+// EMBEX360 ERP
+// Feature Selectors
+// =============================================================================
 
 const selectFeatureState = (state) =>
   state.features ?? {
     features: [],
     meta: null,
 
-    listStatus: "idle",
-    listError: null,
-    listRequestId: null,
+    status: "idle",
+    error: null,
 
-    selectedFeature: null,
-
-    getByIdStatus: "idle",
-    getByIdError: null,
-    getByIdRequestId: null,
+    currentRequestId: null,
 
     createStatus: "idle",
     createError: null,
+
+    selectedFeature: null,
+    selectedFeatureStatus: "idle",
+    selectedFeatureError: null,
 
     updateStatus: "idle",
     updateError: null,
@@ -58,42 +36,27 @@ const selectFeatureState = (state) =>
     restoreError: null,
   };
 
-/**
- * =============================================================================
- * List Selectors
- * =============================================================================
- */
+// =============================================================================
+// GET ALL
+// =============================================================================
 
 export const selectFeatures = (state) => selectFeatureState(state).features;
 
 export const selectFeaturesMeta = (state) => selectFeatureState(state).meta;
 
-export const selectFeaturesStatus = (state) =>
-  selectFeatureState(state).listStatus;
+export const selectFeaturesStatus = (state) => selectFeatureState(state).status;
 
-export const selectFeaturesError = (state) =>
-  selectFeatureState(state).listError;
+export const selectFeaturesError = (state) => selectFeatureState(state).error;
 
-/**
- * =============================================================================
- * Selected Feature Selectors
- * =============================================================================
- */
+export const selectFeaturesLoading = (state) =>
+  selectFeatureState(state).status === "loading";
 
-export const selectSelectedFeature = (state) =>
-  selectFeatureState(state).selectedFeature;
+export const selectFeaturesLoaded = (state) =>
+  selectFeatureState(state).status === "succeeded";
 
-export const selectFeatureByIdStatus = (state) =>
-  selectFeatureState(state).getByIdStatus;
-
-export const selectFeatureByIdError = (state) =>
-  selectFeatureState(state).getByIdError;
-
-/**
- * =============================================================================
- * Create Selectors
- * =============================================================================
- */
+// =============================================================================
+// CREATE
+// =============================================================================
 
 export const selectFeaturesCreateStatus = (state) =>
   selectFeatureState(state).createStatus;
@@ -101,11 +64,28 @@ export const selectFeaturesCreateStatus = (state) =>
 export const selectFeaturesCreateError = (state) =>
   selectFeatureState(state).createError;
 
-/**
- * =============================================================================
- * Update Selectors
- * =============================================================================
- */
+export const selectFeaturesCreating = (state) =>
+  selectFeatureState(state).createStatus === "loading";
+
+// =============================================================================
+// GET BY ID
+// =============================================================================
+
+export const selectSelectedFeature = (state) =>
+  selectFeatureState(state).selectedFeature;
+
+export const selectSelectedFeatureStatus = (state) =>
+  selectFeatureState(state).selectedFeatureStatus;
+
+export const selectSelectedFeatureError = (state) =>
+  selectFeatureState(state).selectedFeatureError;
+
+export const selectSelectedFeatureLoading = (state) =>
+  selectFeatureState(state).selectedFeatureStatus === "loading";
+
+// =============================================================================
+// UPDATE
+// =============================================================================
 
 export const selectFeaturesUpdateStatus = (state) =>
   selectFeatureState(state).updateStatus;
@@ -113,11 +93,12 @@ export const selectFeaturesUpdateStatus = (state) =>
 export const selectFeaturesUpdateError = (state) =>
   selectFeatureState(state).updateError;
 
-/**
- * =============================================================================
- * Activate Selectors
- * =============================================================================
- */
+export const selectFeaturesUpdating = (state) =>
+  selectFeatureState(state).updateStatus === "loading";
+
+// =============================================================================
+// ACTIVATE
+// =============================================================================
 
 export const selectFeaturesActivateStatus = (state) =>
   selectFeatureState(state).activateStatus;
@@ -125,11 +106,12 @@ export const selectFeaturesActivateStatus = (state) =>
 export const selectFeaturesActivateError = (state) =>
   selectFeatureState(state).activateError;
 
-/**
- * =============================================================================
- * Deactivate Selectors
- * =============================================================================
- */
+export const selectFeaturesActivating = (state) =>
+  selectFeatureState(state).activateStatus === "loading";
+
+// =============================================================================
+// DEACTIVATE
+// =============================================================================
 
 export const selectFeaturesDeactivateStatus = (state) =>
   selectFeatureState(state).deactivateStatus;
@@ -137,11 +119,12 @@ export const selectFeaturesDeactivateStatus = (state) =>
 export const selectFeaturesDeactivateError = (state) =>
   selectFeatureState(state).deactivateError;
 
-/**
- * =============================================================================
- * Delete Selectors
- * =============================================================================
- */
+export const selectFeaturesDeactivating = (state) =>
+  selectFeatureState(state).deactivateStatus === "loading";
+
+// =============================================================================
+// DELETE
+// =============================================================================
 
 export const selectFeaturesDeleteStatus = (state) =>
   selectFeatureState(state).deleteStatus;
@@ -149,14 +132,18 @@ export const selectFeaturesDeleteStatus = (state) =>
 export const selectFeaturesDeleteError = (state) =>
   selectFeatureState(state).deleteError;
 
-/**
- * =============================================================================
- * Restore Selectors
- * =============================================================================
- */
+export const selectFeaturesDeleting = (state) =>
+  selectFeatureState(state).deleteStatus === "loading";
+
+// =============================================================================
+// RESTORE
+// =============================================================================
 
 export const selectFeaturesRestoreStatus = (state) =>
   selectFeatureState(state).restoreStatus;
 
 export const selectFeaturesRestoreError = (state) =>
   selectFeatureState(state).restoreError;
+
+export const selectFeaturesRestoring = (state) =>
+  selectFeatureState(state).restoreStatus === "loading";

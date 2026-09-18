@@ -2,8 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import {
   fetchFeatures,
+  fetchFeatureById,
   createFeature,
-  getFeatureById,
   updateFeature,
   activateFeature,
   deactivateFeature,
@@ -12,68 +12,62 @@ import {
 } from "./feature.thunks.js";
 
 const initialState = Object.freeze({
-  // ===========================================================================
-  // Feature List
-  // ===========================================================================
+  /**
+   * ===========================================================================
+   * Feature List
+   * ===========================================================================
+   */
 
   features: [],
   meta: null,
 
-  listStatus: "idle",
-  listError: null,
-  listRequestId: null,
+  status: "idle",
+  error: null,
 
-  // ===========================================================================
-  // Selected Feature
-  // ===========================================================================
+  currentRequestId: null,
+
+  /**
+   * ===========================================================================
+   * Selected Feature
+   * ===========================================================================
+   */
 
   selectedFeature: null,
 
-  getByIdStatus: "idle",
-  getByIdError: null,
-  getByIdRequestId: null,
+  selectedFeatureStatus: "idle",
+  selectedFeatureError: null,
 
-  // ===========================================================================
-  // Create
-  // ===========================================================================
+  /**
+   * ===========================================================================
+   * Create
+   * ===========================================================================
+   */
 
   createStatus: "idle",
   createError: null,
 
-  // ===========================================================================
-  // Update
-  // ===========================================================================
+  /**
+   * ===========================================================================
+   * Update
+   * ===========================================================================
+   */
 
   updateStatus: "idle",
   updateError: null,
 
-  // ===========================================================================
-  // Activate
-  // ===========================================================================
+  /**
+   * ===========================================================================
+   * Feature Actions
+   *
+   * Activate
+   * Deactivate
+   * Delete
+   * Restore
+   * ===========================================================================
+   */
 
-  activateStatus: "idle",
-  activateError: null,
-
-  // ===========================================================================
-  // Deactivate
-  // ===========================================================================
-
-  deactivateStatus: "idle",
-  deactivateError: null,
-
-  // ===========================================================================
-  // Delete
-  // ===========================================================================
-
-  deleteStatus: "idle",
-  deleteError: null,
-
-  // ===========================================================================
-  // Restore
-  // ===========================================================================
-
-  restoreStatus: "idle",
-  restoreError: null,
+  actionStatus: "idle",
+  actionError: null,
 });
 
 const featureSlice = createSlice({
@@ -82,23 +76,17 @@ const featureSlice = createSlice({
   initialState,
 
   reducers: {
-    // =========================================================================
-    // Reset Entire Feature State
-    // =========================================================================
-
     resetFeatures(state) {
       state.features = [];
       state.meta = null;
 
-      state.listStatus = "idle";
-      state.listError = null;
-      state.listRequestId = null;
+      state.status = "idle";
+      state.error = null;
+      state.currentRequestId = null;
 
       state.selectedFeature = null;
-
-      state.getByIdStatus = "idle";
-      state.getByIdError = null;
-      state.getByIdRequestId = null;
+      state.selectedFeatureStatus = "idle";
+      state.selectedFeatureError = null;
 
       state.createStatus = "idle";
       state.createError = null;
@@ -106,127 +94,113 @@ const featureSlice = createSlice({
       state.updateStatus = "idle";
       state.updateError = null;
 
-      state.activateStatus = "idle";
-      state.activateError = null;
-
-      state.deactivateStatus = "idle";
-      state.deactivateError = null;
-
-      state.deleteStatus = "idle";
-      state.deleteError = null;
-
-      state.restoreStatus = "idle";
-      state.restoreError = null;
+      state.actionStatus = "idle";
+      state.actionError = null;
     },
-
-    // =========================================================================
-    // Clear List Error
-    // =========================================================================
 
     clearFeaturesError(state) {
-      state.listError = null;
+      state.error = null;
     },
 
-    // =========================================================================
-    // Clear Selected Feature
-    // =========================================================================
+    clearSelectedFeatureError(state) {
+      state.selectedFeatureError = null;
+    },
+
+    clearFeatureCreateError(state) {
+      state.createError = null;
+    },
+
+    clearFeatureUpdateError(state) {
+      state.updateError = null;
+    },
+
+    clearFeatureActionError(state) {
+      state.actionError = null;
+    },
 
     clearSelectedFeature(state) {
       state.selectedFeature = null;
-      state.getByIdStatus = "idle";
-      state.getByIdError = null;
-      state.getByIdRequestId = null;
-    },
-
-    // =========================================================================
-    // Clear Operation Errors
-    // =========================================================================
-
-    clearFeatureOperationErrors(state) {
-      state.createError = null;
-      state.updateError = null;
-      state.activateError = null;
-      state.deactivateError = null;
-      state.deleteError = null;
-      state.restoreError = null;
+      state.selectedFeatureStatus = "idle";
+      state.selectedFeatureError = null;
     },
   },
 
   extraReducers: (builder) => {
     builder
 
-      // =======================================================================
-      // FETCH FEATURES
-      // =======================================================================
+      /**
+       * =======================================================================
+       * Fetch Features
+       * =======================================================================
+       */
 
       .addCase(fetchFeatures.pending, (state, action) => {
-        state.listStatus = "loading";
-        state.listError = null;
-        state.listRequestId = action.meta.requestId;
+        state.status = "loading";
+        state.error = null;
+        state.currentRequestId = action.meta.requestId;
       })
 
       .addCase(fetchFeatures.fulfilled, (state, action) => {
-        if (state.listRequestId !== action.meta.requestId) {
+        if (state.currentRequestId !== action.meta.requestId) {
           return;
         }
 
-        state.listStatus = "succeeded";
+        state.status = "succeeded";
+
         state.features = action.payload?.features ?? [];
         state.meta = action.payload?.meta ?? null;
-        state.listError = null;
-        state.listRequestId = null;
+
+        state.error = null;
+        state.currentRequestId = null;
       })
 
       .addCase(fetchFeatures.rejected, (state, action) => {
         if (
           action.meta.requestId &&
-          state.listRequestId !== action.meta.requestId
+          state.currentRequestId !== action.meta.requestId
         ) {
           return;
         }
 
-        state.listStatus = "failed";
-        state.listError = action.payload ?? "Unable to fetch features.";
-        state.listRequestId = null;
+        state.status = "failed";
+
+        state.error = action.payload ?? "Unable to fetch features.";
+
+        state.currentRequestId = null;
       })
 
-      // =======================================================================
-      // GET FEATURE BY ID
-      // =======================================================================
+      /**
+       * =======================================================================
+       * Fetch Feature By ID
+       * =======================================================================
+       */
 
-      .addCase(getFeatureById.pending, (state, action) => {
-        state.getByIdStatus = "loading";
-        state.getByIdError = null;
-        state.getByIdRequestId = action.meta.requestId;
+      .addCase(fetchFeatureById.pending, (state) => {
+        state.selectedFeatureStatus = "loading";
+        state.selectedFeatureError = null;
       })
 
-      .addCase(getFeatureById.fulfilled, (state, action) => {
-        if (state.getByIdRequestId !== action.meta.requestId) {
-          return;
-        }
+      .addCase(fetchFeatureById.fulfilled, (state, action) => {
+        state.selectedFeatureStatus = "succeeded";
 
-        state.getByIdStatus = "succeeded";
         state.selectedFeature = action.payload ?? null;
-        state.getByIdError = null;
-        state.getByIdRequestId = null;
+        state.selectedFeatureError = null;
       })
 
-      .addCase(getFeatureById.rejected, (state, action) => {
-        if (
-          action.meta.requestId &&
-          state.getByIdRequestId !== action.meta.requestId
-        ) {
-          return;
-        }
+      .addCase(fetchFeatureById.rejected, (state, action) => {
+        state.selectedFeatureStatus = "failed";
 
-        state.getByIdStatus = "failed";
-        state.getByIdError = action.payload ?? "Unable to fetch feature.";
-        state.getByIdRequestId = null;
+        state.selectedFeature = null;
+
+        state.selectedFeatureError =
+          action.payload ?? "Unable to fetch feature.";
       })
 
-      // =======================================================================
-      // CREATE FEATURE
-      // =======================================================================
+      /**
+       * =======================================================================
+       * Create Feature
+       * =======================================================================
+       */
 
       .addCase(createFeature.pending, (state) => {
         state.createStatus = "loading";
@@ -244,12 +218,15 @@ const featureSlice = createSlice({
 
       .addCase(createFeature.rejected, (state, action) => {
         state.createStatus = "failed";
+
         state.createError = action.payload ?? "Unable to create feature.";
       })
 
-      // =======================================================================
-      // UPDATE FEATURE
-      // =======================================================================
+      /**
+       * =======================================================================
+       * Update Feature
+       * =======================================================================
+       */
 
       .addCase(updateFeature.pending, (state) => {
         state.updateStatus = "loading";
@@ -266,8 +243,10 @@ const featureSlice = createSlice({
 
         state.selectedFeature = action.payload;
 
+        const updatedId = action.payload._id ?? action.payload.id;
+
         const index = state.features.findIndex(
-          (feature) => feature._id === action.payload._id,
+          (feature) => (feature._id ?? feature.id) === updatedId,
         );
 
         if (index !== -1) {
@@ -277,21 +256,24 @@ const featureSlice = createSlice({
 
       .addCase(updateFeature.rejected, (state, action) => {
         state.updateStatus = "failed";
+
         state.updateError = action.payload ?? "Unable to update feature.";
       })
 
-      // =======================================================================
-      // ACTIVATE FEATURE
-      // =======================================================================
+      /**
+       * =======================================================================
+       * Activate Feature
+       * =======================================================================
+       */
 
       .addCase(activateFeature.pending, (state) => {
-        state.activateStatus = "loading";
-        state.activateError = null;
+        state.actionStatus = "loading";
+        state.actionError = null;
       })
 
       .addCase(activateFeature.fulfilled, (state, action) => {
-        state.activateStatus = "succeeded";
-        state.activateError = null;
+        state.actionStatus = "succeeded";
+        state.actionError = null;
 
         if (!action.payload) {
           return;
@@ -299,8 +281,10 @@ const featureSlice = createSlice({
 
         state.selectedFeature = action.payload;
 
+        const updatedId = action.payload._id ?? action.payload.id;
+
         const index = state.features.findIndex(
-          (feature) => feature._id === action.payload._id,
+          (feature) => (feature._id ?? feature.id) === updatedId,
         );
 
         if (index !== -1) {
@@ -309,22 +293,25 @@ const featureSlice = createSlice({
       })
 
       .addCase(activateFeature.rejected, (state, action) => {
-        state.activateStatus = "failed";
-        state.activateError = action.payload ?? "Unable to activate feature.";
+        state.actionStatus = "failed";
+
+        state.actionError = action.payload ?? "Unable to activate feature.";
       })
 
-      // =======================================================================
-      // DEACTIVATE FEATURE
-      // =======================================================================
+      /**
+       * =======================================================================
+       * Deactivate Feature
+       * =======================================================================
+       */
 
       .addCase(deactivateFeature.pending, (state) => {
-        state.deactivateStatus = "loading";
-        state.deactivateError = null;
+        state.actionStatus = "loading";
+        state.actionError = null;
       })
 
       .addCase(deactivateFeature.fulfilled, (state, action) => {
-        state.deactivateStatus = "succeeded";
-        state.deactivateError = null;
+        state.actionStatus = "succeeded";
+        state.actionError = null;
 
         if (!action.payload) {
           return;
@@ -332,8 +319,10 @@ const featureSlice = createSlice({
 
         state.selectedFeature = action.payload;
 
+        const updatedId = action.payload._id ?? action.payload.id;
+
         const index = state.features.findIndex(
-          (feature) => feature._id === action.payload._id,
+          (feature) => (feature._id ?? feature.id) === updatedId,
         );
 
         if (index !== -1) {
@@ -342,23 +331,25 @@ const featureSlice = createSlice({
       })
 
       .addCase(deactivateFeature.rejected, (state, action) => {
-        state.deactivateStatus = "failed";
-        state.deactivateError =
-          action.payload ?? "Unable to deactivate feature.";
+        state.actionStatus = "failed";
+
+        state.actionError = action.payload ?? "Unable to deactivate feature.";
       })
 
-      // =======================================================================
-      // DELETE FEATURE
-      // =======================================================================
+      /**
+       * =======================================================================
+       * Delete Feature
+       * =======================================================================
+       */
 
       .addCase(deleteFeature.pending, (state) => {
-        state.deleteStatus = "loading";
-        state.deleteError = null;
+        state.actionStatus = "loading";
+        state.actionError = null;
       })
 
       .addCase(deleteFeature.fulfilled, (state, action) => {
-        state.deleteStatus = "succeeded";
-        state.deleteError = null;
+        state.actionStatus = "succeeded";
+        state.actionError = null;
 
         const deletedId = action.payload?.id;
 
@@ -367,31 +358,37 @@ const featureSlice = createSlice({
         }
 
         state.features = state.features.filter(
-          (feature) => feature._id !== deletedId,
+          (feature) => (feature._id ?? feature.id) !== deletedId,
         );
 
-        if (state.selectedFeature?._id === deletedId) {
+        if (
+          state.selectedFeature &&
+          (state.selectedFeature._id ?? state.selectedFeature.id) === deletedId
+        ) {
           state.selectedFeature = null;
         }
       })
 
       .addCase(deleteFeature.rejected, (state, action) => {
-        state.deleteStatus = "failed";
-        state.deleteError = action.payload ?? "Unable to delete feature.";
+        state.actionStatus = "failed";
+
+        state.actionError = action.payload ?? "Unable to delete feature.";
       })
 
-      // =======================================================================
-      // RESTORE FEATURE
-      // =======================================================================
+      /**
+       * =======================================================================
+       * Restore Feature
+       * =======================================================================
+       */
 
       .addCase(restoreFeature.pending, (state) => {
-        state.restoreStatus = "loading";
-        state.restoreError = null;
+        state.actionStatus = "loading";
+        state.actionError = null;
       })
 
       .addCase(restoreFeature.fulfilled, (state, action) => {
-        state.restoreStatus = "succeeded";
-        state.restoreError = null;
+        state.actionStatus = "succeeded";
+        state.actionError = null;
 
         if (!action.payload) {
           return;
@@ -399,8 +396,10 @@ const featureSlice = createSlice({
 
         state.selectedFeature = action.payload;
 
+        const restoredId = action.payload._id ?? action.payload.id;
+
         const index = state.features.findIndex(
-          (feature) => feature._id === action.payload._id,
+          (feature) => (feature._id ?? feature.id) === restoredId,
         );
 
         if (index !== -1) {
@@ -411,8 +410,9 @@ const featureSlice = createSlice({
       })
 
       .addCase(restoreFeature.rejected, (state, action) => {
-        state.restoreStatus = "failed";
-        state.restoreError = action.payload ?? "Unable to restore feature.";
+        state.actionStatus = "failed";
+
+        state.actionError = action.payload ?? "Unable to restore feature.";
       });
   },
 });
@@ -420,8 +420,11 @@ const featureSlice = createSlice({
 export const {
   resetFeatures,
   clearFeaturesError,
+  clearSelectedFeatureError,
+  clearFeatureCreateError,
+  clearFeatureUpdateError,
+  clearFeatureActionError,
   clearSelectedFeature,
-  clearFeatureOperationErrors,
 } = featureSlice.actions;
 
 export default featureSlice.reducer;
