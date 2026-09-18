@@ -5,7 +5,7 @@ import PageHeader from "../../../components/layout/page/components/PageHeader";
 import Table from "../../../components/common/table/Table";
 import Modal from "../../../components/common/modal/Modal";
 import { Button } from "../../../components/common";
-import { Input, Select, Textarea } from "../../../components/common/form";
+import { Checkbox, Input, Select, Textarea } from "../../../components/common/form";
 import Grid from "../../../components/common/grid/Grid";
 import GridItem from "../../../components/common/grid/GridItem";
 
@@ -65,6 +65,19 @@ function Features() {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(20);
   const [isDeleted, setIsDeleted] = useState(false);
+  const [filters, setFilters] = useState({
+    status: "",
+    type: "",
+  });
+  const [isColumnsOpen, setIsColumnsOpen] = useState(false);
+  const [visibleColumns, setVisibleColumns] = useState({
+    name: true,
+    code: true,
+    type: true,
+    status: true,
+    sortOrder: true,
+    actions: true,
+  });
 
   // ===========================================================================
   // Modal State
@@ -72,6 +85,7 @@ function Features() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState(null);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   // ===========================================================================
   // Action State
@@ -98,16 +112,17 @@ function Features() {
   // ===========================================================================
 
   useEffect(() => {
-    dispatch(
-      fetchFeatures({
-        page,
-        limit,
-        search,
-        isDeleted,
-      }),
-    );
-  }, [dispatch, page, limit, search, isDeleted]);
+    const params = {
+      page,
+      limit,
+      search,
+      isDeleted,
+      ...(filters.status && { status: filters.status }),
+      ...(filters.type && { type: filters.type }),
+    };
 
+    dispatch(fetchFeatures(params));
+  }, [dispatch, page, limit, search, isDeleted, filters]);
   // ===========================================================================
   // Error Toast
   // ===========================================================================
@@ -136,6 +151,56 @@ function Features() {
       status: "active",
       sortOrder: 0,
     });
+  };
+
+  // Fillter
+  const openFilter = () => {
+    setIsFilterOpen(true);
+  };
+
+  const closeFilter = () => {
+    setIsFilterOpen(false);
+  };
+
+  const handleFilterChange = (event) => {
+    const { name, value } = event.target;
+
+    setFilters((current) => ({
+      ...current,
+      [name]: value,
+    }));
+  };
+
+  const applyFilters = () => {
+    setPage(1);
+    setIsFilterOpen(false);
+  };
+
+  const clearFilters = () => {
+    setFilters({
+      status: "",
+      type: "",
+    });
+
+    setPage(1);
+    setIsFilterOpen(false);
+  };
+
+  const openColumns = () => {
+    setIsColumnsOpen(true);
+  };
+
+  const closeColumns = () => {
+    setIsColumnsOpen(false);
+  };
+
+  const handleColumnChange = (event) => {
+    const { name, checked } = event.target;
+
+    setVisibleColumns((current) => ({
+      ...current,
+      [name]: checked,
+    }));
   };
 
   // ===========================================================================
@@ -648,6 +713,17 @@ function Features() {
     },
   ];
 
+  const displayedColumns = columns.filter((column) => {
+    if (column.key === "name") return visibleColumns.name;
+    if (column.key === "code") return visibleColumns.code;
+    if (column.key === "type") return visibleColumns.type;
+    if (column.key === "status") return visibleColumns.status;
+    if (column.key === "sortOrder") return visibleColumns.sortOrder;
+    if (column.key === "actions") return visibleColumns.actions;
+
+    return true;
+  });
+
   // ===========================================================================
   // Modal Title
   // ===========================================================================
@@ -823,28 +899,9 @@ function Features() {
           Feature Table
       ====================================================================== */}
 
-      <Select
-        label="Records"
-        value={isDeleted ? "deleted" : "active"}
-        onChange={(event) => {
-          setIsDeleted(event.target.value === "deleted");
-          setPage(1);
-        }}
-        options={[
-          {
-            value: "active",
-            label: "Active Features",
-          },
-          {
-            value: "deleted",
-            label: "Deleted Features",
-          },
-        ]}
-      />
-
       <Table
         title="Features"
-        columns={columns}
+        columns={displayedColumns}
         data={features}
         rowKey="_id"
         loading={status === "loading"}
@@ -861,11 +918,147 @@ function Features() {
           setPage(1);
         }}
         searchPlaceholder="Search features..."
+        onFilter={openFilter}
+        onColumns={openColumns}
+        action={
+          <Select
+            label="Records"
+            value={isDeleted ? "deleted" : "active"}
+            onChange={(event) => {
+              setIsDeleted(event.target.value === "deleted");
+              setPage(1);
+            }}
+            options={[
+              {
+                value: "active",
+                label: "Active Features",
+              },
+              {
+                value: "deleted",
+                label: "Deleted Features",
+              },
+            ]}
+          />
+        }
       />
 
       {/* =====================================================================
           Feature Modal
       ====================================================================== */}
+      <Modal
+        isOpen={isColumnsOpen}
+        onClose={closeColumns}
+        title="Feature Columns"
+        size="small"
+        footer={
+          <Button type="button" onClick={closeColumns}>
+            Done
+          </Button>
+        }
+      >
+        <div>
+          <Checkbox
+            name="name"
+            checked={visibleColumns.name}
+            onChange={handleColumnChange}
+            label="Name"
+          />
+
+          <Checkbox
+            name="code"
+            checked={visibleColumns.code}
+            onChange={handleColumnChange}
+            label="Code"
+          />
+
+          <Checkbox
+            name="type"
+            checked={visibleColumns.type}
+            onChange={handleColumnChange}
+            label="Type"
+          />
+
+          <Checkbox
+            name="status"
+            checked={visibleColumns.status}
+            onChange={handleColumnChange}
+            label="Status"
+          />
+
+          <Checkbox
+            name="sortOrder"
+            checked={visibleColumns.sortOrder}
+            onChange={handleColumnChange}
+            label="Sort Order"
+          />
+
+          <Checkbox
+            name="actions"
+            checked={visibleColumns.actions}
+            onChange={handleColumnChange}
+            label="Actions"
+          />
+        </div>
+      </Modal>
+      <Modal
+        isOpen={isFilterOpen}
+        onClose={closeFilter}
+        title="Filter Features"
+        size="medium"
+        footer={
+          <>
+            <Button type="button" onClick={clearFilters}>
+              Clear
+            </Button>
+
+            <Button type="button" onClick={applyFilters}>
+              Apply Filters
+            </Button>
+          </>
+        }
+      >
+        <Grid columns={2} gap={16}>
+          <GridItem>
+            <Select
+              label="Status"
+              name="status"
+              value={filters.status}
+              onChange={handleFilterChange}
+              placeholder="All Statuses"
+              options={[
+                {
+                  value: "active",
+                  label: "Active",
+                },
+                {
+                  value: "inactive",
+                  label: "Inactive",
+                },
+              ]}
+            />
+          </GridItem>
+
+          <GridItem>
+            <Select
+              label="Feature Type"
+              name="type"
+              value={filters.type}
+              onChange={handleFilterChange}
+              placeholder="All Types"
+              options={[
+                {
+                  value: "module",
+                  label: "Module",
+                },
+                {
+                  value: "capability",
+                  label: "Capability",
+                },
+              ]}
+            />
+          </GridItem>
+        </Grid>
+      </Modal>
 
       <Modal
         isOpen={isModalOpen}
