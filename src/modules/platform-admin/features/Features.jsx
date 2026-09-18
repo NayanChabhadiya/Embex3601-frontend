@@ -64,6 +64,7 @@ function Features() {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(20);
+  const [isDeleted, setIsDeleted] = useState(false);
 
   // ===========================================================================
   // Modal State
@@ -102,9 +103,10 @@ function Features() {
         page,
         limit,
         search,
+        isDeleted,
       }),
     );
-  }, [dispatch, page, limit, search]);
+  }, [dispatch, page, limit, search, isDeleted]);
 
   // ===========================================================================
   // Error Toast
@@ -229,6 +231,7 @@ function Features() {
         page,
         limit,
         search,
+        isDeleted,
       }),
     );
   };
@@ -819,6 +822,25 @@ function Features() {
       {/* =====================================================================
           Feature Table
       ====================================================================== */}
+
+      <Select
+        label="Records"
+        value={isDeleted ? "deleted" : "active"}
+        onChange={(event) => {
+          setIsDeleted(event.target.value === "deleted");
+          setPage(1);
+        }}
+        options={[
+          {
+            value: "active",
+            label: "Active Features",
+          },
+          {
+            value: "deleted",
+            label: "Deleted Features",
+          },
+        ]}
+      />
 
       <Table
         title="Features"
