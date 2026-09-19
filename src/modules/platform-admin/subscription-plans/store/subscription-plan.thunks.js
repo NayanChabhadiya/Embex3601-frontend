@@ -1,199 +1,90 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-import subscriptionPlanService from "../services/subscription-plan.service.js";
+import subscriptionPlanService from "../services/subscription-plan.service";
 
 export const fetchSubscriptionPlans = createAsyncThunk(
-  "subscriptionPlans/fetchAll",
-  async (params = {}, { rejectWithValue }) => {
+  "subscriptionPlan/fetchAll",
+  async (_, { rejectWithValue }) => {
     try {
-      const response =
-        await subscriptionPlanService.getSubscriptionPlans(params);
-      return {
-        plans: response.data?.data ?? [],
-        meta: response.data?.meta ?? null,
-      };
+      const response = await subscriptionPlanService.getAll();
+
+      return response?.data ?? [];
     } catch (error) {
       return rejectWithValue(
-        error?.response?.data?.message ?? "Unable to fetch subscription plans.",
+        error?.response?.data?.message ||
+          error?.message ||
+          "Failed to fetch subscription plans.",
       );
     }
-  },
-  {
-    condition: (_, { getState }) => {
-      const status = getState().subscriptionPlans?.status;
-
-      return status !== "loading";
-    },
   },
 );
 
 export const fetchSubscriptionPlanById = createAsyncThunk(
-  "subscriptionPlans/fetchById",
+  "subscriptionPlan/fetchById",
   async (id, { rejectWithValue }) => {
     try {
-      const response =
-        await subscriptionPlanService.getSubscriptionPlanById(id);
+      const response = await subscriptionPlanService.getById(id);
 
-      return response.data?.data ?? null;
+      return response?.data ?? null;
     } catch (error) {
       return rejectWithValue(
-        error?.response?.data?.message ?? "Unable to fetch subscription plan.",
+        error?.response?.data?.message ||
+          error?.message ||
+          "Failed to fetch subscription plan.",
       );
     }
   },
 );
-
-/**
- * =============================================================================
- * Fetch Active Subscription Plans
- * =============================================================================
- */
-
-export const fetchActiveSubscriptionPlans = createAsyncThunk(
-  "subscriptionPlans/fetchActive",
-  async (_, { rejectWithValue }) => {
-    try {
-      const response =
-        await subscriptionPlanService.getActiveSubscriptionPlans();
-
-      return response.data?.data ?? [];
-    } catch (error) {
-      return rejectWithValue(
-        error?.response?.data?.message ??
-          "Unable to fetch active subscription plans.",
-      );
-    }
-  },
-);
-
-/**
- * =============================================================================
- * Create Subscription Plan
- * =============================================================================
- */
 
 export const createSubscriptionPlan = createAsyncThunk(
-  "subscriptionPlans/create",
+  "subscriptionPlan/create",
   async (payload, { rejectWithValue }) => {
     try {
-      const response =
-        await subscriptionPlanService.createSubscriptionPlan(payload);
+      const response = await subscriptionPlanService.create(payload);
 
-      return response.data?.data ?? null;
+      return response?.data ?? null;
     } catch (error) {
       return rejectWithValue(
-        error?.response?.data?.message ?? "Unable to create subscription plan.",
+        error?.response?.data?.message ||
+          error?.message ||
+          "Failed to create subscription plan.",
       );
     }
   },
 );
 
 export const updateSubscriptionPlan = createAsyncThunk(
-  "subscriptionPlans/update",
+  "subscriptionPlan/update",
   async ({ id, payload }, { rejectWithValue }) => {
     try {
-      const response = await subscriptionPlanService.updateSubscriptionPlan(
-        id,
-        payload,
-      );
+      const response = await subscriptionPlanService.update(id, payload);
 
-      return response.data?.data ?? null;
+      return response?.data ?? null;
     } catch (error) {
       return rejectWithValue(
-        error?.response?.data?.message ?? "Unable to update subscription plan.",
+        error?.response?.data?.message ||
+          error?.message ||
+          "Failed to update subscription plan.",
       );
     }
   },
 );
-
-/**
- * =============================================================================
- * Activate Subscription Plan
- * =============================================================================
- */
-
-export const activateSubscriptionPlan = createAsyncThunk(
-  "subscriptionPlans/activate",
-  async (id, { rejectWithValue }) => {
-    try {
-      const response =
-        await subscriptionPlanService.activateSubscriptionPlan(id);
-
-      return response.data?.data ?? null;
-    } catch (error) {
-      return rejectWithValue(
-        error?.response?.data?.message ??
-          "Unable to activate subscription plan.",
-      );
-    }
-  },
-);
-
-/**
- * =============================================================================
- * Deactivate Subscription Plan
- * =============================================================================
- */
-
-export const deactivateSubscriptionPlan = createAsyncThunk(
-  "subscriptionPlans/deactivate",
-  async (id, { rejectWithValue }) => {
-    try {
-      const response =
-        await subscriptionPlanService.deactivateSubscriptionPlan(id);
-
-      return response.data?.data ?? null;
-    } catch (error) {
-      return rejectWithValue(
-        error?.response?.data?.message ??
-          "Unable to deactivate subscription plan.",
-      );
-    }
-  },
-);
-
-/**
- * =============================================================================
- * Delete Subscription Plan
- * =============================================================================
- */
 
 export const deleteSubscriptionPlan = createAsyncThunk(
-  "subscriptionPlans/delete",
+  "subscriptionPlan/delete",
   async (id, { rejectWithValue }) => {
     try {
-      const response = await subscriptionPlanService.deleteSubscriptionPlan(id);
+      const response = await subscriptionPlanService.delete(id);
 
       return {
         id,
-        data: response.data?.data ?? null,
+        data: response?.data ?? null,
       };
     } catch (error) {
       return rejectWithValue(
-        error?.response?.data?.message ?? "Unable to delete subscription plan.",
-      );
-    }
-  },
-);
-
-/**
- * =============================================================================
- * Restore Subscription Plan
- * =============================================================================
- */
-
-export const restoreSubscriptionPlan = createAsyncThunk(
-  "subscriptionPlans/restore",
-  async (id, { rejectWithValue }) => {
-    try {
-      const response =
-        await subscriptionPlanService.restoreSubscriptionPlan(id);
-
-      return response.data?.data ?? null;
-    } catch (error) {
-      return rejectWithValue(
-        error?.response?.data?.message ??
-          "Unable to restore subscription plan.",
+        error?.response?.data?.message ||
+          error?.message ||
+          "Failed to delete subscription plan.",
       );
     }
   },

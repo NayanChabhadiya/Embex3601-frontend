@@ -1,57 +1,22 @@
 import { createBrowserRouter } from "react-router-dom";
 
-import { LoginPage } from "../modules/auth/pages";
 import { NotFound } from "../modules/public/pages/not-found";
-import { Dashboard } from "../modules/dashboard/pages/dashboard";
+import Dashboard from "../modules/dashboard/pages/dashboard/Dashboard.jsx";
 
 import AppLayout from "../components/layout/AppLayout";
-
-import PublicRoutes from "./PublicRoutes";
-import ProtectedRoutes from "./ProtectedRoutes";
-import PlatformAdminRoute from "./PlatformAdminRoute";
-import PlatformAdminDashboard from "../modules/platform-admin/pages/dashboard/PlatformAdminDashboard";
 import SubscriptionPlanPage from "../modules/platform-admin/subscription-plans/SubscriptionPlanPage";
-import Features from "../modules/platform-admin/features/Features";
 
 const router = createBrowserRouter([
   {
-    element: <PublicRoutes />,
+    element: <AppLayout />,
     children: [
       {
-        path: "/login",
-        element: <LoginPage />,
+        path: "/",
+        element: <Dashboard />,
       },
-    ],
-  },
-
-  {
-    element: <ProtectedRoutes />,
-    children: [
       {
-        element: <AppLayout />,
-        children: [
-          {
-            path: "/",
-            element: <Dashboard />,
-          },
-          {
-            element: <PlatformAdminRoute />,
-            children: [
-              {
-                path: "/platform-admin",
-                element: <PlatformAdminDashboard />,
-              },
-              {
-                path: "/platform-admin/features",
-                element: <Features />,
-              },
-              {
-                path: "/platform-admin/subscription-plans",
-                element: <SubscriptionPlanPage />,
-              },
-            ],
-          },
-        ],
+        path: "/platform-admin/subscription-plans",
+        element: <SubscriptionPlanPage />,
       },
     ],
   },

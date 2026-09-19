@@ -5,269 +5,142 @@ import {
   fetchSubscriptionPlanById,
   createSubscriptionPlan,
   updateSubscriptionPlan,
-  activateSubscriptionPlan,
-  deactivateSubscriptionPlan,
   deleteSubscriptionPlan,
-  restoreSubscriptionPlan,
 } from "./subscription-plan.thunks.js";
 
-const initialState = Object.freeze({
+const initialState = {
   plans: [],
-  meta: null,
+  selectedPlan: null,
   status: "idle",
   error: null,
-  currentRequestId: null,
-
-  selectedPlan: null,
-  selectedPlanStatus: "idle",
-  selectedPlanError: null,
-
-  createStatus: "idle",
-  createError: null,
-
-  updateStatus: "idle",
-  updateError: null,
-
-  activateStatus: "idle",
-  activateError: null,
-
-  deactivateStatus: "idle",
-  deactivateError: null,
-
-  deleteStatus: "idle",
-  deleteError: null,
-
-  restoreStatus: "idle",
-  restoreError: null,
-});
+};
 
 const subscriptionPlanSlice = createSlice({
-  name: "subscriptionPlans",
+  name: "subscriptionPlan",
+
   initialState,
+
   reducers: {
-    resetSubscriptionPlans(state) {
-      state.plans = [];
-      state.meta = null;
-      state.status = "idle";
+    clearSubscriptionPlanError: (state) => {
       state.error = null;
-      state.currentRequestId = null;
-
-      state.selectedPlan = null;
-      state.selectedPlanStatus = "idle";
-      state.selectedPlanError = null;
-
-      state.createStatus = "idle";
-      state.createError = null;
-
-      state.updateStatus = "idle";
-      state.updateError = null;
-
-      state.activateStatus = "idle";
-      state.activateError = null;
-
-      state.deactivateStatus = "idle";
-      state.deactivateError = null;
-
-      state.deleteStatus = "idle";
-      state.deleteError = null;
-
-      state.restoreStatus = "idle";
-      state.restoreError = null;
     },
 
-    clearSubscriptionPlanError(state) {
-      state.error = null;
+    clearSelectedSubscriptionPlan: (state) => {
+      state.selectedPlan = null;
     },
   },
 
   extraReducers: (builder) => {
     builder
-      .addCase(fetchSubscriptionPlans.pending, (state, action) => {
+      .addCase(fetchSubscriptionPlans.pending, (state) => {
         state.status = "loading";
         state.error = null;
-        state.currentRequestId = action.meta.requestId;
       })
 
       .addCase(fetchSubscriptionPlans.fulfilled, (state, action) => {
-        if (state.currentRequestId !== action.meta.requestId) {
-          return;
-        }
-
         state.status = "succeeded";
-        state.plans = action.payload?.plans ?? [];
-        state.meta = action.payload?.meta ?? null;
-        state.error = null;
-        state.currentRequestId = null;
+        state.plans = action.payload ?? [];
       })
 
       .addCase(fetchSubscriptionPlans.rejected, (state, action) => {
-        if (state.currentRequestId !== action.meta.requestId) {
-          return;
-        }
-
         state.status = "failed";
-        state.plans = [];
-        state.meta = null;
-        state.error = action.payload ?? "Unable to fetch subscription plans.";
-        state.currentRequestId = null;
+        state.error = action.payload;
       })
 
       .addCase(fetchSubscriptionPlanById.pending, (state) => {
-        state.selectedPlanStatus = "loading";
-        state.selectedPlanError = null;
+        state.status = "loading";
+        state.error = null;
       })
+
       .addCase(fetchSubscriptionPlanById.fulfilled, (state, action) => {
-        state.selectedPlanStatus = "succeeded";
+        state.status = "succeeded";
         state.selectedPlan = action.payload ?? null;
-        state.selectedPlanError = null;
       })
+
       .addCase(fetchSubscriptionPlanById.rejected, (state, action) => {
-        state.selectedPlanStatus = "failed";
-        state.selectedPlan = null;
-        state.selectedPlanError =
-          action.payload ?? "Unable to fetch subscription plan.";
+        state.status = "failed";
+        state.error = action.payload;
       })
+
       .addCase(createSubscriptionPlan.pending, (state) => {
-        state.createStatus = "loading";
-        state.createError = null;
+        state.status = "loading";
+        state.error = null;
       })
+
       .addCase(createSubscriptionPlan.fulfilled, (state, action) => {
-        state.createStatus = "succeeded";
-        state.createError = null;
+        state.status = "succeeded";
 
         if (action.payload) {
           state.plans.unshift(action.payload);
         }
       })
+
       .addCase(createSubscriptionPlan.rejected, (state, action) => {
-        state.createStatus = "failed";
-        state.createError =
-          action.payload ?? "Unable to create subscription plan.";
+        state.status = "failed";
+        state.error = action.payload;
       })
 
       .addCase(updateSubscriptionPlan.pending, (state) => {
-        state.updateStatus = "loading";
-        state.updateError = null;
+        state.status = "loading";
+        state.error = null;
       })
+
       .addCase(updateSubscriptionPlan.fulfilled, (state, action) => {
-        state.updateStatus = "succeeded";
-        state.updateError = null;
+        state.status = "succeeded";
 
-        if (action.payload) {
-          state.selectedPlan = action.payload;
+        const updatedPlan = action.payload;
+
+        if (!updatedPlan) {
+          return;
+        }
+
+        const index = state.plans.findIndex(
+          (plan) => plan._id === updatedPlan._id,
+        );
+
+        if (index !== -1) {
+          state.plans[index] = updatedPlan;
+        }
+
+        if (state.selectedPlan?._id === updatedPlan._id) {
+          state.selectedPlan = updatedPlan;
         }
       })
+
       .addCase(updateSubscriptionPlan.rejected, (state, action) => {
-        state.updateStatus = "failed";
-        state.updateError =
-          action.payload ?? "Unable to update subscription plan.";
-      })
-
-      .addCase(activateSubscriptionPlan.pending, (state) => {
-        state.activateStatus = "loading";
-        state.activateError = null;
-      })
-      .addCase(activateSubscriptionPlan.fulfilled, (state, action) => {
-        state.activateStatus = "succeeded";
-        state.activateError = null;
-
-        if (action.payload) {
-          state.selectedPlan = action.payload;
-
-          const index = state.plans.findIndex(
-            (plan) => plan._id === action.payload._id,
-          );
-
-          if (index !== -1) {
-            state.plans[index] = action.payload;
-          }
-        }
-      })
-      .addCase(activateSubscriptionPlan.rejected, (state, action) => {
-        state.activateStatus = "failed";
-        state.activateError =
-          action.payload ?? "Unable to activate subscription plan.";
-      })
-
-      .addCase(deactivateSubscriptionPlan.pending, (state) => {
-        state.deactivateStatus = "loading";
-        state.deactivateError = null;
-      })
-      .addCase(deactivateSubscriptionPlan.fulfilled, (state, action) => {
-        state.deactivateStatus = "succeeded";
-        state.deactivateError = null;
-
-        if (action.payload) {
-          state.selectedPlan = action.payload;
-
-          const index = state.plans.findIndex(
-            (plan) => plan._id === action.payload._id,
-          );
-
-          if (index !== -1) {
-            state.plans[index] = action.payload;
-          }
-        }
-      })
-      .addCase(deactivateSubscriptionPlan.rejected, (state, action) => {
-        state.deactivateStatus = "failed";
-        state.deactivateError =
-          action.payload ?? "Unable to deactivate subscription plan.";
+        state.status = "failed";
+        state.error = action.payload;
       })
 
       .addCase(deleteSubscriptionPlan.pending, (state) => {
-        state.deleteStatus = "loading";
-        state.deleteError = null;
+        state.status = "loading";
+        state.error = null;
       })
+
       .addCase(deleteSubscriptionPlan.fulfilled, (state, action) => {
-        state.deleteStatus = "succeeded";
-        state.deleteError = null;
+        state.status = "succeeded";
 
-        state.plans = state.plans.filter(
-          (plan) => plan._id !== action.payload?.id,
-        );
+        const deletedId = action.payload?.id;
 
-        if (state.selectedPlan?._id === action.payload?.id) {
+        if (!deletedId) {
+          return;
+        }
+
+        state.plans = state.plans.filter((plan) => plan._id !== deletedId);
+
+        if (state.selectedPlan?._id === deletedId) {
           state.selectedPlan = null;
         }
       })
+
       .addCase(deleteSubscriptionPlan.rejected, (state, action) => {
-        state.deleteStatus = "failed";
-        state.deleteError =
-          action.payload ?? "Unable to delete subscription plan.";
-      })
-
-      .addCase(restoreSubscriptionPlan.pending, (state) => {
-        state.restoreStatus = "loading";
-        state.restoreError = null;
-      })
-      .addCase(restoreSubscriptionPlan.fulfilled, (state, action) => {
-        state.restoreStatus = "succeeded";
-        state.restoreError = null;
-
-        if (action.payload) {
-          state.selectedPlan = action.payload;
-
-          const index = state.plans.findIndex(
-            (plan) => plan._id === action.payload._id,
-          );
-
-          if (index !== -1) {
-            state.plans[index] = action.payload;
-          } else {
-            state.plans.unshift(action.payload);
-          }
-        }
-      })
-      .addCase(restoreSubscriptionPlan.rejected, (state, action) => {
-        state.restoreStatus = "failed";
-        state.restoreError =
-          action.payload ?? "Unable to restore subscription plan.";
+        state.status = "failed";
+        state.error = action.payload;
       });
   },
 });
 
-export const { resetSubscriptionPlans, clearSubscriptionPlanError } =
+export const { clearSubscriptionPlanError, clearSelectedSubscriptionPlan } =
   subscriptionPlanSlice.actions;
 
 export default subscriptionPlanSlice.reducer;

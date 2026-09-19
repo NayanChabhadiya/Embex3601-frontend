@@ -1,31 +1,21 @@
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import { logout } from "../../../modules/auth/store/auth.thunks.js";
-import { resetPlatformAdmin } from "../../../modules/platform-admin/store/platform-admin.slice.js";
 import "./header.scss";
-import { selectPlatformAdminAccess } from "../../../modules/platform-admin/store/platform-admin.selectors.js";
 import Badge from "../../common/badge/Badge.jsx";
 
 function Header() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
-  const user = useSelector((state) => state.auth?.user);
-  const platformAdminAccess = useSelector(selectPlatformAdminAccess);
+  const user = null;
 
-  const platformAdminRole = platformAdminAccess?.role
-    ? platformAdminAccess.role.replace(/_/g, " ").toUpperCase()
-    : null;
-
-  const handleLogout = async () => {
-    try {
-      await dispatch(logout()).unwrap();
-    } finally {
-      dispatch(resetPlatformAdmin());
-      navigate("/login", { replace: true });
-    }
+  const platformAdminAccess = {
+    role: "super_admin",
   };
+
+  const platformAdminRoles = platformAdminAccess?.role
+    ? platformAdminAccess.role.replace(/\_/g, " ").toUpperCase()
+    : null;
 
   const displayName =
     [user?.firstName, user?.lastName].filter(Boolean).join(" ") ||
@@ -49,19 +39,11 @@ function Header() {
           <div className="app-header__badges">
             <Badge variant="neutral">{userType}</Badge>
 
-            {platformAdminRole && (
-              <Badge variant="primary">{platformAdminRole}</Badge>
+            {platformAdminRoles && (
+              <Badge variant="primary">{platformAdminRoles}</Badge>
             )}
           </div>
         </div>
-
-        <button
-          type="button"
-          className="app-header__logout"
-          onClick={handleLogout}
-        >
-          Logout
-        </button>
       </div>
     </header>
   );

@@ -6,6 +6,8 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   
 +---components
 |   +---common
+|   |   |   index.js
+|   |   |   
 |   |   +---badge
 |   |   |       Badge.jsx
 |   |   |       badge.scss
@@ -46,11 +48,6 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   |   |   |       FormField.jsx
 |   |   |   |       index.js
 |   |   |   |       
-|   |   |   +---form-grid
-|   |   |   |       form-grid.scss
-|   |   |   |       FormGrid.jsx
-|   |   |   |       index.js
-|   |   |   |       
 |   |   |   +---form-section
 |   |   |   |       form-section.scss
 |   |   |   |       FormSection.jsx
@@ -62,6 +59,7 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   |   |   |       input.scss
 |   |   |   |       
 |   |   |   +---multi-select
+|   |   |   |       index.js
 |   |   |   |       multi-select.scss
 |   |   |   |       MultiSelect.jsx
 |   |   |   |       
@@ -78,12 +76,27 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   |   +---grid
 |   |   |       Grid.jsx
 |   |   |       grid.scss
+|   |   |       GridItem.jsx
 |   |   |       index.js
+|   |   |       
+|   |   +---icons
+|   |   |       ActivateIcon.jsx
+|   |   |       DeactivateIcon.jsx
+|   |   |       DeleteIcon.jsx
+|   |   |       EditIcon.jsx
+|   |   |       index.js
+|   |   |       RestoreIcon.jsx
+|   |   |       ViewIcon.jsx
 |   |   |       
 |   |   +---loader
 |   |   |       Loader.jsx
 |   |   |       loader.scss
 |   |   |       LoaderProvider.jsx
+|   |   |       
+|   |   +---modal
+|   |   |       index.js
+|   |   |       Modal.jsx
+|   |   |       modal.scss
 |   |   |       
 |   |   +---table
 |   |   |       index.js
@@ -141,25 +154,6 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |                   
 +---modules
 |   +---auth
-|   |   +---hooks
-|   |   |       useAuth.js
-|   |   |       
-|   |   +---pages
-|   |   |   |   index.js
-|   |   |   |   
-|   |   |   \---login
-|   |   |           index.js
-|   |   |           Login.jsx
-|   |   |           login.scss
-|   |   |           
-|   |   +---services
-|   |   |       auth.service.js
-|   |   |       
-|   |   \---store
-|   |           auth.selectors.js
-|   |           auth.slice.js
-|   |           auth.thunks.js
-|   |           
 |   +---dashboard
 |   |   \---pages
 |   |       \---dashboard
@@ -168,49 +162,13 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   |               index.js
 |   |               
 |   +---platform-admin
-|   |   +---features
-|   |   |   +---services
-|   |   |   |       feature.service.js
-|   |   |   |       
-|   |   |   \---store
-|   |   |           feature.selectors.js
-|   |   |           feature.slice.js
-|   |   |           feature.thunks.js
-|   |   |           
-|   |   +---pages
-|   |   |   \---dashboard
-|   |   |           platform-admin-dashboard.scss
-|   |   |           PlatformAdminDashboard.jsx
-|   |   |           
-|   |   +---services
-|   |   |       platform-admin.service.js
-|   |   |       
-|   |   +---store
-|   |   |       platform-admin.selectors.js
-|   |   |       platform-admin.slice.js
-|   |   |       platform-admin.thunks.js
-|   |   |       
 |   |   \---subscription-plans
 |   |       |   SubscriptionPlanPage.jsx
 |   |       |   
-|   |       +---components
-|   |       |       SubscriptionPlanForm.jsx
-|   |       |       
-|   |       +---pages
-|   |       |   +---details
-|   |       |   |       SubscriptionPlanDetailsPage.jsx
-|   |       |   |       
-|   |       |   \---edit
-|   |       |           SubscriptionPlanEditPage.jsx
-|   |       |           
 |   |       +---services
-|   |       |       plan-feature.service.js
 |   |       |       subscription-plan.service.js
 |   |       |       
 |   |       \---store
-|   |               plan-feature.selectors.js
-|   |               plan-feature.slice.js
-|   |               plan-feature.thunks.js
 |   |               subscription-plan.selectors.js
 |   |               subscription-plan.slice.js
 |   |               subscription-plan.thunks.js
