@@ -36,3 +36,33 @@ export const selectSubscriptionPlanUpdateStatus = (state) =>
 
 export const selectSubscriptionPlanUpdateError = (state) =>
   selectSubscriptionPlanState(state).updateError;
+
+export const selectSubscriptionPlanCreateStatus = (state) =>
+  state.subscriptionPlans?.createStatus ?? "idle";
+
+export const selectSubscriptionPlanCreateError = (state) =>
+  state.subscriptionPlans?.createError ?? null;
+
+export const selectSubscriptionPlanActivateStatus = (state) =>
+  state.subscriptionPlans?.activateStatus ?? "idle";
+
+export const selectSubscriptionPlanActivateError = (state) =>
+  state.subscriptionPlans?.activateError ?? null;
+
+export const selectSubscriptionPlanDeactivateStatus = (state) =>
+  state.subscriptionPlans?.deactivateStatus ?? "idle";
+
+export const selectSubscriptionPlanDeactivateError = (state) =>
+  state.subscriptionPlans?.deactivateError ?? null;
+
+export const selectSubscriptionPlanDeleteStatus = (state) =>
+  state.subscriptionPlans?.deleteStatus ?? "idle";
+
+export const selectSubscriptionPlanDeleteError = (state) =>
+  state.subscriptionPlans?.deleteError ?? null;
+
+export const selectSubscriptionPlanRestoreStatus = (state) =>
+  state.subscriptionPlans?.restoreStatus ?? "idle";
+
+export const selectSubscriptionPlanRestoreError = (state) =>
+  state.subscriptionPlans?.restoreError ?? null;

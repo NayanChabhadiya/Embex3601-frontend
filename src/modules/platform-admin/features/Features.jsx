@@ -5,7 +5,12 @@ import PageHeader from "../../../components/layout/page/components/PageHeader";
 import Table from "../../../components/common/table/Table";
 import Modal from "../../../components/common/modal/Modal";
 import { Button } from "../../../components/common";
-import { Checkbox, Input, Select, Textarea } from "../../../components/common/form";
+import {
+  Checkbox,
+  Input,
+  Select,
+  Textarea,
+} from "../../../components/common/form";
 import Grid from "../../../components/common/grid/Grid";
 import GridItem from "../../../components/common/grid/GridItem";
 
@@ -39,6 +44,7 @@ import {
   deleteFeature,
   restoreFeature,
 } from "./store/feature.thunks";
+import Badge from "../../../components/common/badge/Badge";
 
 function Features() {
   const dispatch = useDispatch();
@@ -650,7 +656,17 @@ function Features() {
     {
       key: "status",
       label: "Status",
-      render: (row) => row.status,
+      render: (row) => {
+        if (row.isDeleted) {
+          return <Badge variant="danger">Deleted</Badge>;
+        }
+
+        return (
+          <Badge variant={row.status === "active" ? "success" : "neutral"}>
+            {row.status === "active" ? "Active" : "Inactive"}
+          </Badge>
+        );
+      },
     },
 
     {
@@ -920,26 +936,6 @@ function Features() {
         searchPlaceholder="Search features..."
         onFilter={openFilter}
         onColumns={openColumns}
-        action={
-          <Select
-            label="Records"
-            value={isDeleted ? "deleted" : "active"}
-            onChange={(event) => {
-              setIsDeleted(event.target.value === "deleted");
-              setPage(1);
-            }}
-            options={[
-              {
-                value: "active",
-                label: "Active Features",
-              },
-              {
-                value: "deleted",
-                label: "Deleted Features",
-              },
-            ]}
-          />
-        }
       />
 
       {/* =====================================================================
@@ -1000,6 +996,7 @@ function Features() {
           />
         </div>
       </Modal>
+
       <Modal
         isOpen={isFilterOpen}
         onClose={closeFilter}
@@ -1017,7 +1014,7 @@ function Features() {
           </>
         }
       >
-        <Grid columns={2} gap={16}>
+        <Grid columns={3} gap={16}>
           <GridItem>
             <Select
               label="Status"
@@ -1053,6 +1050,26 @@ function Features() {
                 {
                   value: "capability",
                   label: "Capability",
+                },
+              ]}
+            />
+          </GridItem>
+          <GridItem>
+            <Select
+              label="Records"
+              value={isDeleted ? "deleted" : "active"}
+              onChange={(event) => {
+                setIsDeleted(event.target.value === "deleted");
+                setPage(1);
+              }}
+              options={[
+                {
+                  value: "active",
+                  label: "Active Features",
+                },
+                {
+                  value: "deleted",
+                  label: "Deleted Features",
                 },
               ]}
             />

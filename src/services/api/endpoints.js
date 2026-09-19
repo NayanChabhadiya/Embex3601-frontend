@@ -19,6 +19,18 @@ const API_ENDPOINTS = Object.freeze({
     RESTORE: (id) => `/features/${id}/restore`,
   }),
 
+  SUBSCRIPTION_PLANS: Object.freeze({
+    LIST: "/subscription-plans",
+    ACTIVE: "/subscription-plans/active",
+    BY_ID: (id) => `/subscription-plans/${id}`,
+    CREATE: "/subscription-plans",
+    UPDATE: (id) => `/subscription-plans/${id}`,
+    ACTIVATE: (id) => `/subscription-plans/${id}/activate`,
+    DEACTIVATE: (id) => `/subscription-plans/${id}/deactivate`,
+    DELETE: (id) => `/subscription-plans/${id}`,
+    RESTORE: (id) => `/subscription-plans/${id}/restore`,
+  }),
+
   PLAN_FEATURES: Object.freeze({
     LIST: (subscriptionPlanId) =>
       `/subscription-plans/${subscriptionPlanId}/features`,
@@ -30,18 +42,6 @@ const API_ENDPOINTS = Object.freeze({
       `/subscription-plans/${subscriptionPlanId}/features/${featureId}`,
     DELETE: (subscriptionPlanId, featureId) =>
       `/subscription-plans/${subscriptionPlanId}/features/${featureId}`,
-  }),
-
-  SUBSCRIPTION_PLANS: Object.freeze({
-    LIST: "/subscription-plans",
-    ACTIVE: "/subscription-plans/active",
-    BY_ID: (id) => `/subscription-plans/${id}`,
-    CREATE: "/subscription-plans",
-    UPDATE: (id) => `/subscription-plans/${id}`,
-    ACTIVATE: (id) => `/subscription-plans/${id}/activate`,
-    DEACTIVATE: (id) => `/subscription-plans/${id}/deactivate`,
-    DELETE: (id) => `/subscription-plans/${id}`,
-    RESTORE: (id) => `/subscription-plans/${id}/restore`,
   }),
 });
 
