@@ -7,6 +7,14 @@ const API_ENDPOINTS = Object.freeze({
     BASE: "/subscription-plans",
     BY_ID: (id) => `/subscription-plans/${id}`,
   },
+  FEATURES: {
+    BASE: "/features",
+    BY_ID: (id) => `/features/${id}`,
+  },
+  PLAN_FEATURES: {
+    BASE: "/plan-features",
+    BY_ID: (id) => `/plan-features/${id}`,
+  },
 });
 
 export default API_ENDPOINTS;

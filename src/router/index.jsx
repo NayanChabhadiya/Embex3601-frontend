@@ -5,6 +5,8 @@ import Dashboard from "../modules/dashboard/pages/dashboard/Dashboard.jsx";
 
 import AppLayout from "../components/layout/AppLayout";
 import SubscriptionPlanPage from "../modules/platform-admin/subscription-plans/SubscriptionPlanPage";
+import FeaturePage from "../modules/platform-admin/features/FeaturePage.jsx";
+import PlanFeaturePage from "../modules/platform-admin/plan-features/PlanFeaturePage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +19,14 @@ const router = createBrowserRouter([
       {
         path: "/platform-admin/subscription-plans",
         element: <SubscriptionPlanPage />,
+      },
+      {
+        path: "/platform-admin/features",
+        element: <FeaturePage />,
+      },
+      {
+        path: "/platform-admin/plan-features",
+        element: <PlanFeaturePage />,
       },
     ],
   },

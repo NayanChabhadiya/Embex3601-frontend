@@ -162,6 +162,15 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   |               index.js
 |   |               
 |   +---platform-admin
+|   |   +---features
+|   |   |   +---services
+|   |   |   |       feature.service.js
+|   |   |   |       
+|   |   |   \---store
+|   |   |           feature.selectors.js
+|   |   |           feature.slice.js
+|   |   |           feature.thunks.js
+|   |   |           
 |   |   \---subscription-plans
 |   |       |   SubscriptionPlanPage.jsx
 |   |       |   
