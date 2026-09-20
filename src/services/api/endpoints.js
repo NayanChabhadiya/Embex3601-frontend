@@ -1,6 +1,9 @@
 const API_ENDPOINTS = Object.freeze({
   AUTH: Object.freeze({
+    LOGIN: "/auth/login",
     REFRESH: "/auth/refresh",
+    LOGOUT: "/auth/logout",
+    ME: "/auth/me",
   }),
 
   SUBSCRIPTION_PLANS: {
@@ -14,6 +17,18 @@ const API_ENDPOINTS = Object.freeze({
   PLAN_FEATURES: {
     BASE: "/plan-features",
     BY_ID: (id) => `/plan-features/${id}`,
+  },
+  ACCOUNTS: {
+    BASE: "/accounts",
+    BY_ID: (id) => `/accounts/${id}`,
+  },
+  USERS: {
+    BASE: "/users",
+    BY_ID: (id) => `/users/${id}`,
+  },
+  WORKSPACES: {
+    BASE: "/workspaces",
+    BY_ID: (id) => `/workspaces/${id}`,
   },
 });
 

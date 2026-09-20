@@ -7,6 +7,10 @@ import AppLayout from "../components/layout/AppLayout";
 import SubscriptionPlanPage from "../modules/platform-admin/subscription-plans/SubscriptionPlanPage";
 import FeaturePage from "../modules/platform-admin/features/FeaturePage.jsx";
 import PlanFeaturePage from "../modules/platform-admin/plan-features/PlanFeaturePage.jsx";
+import AccountPage from "../modules/account/AccountPage.jsx";
+import UserPage from "../modules/user/UserPage.jsx";
+import Login from "../modules/auth/pages/login/Login.jsx";
+import WorkspacePage from "../modules/workspace/WorkspacePage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -16,6 +20,7 @@ const router = createBrowserRouter([
         path: "/",
         element: <Dashboard />,
       },
+
       {
         path: "/platform-admin/subscription-plans",
         element: <SubscriptionPlanPage />,
@@ -28,9 +33,24 @@ const router = createBrowserRouter([
         path: "/platform-admin/plan-features",
         element: <PlanFeaturePage />,
       },
+      {
+        path: "/accounts",
+        element: <AccountPage />,
+      },
+      {
+        path: "/users",
+        element: <UserPage />,
+      },
+      {
+        path: "/workspaces",
+        element: <WorkspacePage />,
+      },
     ],
   },
-
+  {
+    path: "/login",
+    element: <Login />,
+  },
   {
     path: "*",
     element: <NotFound />,

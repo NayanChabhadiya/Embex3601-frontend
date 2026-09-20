@@ -153,7 +153,30 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |                   is-sidebar-section-active.js
 |                   
 +---modules
+|   +---account
+|   |   |   AccountPage.jsx
+|   |   |   
+|   |   +---services
+|   |   |       account.service.js
+|   |   |       
+|   |   \---store
+|   |           account.selectors.js
+|   |           account.slice.js
+|   |           account.thunks.js
+|   |           
 |   +---auth
+|   |   +---pages
+|   |   |   \---login
+|   |   |           Login.jsx
+|   |   |           
+|   |   +---services
+|   |   |       authentication.service.js
+|   |   |       
+|   |   \---store
+|   |           authentication.selectors.js
+|   |           authentication.slice.js
+|   |           authentication.thunks.js
+|   |           
 |   +---dashboard
 |   |   \---pages
 |   |       \---dashboard
@@ -163,6 +186,8 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   |               
 |   +---platform-admin
 |   |   +---features
+|   |   |   |   FeaturePage.jsx
+|   |   |   |   
 |   |   |   +---services
 |   |   |   |       feature.service.js
 |   |   |   |       
@@ -170,6 +195,17 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   |   |           feature.selectors.js
 |   |   |           feature.slice.js
 |   |   |           feature.thunks.js
+|   |   |           
+|   |   +---plan-features
+|   |   |   |   PlanFeaturePage.jsx
+|   |   |   |   
+|   |   |   +---services
+|   |   |   |       plan-feature.service.js
+|   |   |   |       
+|   |   |   \---store
+|   |   |           plan-feature.selectors.js
+|   |   |           plan-feature.slice.js
+|   |   |           plan-feature.thunks.js
 |   |   |           
 |   |   \---subscription-plans
 |   |       |   SubscriptionPlanPage.jsx
@@ -182,12 +218,23 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   |               subscription-plan.slice.js
 |   |               subscription-plan.thunks.js
 |   |               
-|   \---public
-|       \---pages
-|           \---not-found
-|                   index.js
-|                   NotFound.jsx
-|                   
+|   +---public
+|   |   \---pages
+|   |       \---not-found
+|   |               index.js
+|   |               NotFound.jsx
+|   |               
+|   \---user
+|       |   UserPage.jsx
+|       |   
+|       +---services
+|       |       user.service.js
+|       |       
+|       \---store
+|               user.selectors.js
+|               user.slice.js
+|               user.thunks.js
+|               
 +---router
 |       index.jsx
 |       PlatformAdminRoute.jsx
