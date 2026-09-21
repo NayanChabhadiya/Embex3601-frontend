@@ -30,6 +30,38 @@ const API_ENDPOINTS = Object.freeze({
     BASE: "/workspaces",
     BY_ID: (id) => `/workspaces/${id}`,
   },
+  WORKSPACE_MEMBERSHIPS: {
+    BASE: "/workspace-memberships",
+    BY_ID: (id) => `/workspace-memberships/${id}`,
+  },
+  WORKSPACE_SUBSCRIPTIONS: {
+    BASE: "/workspace-subscriptions",
+    BY_ID: (id) => `/workspace-subscriptions/${id}`,
+  },
+  UNITS: {
+    BASE: "/units",
+    BY_ID: (id) => `/units/${id}`,
+  },
+  TAXES: {
+    BASE: "/taxes",
+    BY_ID: (id) => `/taxes/${id}`,
+  },
+  CURRENCIES: {
+    BASE: "/currencies",
+    BY_ID: (id) => `/currencies/${id}`,
+  },
+  PAYMENT_TERMS: {
+    BASE: "/payment-terms",
+    BY_ID: (id) => `/payment-terms/${id}`,
+  },
+  BANKS: {
+    BASE: "/banks",
+    BY_ID: (id) => `/banks/${id}`,
+  },
+  HSN_SAC: {
+    BASE: "/hsn-sac",
+    BY_ID: (id) => `/hsn-sac/${id}`,
+  },
 });
 
 export default API_ENDPOINTS;

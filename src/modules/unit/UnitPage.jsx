@@ -17,21 +17,15 @@ import { DeleteIcon, EditIcon, ViewIcon } from "../../components/common/icons";
 import { useToast } from "../../components/common/toast/ToastProvider.jsx";
 
 import {
-  fetchWorkspaces,
-  createWorkspace,
-  updateWorkspace,
-  deleteWorkspace,
-} from "./store/workspace.thunks.js";
+  fetchUnits,
+  createUnit,
+  updateUnit,
+  deleteUnit,
+} from "./store/unit.thunks.js";
 
-import { setSelectedWorkspace } from "./store/workspace.slice.js";
+import { selectUnits, selectUnitStatus } from "./store/unit.selectors.js";
 
-import {
-  selectWorkspaces,
-  selectWorkspaceStatus,
-  selectSelectedWorkspace,
-} from "./store/workspace.selectors.js";
-
-function WorkspacePage() {
+function UnitPage() {
   const dispatch = useDispatch();
 
   const { showToast } = useToast();
@@ -40,11 +34,8 @@ function WorkspacePage() {
   // Redux State
   // =========================================================
 
-  const workspaces = useSelector(selectWorkspaces);
-
-  const status = useSelector(selectWorkspaceStatus);
-
-  const selectedWorkspace = useSelector(selectSelectedWorkspace);
+  const units = useSelector(selectUnits);
+  const status = useSelector(selectUnitStatus);
 
   // =========================================================
   // Modal State
@@ -55,49 +46,33 @@ function WorkspacePage() {
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
 
   // =========================================================
-  // View / Editing Workspace
+  // Selected / Editing Unit
   // =========================================================
 
-  // Used only for View modal
-  const [viewWorkspace, setViewWorkspace] = useState(null);
+  const [selectedUnit, setSelectedUnit] = useState(null);
 
-  // Used only for Edit modal
-  const [editingWorkspace, setEditingWorkspace] = useState(null);
+  const [editingUnit, setEditingUnit] = useState(null);
 
   // =========================================================
-  // Workspace Form
+  // Unit Form
   // =========================================================
 
   const [formData, setFormData] = useState({
-    accountId: "",
     name: "",
     code: "",
+    symbol: "",
     description: "",
-    type: "BUSINESS_UNIT",
+    type: "QUANTITY",
     status: "ACTIVE",
   });
 
   // =========================================================
-  // Fetch Workspaces
+  // Fetch Units
   // =========================================================
 
   useEffect(() => {
-    dispatch(fetchWorkspaces());
+    dispatch(fetchUnits());
   }, [dispatch]);
-
-  // =========================================================
-  // Select Active Workspace
-  // =========================================================
-
-  const handleWorkspaceSelect = (workspace) => {
-    dispatch(setSelectedWorkspace(workspace));
-
-    showToast({
-      type: "success",
-      title: "Workspace Selected",
-      message: `${workspace?.name || "Workspace"} selected successfully.`,
-    });
-  };
 
   // =========================================================
   // Form Change
@@ -118,15 +93,15 @@ function WorkspacePage() {
 
   const resetForm = () => {
     setFormData({
-      accountId: "",
       name: "",
       code: "",
+      symbol: "",
       description: "",
-      type: "BUSINESS_UNIT",
+      type: "QUANTITY",
       status: "ACTIVE",
     });
 
-    setEditingWorkspace(null);
+    setEditingUnit(null);
   };
 
   // =========================================================
@@ -143,8 +118,8 @@ function WorkspacePage() {
   // Open View Modal
   // =========================================================
 
-  const handleView = (workspace) => {
-    setViewWorkspace(workspace);
+  const handleView = (unit) => {
+    setSelectedUnit(unit);
 
     setIsViewModalOpen(true);
   };
@@ -153,38 +128,33 @@ function WorkspacePage() {
   // Open Edit Modal
   // =========================================================
 
-  const handleEdit = (workspace) => {
-    setEditingWorkspace(workspace);
+  const handleEdit = (unit) => {
+    setEditingUnit(unit);
 
     setFormData({
-      accountId: workspace.accountId?._id || workspace.accountId || "",
-
-      name: workspace.name || "",
-
-      code: workspace.code || "",
-
-      description: workspace.description || "",
-
-      type: workspace.type || "BUSINESS_UNIT",
-
-      status: workspace.status || "ACTIVE",
+      name: unit.name || "",
+      code: unit.code || "",
+      symbol: unit.symbol || "",
+      description: unit.description || "",
+      type: unit.type || "QUANTITY",
+      status: unit.status || "ACTIVE",
     });
 
     setIsModalOpen(true);
   };
 
   // =========================================================
-  // Delete Workspace
+  // Delete Unit
   // =========================================================
 
-  const handleDelete = async (workspace) => {
-    const result = await dispatch(deleteWorkspace(workspace._id));
+  const handleDelete = async (unit) => {
+    const result = await dispatch(deleteUnit(unit._id));
 
-    if (deleteWorkspace.fulfilled.match(result)) {
+    if (deleteUnit.fulfilled.match(result)) {
       showToast({
         type: "success",
-        title: "Workspace Deleted",
-        message: "Workspace deleted successfully.",
+        title: "Unit Deleted",
+        message: "Unit deleted successfully.",
       });
 
       return;
@@ -193,7 +163,7 @@ function WorkspacePage() {
     showToast({
       type: "error",
       title: "Error",
-      message: result?.payload || "Failed to delete workspace.",
+      message: result?.payload || "Failed to delete unit.",
     });
   };
 
@@ -208,37 +178,32 @@ function WorkspacePage() {
     // UPDATE
     // ---------------------------------------------------------
 
-    if (editingWorkspace) {
+    if (editingUnit) {
       const payload = {
-        accountId: formData.accountId,
-
         name: formData.name,
-
         code: formData.code,
-
+        symbol: formData.symbol,
         description: formData.description,
-
         type: formData.type,
-
         status: formData.status,
       };
 
       const result = await dispatch(
-        updateWorkspace({
-          id: editingWorkspace._id,
+        updateUnit({
+          id: editingUnit._id,
           payload,
         }),
       );
 
-      if (updateWorkspace.fulfilled.match(result)) {
+      if (updateUnit.fulfilled.match(result)) {
         setIsModalOpen(false);
 
         resetForm();
 
         showToast({
           type: "success",
-          title: "Workspace Updated",
-          message: "Workspace updated successfully.",
+          title: "Unit Updated",
+          message: "Unit updated successfully.",
         });
 
         return;
@@ -247,7 +212,7 @@ function WorkspacePage() {
       showToast({
         type: "error",
         title: "Error",
-        message: result?.payload || "Failed to update workspace.",
+        message: result?.payload || "Failed to update unit.",
       });
 
       return;
@@ -257,17 +222,17 @@ function WorkspacePage() {
     // CREATE
     // ---------------------------------------------------------
 
-    const result = await dispatch(createWorkspace(formData));
+    const result = await dispatch(createUnit(formData));
 
-    if (createWorkspace.fulfilled.match(result)) {
+    if (createUnit.fulfilled.match(result)) {
       setIsModalOpen(false);
 
       resetForm();
 
       showToast({
         type: "success",
-        title: "Workspace Created",
-        message: "Workspace created successfully.",
+        title: "Unit Created",
+        message: "Unit created successfully.",
       });
 
       return;
@@ -276,7 +241,7 @@ function WorkspacePage() {
     showToast({
       type: "error",
       title: "Error",
-      message: result?.payload || "Failed to create workspace.",
+      message: result?.payload || "Failed to create unit.",
     });
   };
 
@@ -301,11 +266,8 @@ function WorkspacePage() {
     },
 
     {
-      key: "accountId",
-      label: "Account",
-
-      render: (row) =>
-        row.accountId?.name || row.accountId?.code || row.accountId || "-",
+      key: "symbol",
+      label: "Symbol",
     },
 
     {
@@ -319,31 +281,6 @@ function WorkspacePage() {
 
       render: (row) => <Badge>{row.status}</Badge>,
     },
-
-    // =======================================================
-    // Selected Workspace
-    // =======================================================
-
-    {
-      key: "selected",
-      label: "Workspace",
-
-      render: (row) => {
-        const isSelected = selectedWorkspace?._id === row._id;
-
-        return isSelected ? (
-          <Badge>Selected</Badge>
-        ) : (
-          <Button type="button" onClick={() => handleWorkspaceSelect(row)}>
-            Select
-          </Button>
-        );
-      },
-    },
-
-    // =======================================================
-    // Actions
-    // =======================================================
 
     {
       key: "actions",
@@ -365,10 +302,6 @@ function WorkspacePage() {
     },
   ];
 
-  // =========================================================
-  // Render
-  // =========================================================
-
   return (
     <section>
       {/* =====================================================
@@ -376,42 +309,27 @@ function WorkspacePage() {
       ===================================================== */}
 
       <PageHeader
-        title="Workspaces"
-        description="Manage Embex360 workspaces."
+        title="Units"
+        description="Manage measurement units."
         actions={
           <Button type="button" onClick={handleCreate}>
-            Add Workspace
+            Add Unit
           </Button>
         }
       />
 
       {/* =====================================================
-          Currently Selected Workspace
-      ===================================================== */}
-
-      {selectedWorkspace && (
-        <div
-          style={{
-            marginBottom: "16px",
-          }}
-        >
-          <strong>Active Workspace:</strong>{" "}
-          {selectedWorkspace.name || selectedWorkspace.code || "-"}
-        </div>
-      )}
-
-      {/* =====================================================
-          Workspace Table
+          Unit Table
       ===================================================== */}
 
       <Table
-        title="Workspaces"
+        title="Units"
         columns={columns}
-        data={workspaces}
+        data={units}
         rowKey="_id"
-        emptyMessage="No workspaces found."
+        emptyMessage="No units found."
         loading={status === "loading"}
-        searchPlaceholder="Search workspaces..."
+        searchPlaceholder="Search units..."
       />
 
       {/* =====================================================
@@ -422,53 +340,51 @@ function WorkspacePage() {
         isOpen={isModalOpen}
         onClose={() => {
           setIsModalOpen(false);
-
           resetForm();
         }}
-        title={editingWorkspace ? "Edit Workspace" : "Add Workspace"}
+        title={editingUnit ? "Edit Unit" : "Add Unit"}
         footer={
           <>
             <Button
               type="button"
               onClick={() => {
                 setIsModalOpen(false);
-
                 resetForm();
               }}
             >
               Cancel
             </Button>
 
-            <Button type="submit" form="workspace-form">
-              {editingWorkspace ? "Update Workspace" : "Create Workspace"}
+            <Button type="submit" form="unit-form">
+              {editingUnit ? "Update Unit" : "Create Unit"}
             </Button>
           </>
         }
       >
-        <form id="workspace-form" onSubmit={handleSubmit}>
+        <form id="unit-form" onSubmit={handleSubmit}>
           <Grid>
             <Input
-              label="Account ID"
-              name="accountId"
-              value={formData.accountId}
-              onChange={handleChange}
-              placeholder="Enter account ID"
-            />
-
-            <Input
-              label="Workspace Name"
+              label="Unit Name"
               name="name"
               value={formData.name}
               onChange={handleChange}
-              placeholder="Enter workspace name"
+              placeholder="Enter unit name"
             />
 
             <Input
-              label="Workspace Code"
+              label="Unit Code"
               name="code"
               value={formData.code}
               onChange={handleChange}
-              placeholder="Enter workspace code"
+              placeholder="Enter unit code"
+            />
+
+            <Input
+              label="Symbol"
+              name="symbol"
+              value={formData.symbol}
+              onChange={handleChange}
+              placeholder="Enter unit symbol"
             />
 
             <Select
@@ -478,12 +394,32 @@ function WorkspacePage() {
               onChange={handleChange}
               options={[
                 {
-                  value: "BUSINESS_GROUP",
-                  label: "Business Group",
+                  value: "QUANTITY",
+                  label: "Quantity",
                 },
                 {
-                  value: "BUSINESS_UNIT",
-                  label: "Business Unit",
+                  value: "WEIGHT",
+                  label: "Weight",
+                },
+                {
+                  value: "LENGTH",
+                  label: "Length",
+                },
+                {
+                  value: "AREA",
+                  label: "Area",
+                },
+                {
+                  value: "VOLUME",
+                  label: "Volume",
+                },
+                {
+                  value: "TIME",
+                  label: "Time",
+                },
+                {
+                  value: "OTHER",
+                  label: "Other",
                 },
               ]}
             />
@@ -510,67 +446,61 @@ function WorkspacePage() {
               name="description"
               value={formData.description}
               onChange={handleChange}
-              placeholder="Enter workspace description"
+              placeholder="Enter unit description"
             />
           </Grid>
         </form>
       </Modal>
 
       {/* =====================================================
-          View Workspace Modal
+          View Unit Modal
       ===================================================== */}
 
       <Modal
         isOpen={isViewModalOpen}
         onClose={() => {
           setIsViewModalOpen(false);
-
-          setViewWorkspace(null);
+          setSelectedUnit(null);
         }}
-        title="View Workspace"
+        title="View Unit"
       >
-        {viewWorkspace && (
+        {selectedUnit && (
           <Grid columns={1}>
             <div>
-              <strong>Workspace Name</strong>
+              <strong>Unit Name</strong>
 
-              <div>{viewWorkspace.name || "-"}</div>
+              <div>{selectedUnit.name || "-"}</div>
             </div>
 
             <div>
-              <strong>Workspace Code</strong>
+              <strong>Unit Code</strong>
 
-              <div>{viewWorkspace.code || "-"}</div>
+              <div>{selectedUnit.code || "-"}</div>
             </div>
 
             <div>
-              <strong>Account</strong>
+              <strong>Symbol</strong>
 
-              <div>
-                {viewWorkspace.accountId?.name ||
-                  viewWorkspace.accountId?.code ||
-                  viewWorkspace.accountId ||
-                  "-"}
-              </div>
+              <div>{selectedUnit.symbol || "-"}</div>
             </div>
 
             <div>
               <strong>Type</strong>
 
-              <div>{viewWorkspace.type || "-"}</div>
+              <div>{selectedUnit.type || "-"}</div>
             </div>
 
             <div>
               <strong>Description</strong>
 
-              <div>{viewWorkspace.description || "-"}</div>
+              <div>{selectedUnit.description || "-"}</div>
             </div>
 
             <div>
               <strong>Status</strong>
 
               <div>
-                <Badge>{viewWorkspace.status}</Badge>
+                <Badge>{selectedUnit.status}</Badge>
               </div>
             </div>
 
@@ -578,36 +508,9 @@ function WorkspacePage() {
               <strong>Created At</strong>
 
               <div>
-                {viewWorkspace.createdAt
-                  ? new Date(viewWorkspace.createdAt).toLocaleString()
+                {selectedUnit.createdAt
+                  ? new Date(selectedUnit.createdAt).toLocaleString()
                   : "-"}
-              </div>
-            </div>
-
-            {/* =================================================
-                Selected Status
-            ================================================= */}
-
-            <div>
-              <strong>Workspace Selection</strong>
-
-              <div>
-                {selectedWorkspace?._id === viewWorkspace._id ? (
-                  <Badge>Currently Selected</Badge>
-                ) : (
-                  <Button
-                    type="button"
-                    onClick={() => {
-                      handleWorkspaceSelect(viewWorkspace);
-
-                      setIsViewModalOpen(false);
-
-                      setViewWorkspace(null);
-                    }}
-                  >
-                    Select Workspace
-                  </Button>
-                )}
               </div>
             </div>
           </Grid>
@@ -617,4 +520,4 @@ function WorkspacePage() {
   );
 }
 
-export default WorkspacePage;
+export default UnitPage;

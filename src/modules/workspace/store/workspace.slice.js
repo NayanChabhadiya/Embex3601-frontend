@@ -26,14 +26,30 @@ const workspaceSlice = createSlice({
   initialState,
 
   reducers: {
+    // --------------------------------------------------
+    // Set Selected Workspace
+    // --------------------------------------------------
+    setSelectedWorkspace: (state, action) => {
+      state.selectedWorkspace = action.payload || null;
+    },
+
+    // --------------------------------------------------
+    // Clear Workspace Error
+    // --------------------------------------------------
     clearWorkspaceError: (state) => {
       state.error = null;
     },
 
+    // --------------------------------------------------
+    // Clear Selected Workspace
+    // --------------------------------------------------
     clearSelectedWorkspace: (state) => {
       state.selectedWorkspace = null;
     },
 
+    // --------------------------------------------------
+    // Reset Workspace State
+    // --------------------------------------------------
     resetWorkspaceState: () => initialState,
   },
 
@@ -174,6 +190,7 @@ const workspaceSlice = createSlice({
 });
 
 export const {
+  setSelectedWorkspace,
   clearWorkspaceError,
   clearSelectedWorkspace,
   resetWorkspaceState,
