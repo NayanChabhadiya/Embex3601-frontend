@@ -144,6 +144,13 @@ export const SIDEBAR_MENU = [
         path: "/items",
         icon: "users",
       },
+      {
+        key: "purchase-companies",
+        type: "item",
+        label: "Purchase Company",
+        path: "/purchase-companies",
+        icon: "users",
+      },
     ],
   },
   {

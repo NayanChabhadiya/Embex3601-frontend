@@ -22,6 +22,7 @@ import HsnSacPage from "../modules/hsn-sac/HsnSacPage.jsx";
 import PartnerCategoryPage from "../modules/partner-category/PartnerCategoryPage.jsx";
 import ProductCategoryPage from "../modules/product-category/ProductCategoryPage.jsx";
 import ItemPage from "../modules/item/ItemPage.jsx";
+import PurchaseCompanyPage from "../modules/purchase-company/PurchaseCompanyPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -99,6 +100,10 @@ const router = createBrowserRouter([
       {
         path: "/items",
         element: <ItemPage />,
+      },
+      {
+        path: "/purchase-companies",
+        element: <PurchaseCompanyPage />,
       },
     ],
   },
