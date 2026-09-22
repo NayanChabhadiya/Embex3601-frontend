@@ -19,6 +19,8 @@ import CurrencyPage from "../modules/currency/CurrencyPage.jsx";
 import PaymentTermPage from "../modules/payment-term/PaymentTermPage.jsx";
 import BankPage from "../modules/bank/BankPage.jsx";
 import HsnSacPage from "../modules/hsn-sac/HsnSacPage.jsx";
+import PartnerCategoryPage from "../modules/partner-category/PartnerCategoryPage.jsx";
+import ProductCategoryPage from "../modules/product-category/ProductCategoryPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -84,6 +86,14 @@ const router = createBrowserRouter([
       {
         path: "/hsn-sac",
         element: <HsnSacPage />,
+      },
+      {
+        path: "/partner-categories",
+        element: <PartnerCategoryPage />,
+      },
+      {
+        path: "/product-categories",
+        element: <ProductCategoryPage />,
       },
     ],
   },

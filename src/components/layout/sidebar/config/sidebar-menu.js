@@ -109,7 +109,7 @@ export const SIDEBAR_MENU = [
         path: "/payment-terms",
         icon: "users",
       },
-       {
+      {
         key: "banks",
         type: "item",
         label: "Banks",
@@ -121,6 +121,20 @@ export const SIDEBAR_MENU = [
         type: "item",
         label: "HSN & SAC",
         path: "/hsn-sac",
+        icon: "users",
+      },
+      {
+        key: "partner-categories",
+        type: "item",
+        label: "Partner Category",
+        path: "/partner-categories",
+        icon: "users",
+      },
+      {
+        key: "product-categories",
+        type: "item",
+        label: "Product Category",
+        path: "/product-categories",
         icon: "users",
       },
     ],

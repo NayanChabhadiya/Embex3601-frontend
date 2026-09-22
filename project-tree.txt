@@ -177,6 +177,28 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   |           authentication.slice.js
 |   |           authentication.thunks.js
 |   |           
+|   +---bank
+|   |   |   BankPage.jsx
+|   |   |   
+|   |   +---services
+|   |   |       bank.service.js
+|   |   |       
+|   |   \---store
+|   |           bank.selectors.js
+|   |           bank.slice.js
+|   |           bank.thunks.js
+|   |           
+|   +---currency
+|   |   |   CurrencyPage.jsx
+|   |   |   
+|   |   +---services
+|   |   |       currency.service.js
+|   |   |       
+|   |   \---store
+|   |           currency.selectors.js
+|   |           currency.slice.js
+|   |           currency.thunks.js
+|   |           
 |   +---dashboard
 |   |   \---pages
 |   |       \---dashboard
@@ -184,6 +206,28 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   |               dashboard.scss
 |   |               index.js
 |   |               
+|   +---hsn-sac
+|   |   |   HsnSacPage.jsx
+|   |   |   
+|   |   +---services
+|   |   |       hsn-sac.service.js
+|   |   |       
+|   |   \---store
+|   |           hsn-sac.selectors.js
+|   |           hsn-sac.slice.js
+|   |           hsn-sac.thunks.js
+|   |           
+|   +---payment-term
+|   |   |   PaymentTermPage.jsx
+|   |   |   
+|   |   +---services
+|   |   |       payment-term.service.js
+|   |   |       
+|   |   \---store
+|   |           payment-term.selectors.js
+|   |           payment-term.slice.js
+|   |           payment-term.thunks.js
+|   |           
 |   +---platform-admin
 |   |   +---features
 |   |   |   |   FeaturePage.jsx
@@ -224,16 +268,74 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   |               index.js
 |   |               NotFound.jsx
 |   |               
-|   \---user
-|       |   UserPage.jsx
+|   +---tax
+|   |   |   TaxPage.jsx
+|   |   |   
+|   |   +---services
+|   |   |       tax.service.js
+|   |   |       
+|   |   \---store
+|   |           tax.selectors.js
+|   |           tax.slice.js
+|   |           tax.thunks.js
+|   |           
+|   +---unit
+|   |   |   UnitPage.jsx
+|   |   |   
+|   |   +---routes
+|   |   |       tax.routes.js
+|   |   |       
+|   |   +---services
+|   |   |       unit.service.js
+|   |   |       
+|   |   \---store
+|   |           unit.selectors.js
+|   |           unit.slice.js
+|   |           unit.thunks.js
+|   |           
+|   +---user
+|   |   |   UserPage.jsx
+|   |   |   
+|   |   +---services
+|   |   |       user.service.js
+|   |   |       
+|   |   \---store
+|   |           user.selectors.js
+|   |           user.slice.js
+|   |           user.thunks.js
+|   |           
+|   +---workspace
+|   |   |   WorkspacePage.jsx
+|   |   |   
+|   |   +---services
+|   |   |       workspace.service.js
+|   |   |       
+|   |   \---store
+|   |           workspace.selectors.js
+|   |           workspace.slice.js
+|   |           workspace.thunks.js
+|   |           
+|   +---workspace-membership
+|   |   |   WorkspaceMembershipPage.jsx
+|   |   |   
+|   |   +---services
+|   |   |       workspace-membership.service.js
+|   |   |       
+|   |   \---store
+|   |           workspace-membership.selectors.js
+|   |           workspace-membership.slice.js
+|   |           workspace-membership.thunks.js
+|   |           
+|   \---workspace-subscription
+|       |   WorkspaceSubscriptionPage.jsx
 |       |   
 |       +---services
-|       |       user.service.js
+|       |       workspace-subscription.service.js
 |       |       
 |       \---store
-|               user.selectors.js
-|               user.slice.js
-|               user.thunks.js
+|               workspace-subscription.selectors.js
+|               workspace-subscription.slice.js
+|               workspace-subscription.thunks.js
 |               
 +---router
 |       index.jsx

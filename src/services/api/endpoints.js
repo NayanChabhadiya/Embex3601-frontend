@@ -62,6 +62,14 @@ const API_ENDPOINTS = Object.freeze({
     BASE: "/hsn-sac",
     BY_ID: (id) => `/hsn-sac/${id}`,
   },
+  PARTNER_CATEGORIES: {
+    BASE: "/partner-categories",
+    BY_ID: (id) => `/partner-categories/${id}`,
+  },
+  PRODUCT_CATEGORIES: {
+    BASE: "/product-categories",
+    BY_ID: (id) => `/product-categories/${id}`,
+  },
 });
 
 export default API_ENDPOINTS;
