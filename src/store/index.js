@@ -17,6 +17,7 @@ import bankReducer from "../modules/bank/store/bank.slice.js";
 import hsnSacReducer from "../modules/hsn-sac/store/hsn-sac.slice.js";
 import partnerCategoryReducer from "../modules/partner-category/store/partner-category.slice.js";
 import productCategoryReducer from "../modules/product-category/store/product-category.slice.js";
+import itemReducer from "../modules/item/store/item.slice.js";
 
 const store = configureStore({
   reducer: {
@@ -39,6 +40,7 @@ const store = configureStore({
     hsnSac: hsnSacReducer,
     partnerCategory: partnerCategoryReducer,
     productCategory: productCategoryReducer,
+    item: itemReducer,
   },
 });
 

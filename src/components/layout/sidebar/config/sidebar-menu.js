@@ -137,6 +137,13 @@ export const SIDEBAR_MENU = [
         path: "/product-categories",
         icon: "users",
       },
+      {
+        key: "items",
+        type: "item",
+        label: "Item",
+        path: "/items",
+        icon: "users",
+      },
     ],
   },
   {

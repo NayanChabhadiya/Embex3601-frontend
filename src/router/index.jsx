@@ -21,6 +21,7 @@ import BankPage from "../modules/bank/BankPage.jsx";
 import HsnSacPage from "../modules/hsn-sac/HsnSacPage.jsx";
 import PartnerCategoryPage from "../modules/partner-category/PartnerCategoryPage.jsx";
 import ProductCategoryPage from "../modules/product-category/ProductCategoryPage.jsx";
+import ItemPage from "../modules/item/ItemPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -94,6 +95,10 @@ const router = createBrowserRouter([
       {
         path: "/product-categories",
         element: <ProductCategoryPage />,
+      },
+      {
+        path: "/items",
+        element: <ItemPage />,
       },
     ],
   },
