@@ -34,9 +34,13 @@ const API_ENDPOINTS = Object.freeze({
     BASE: "/workspace-memberships",
     BY_ID: (id) => `/workspace-memberships/${id}`,
   },
-  WORKSPACE_SUBSCRIPTIONS: {
-    BASE: "/workspace-subscriptions",
-    BY_ID: (id) => `/workspace-subscriptions/${id}`,
+  COMPANIES: {
+    BASE: "/companies",
+    BY_ID: (id) => `/companies/${id}`,
+  },
+  FINANCIAL_YEARS: {
+    BASE: "/financial-years",
+    BY_ID: (id) => `/financial-years/${id}`,
   },
   UNITS: {
     BASE: "/units",
@@ -69,14 +73,6 @@ const API_ENDPOINTS = Object.freeze({
   PRODUCT_CATEGORIES: {
     BASE: "/product-categories",
     BY_ID: (id) => `/product-categories/${id}`,
-  },
-  ITEMS: {
-    BASE: "/items",
-    BY_ID: (id) => `/items/${id}`,
-  },
-  PURCHASE_COMPANIES: {
-    BASE: "/purchase-companies",
-    BY_ID: (id) => `/purchase-companies/${id}`,
   },
 });
 

@@ -1,54 +1,54 @@
 // ============================================================
-// PURCHASE COMPANY STATE
+// FINANCIAL YEAR STATE
 // ============================================================
 
-export const selectPurchaseCompanyState = (state) => state.purchaseCompany;
+export const selectFinancialYearState = (state) => state.financialYear;
 
 // ============================================================
-// PURCHASE COMPANIES
+// FINANCIAL YEARS
 // ============================================================
 
-export const selectPurchaseCompanies = (state) =>
-  state.purchaseCompany?.purchaseCompanies ?? [];
+export const selectFinancialYears = (state) =>
+  state.financialYear?.financialYears ?? [];
 
 // ============================================================
-// SELECTED PURCHASE COMPANY
+// SELECTED FINANCIAL YEAR
 // ============================================================
 
-export const selectSelectedPurchaseCompany = (state) =>
-  state.purchaseCompany?.selectedPurchaseCompany ?? null;
+export const selectSelectedFinancialYear = (state) =>
+  state.financialYear?.selectedFinancialYear ?? null;
 
 // ============================================================
 // FETCH STATUS
 // ============================================================
 
-export const selectPurchaseCompanyStatus = (state) =>
-  state.purchaseCompany?.status ?? "idle";
+export const selectFinancialYearStatus = (state) =>
+  state.financialYear?.status ?? "idle";
 
 // ============================================================
 // CREATE STATUS
 // ============================================================
 
-export const selectPurchaseCompanyCreateStatus = (state) =>
-  state.purchaseCompany?.createStatus ?? "idle";
+export const selectFinancialYearCreateStatus = (state) =>
+  state.financialYear?.createStatus ?? "idle";
 
 // ============================================================
 // UPDATE STATUS
 // ============================================================
 
-export const selectPurchaseCompanyUpdateStatus = (state) =>
-  state.purchaseCompany?.updateStatus ?? "idle";
+export const selectFinancialYearUpdateStatus = (state) =>
+  state.financialYear?.updateStatus ?? "idle";
 
 // ============================================================
 // DELETE STATUS
 // ============================================================
 
-export const selectPurchaseCompanyDeleteStatus = (state) =>
-  state.purchaseCompany?.deleteStatus ?? "idle";
+export const selectFinancialYearDeleteStatus = (state) =>
+  state.financialYear?.deleteStatus ?? "idle";
 
 // ============================================================
 // ERROR
 // ============================================================
 
-export const selectPurchaseCompanyError = (state) =>
-  state.purchaseCompany?.error ?? null;
+export const selectFinancialYearError = (state) =>
+  state.financialYear?.error ?? null;

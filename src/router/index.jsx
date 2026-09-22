@@ -12,7 +12,6 @@ import UserPage from "../modules/user/UserPage.jsx";
 import Login from "../modules/auth/pages/login/Login.jsx";
 import WorkspacePage from "../modules/workspace/WorkspacePage.jsx";
 import WorkspaceMembershipPage from "../modules/workspace-membership/WorkspaceMembershipPage.jsx";
-import WorkspaceSubscriptionPage from "../modules/workspace-subscription/WorkspaceSubscriptionPage.jsx";
 import UnitPage from "../modules/unit/UnitPage.jsx";
 import TaxPage from "../modules/tax/TaxPage.jsx";
 import CurrencyPage from "../modules/currency/CurrencyPage.jsx";
@@ -21,8 +20,8 @@ import BankPage from "../modules/bank/BankPage.jsx";
 import HsnSacPage from "../modules/hsn-sac/HsnSacPage.jsx";
 import PartnerCategoryPage from "../modules/partner-category/PartnerCategoryPage.jsx";
 import ProductCategoryPage from "../modules/product-category/ProductCategoryPage.jsx";
-import ItemPage from "../modules/item/ItemPage.jsx";
-import PurchaseCompanyPage from "../modules/purchase-company/PurchaseCompanyPage.jsx";
+import CompanyPage from "../modules/company/CompanyPage.jsx";
+import FinancialYear from "../modules/financial-year/FinancialYear.jsx";
 
 const router = createBrowserRouter([
   {
@@ -62,8 +61,12 @@ const router = createBrowserRouter([
         element: <WorkspaceMembershipPage />,
       },
       {
-        path: "/workspace-subscriptions",
-        element: <WorkspaceSubscriptionPage />,
+        path: "/companies",
+        element: <CompanyPage />,
+      },
+      {
+        path: "/financial-years",
+        element: <FinancialYear />,
       },
       {
         path: "/units",
@@ -96,14 +99,6 @@ const router = createBrowserRouter([
       {
         path: "/product-categories",
         element: <ProductCategoryPage />,
-      },
-      {
-        path: "/items",
-        element: <ItemPage />,
-      },
-      {
-        path: "/purchase-companies",
-        element: <PurchaseCompanyPage />,
       },
     ],
   },

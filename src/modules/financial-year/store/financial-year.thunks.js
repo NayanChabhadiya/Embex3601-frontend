@@ -1,120 +1,118 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-import itemService from "../services/item.service.js";
+import financialYearService from "../services/financial-year.service.js";
 
 // ============================================================
-// GET ALL ITEMS
+// FETCH ALL FINANCIAL YEARS
 // ============================================================
 
-export const fetchItems = createAsyncThunk(
-  "item/fetchItems",
+export const fetchFinancialYears = createAsyncThunk(
+  "financialYear/fetchAll",
 
-  async (workspaceId, { rejectWithValue }) => {
+  async ({ workspaceId, companyId } = {}, { rejectWithValue }) => {
     try {
-      const response = await itemService.getAll(workspaceId);
+      const response = await financialYearService.getAll(
+        workspaceId,
+        companyId,
+      );
 
-      return response?.data || [];
+      return response?.data ?? [];
     } catch (error) {
       return rejectWithValue(
         error?.response?.data?.message ||
-          error?.response?.data?.error ||
           error?.message ||
-          "Failed to fetch items.",
+          "Failed to fetch financial years.",
       );
     }
   },
 );
 
 // ============================================================
-// GET ITEM BY ID
+// FETCH FINANCIAL YEAR BY ID
 // ============================================================
 
-export const fetchItemById = createAsyncThunk(
-  "item/fetchItemById",
+export const fetchFinancialYearById = createAsyncThunk(
+  "financialYear/fetchById",
 
   async (id, { rejectWithValue }) => {
     try {
-      const response = await itemService.getById(id);
+      const response = await financialYearService.getById(id);
 
-      return response?.data || null;
+      return response?.data ?? null;
     } catch (error) {
       return rejectWithValue(
         error?.response?.data?.message ||
-          error?.response?.data?.error ||
           error?.message ||
-          "Failed to fetch item.",
+          "Failed to fetch financial year.",
       );
     }
   },
 );
 
 // ============================================================
-// CREATE ITEM
+// CREATE FINANCIAL YEAR
 // ============================================================
 
-export const createItem = createAsyncThunk(
-  "item/createItem",
+export const createFinancialYear = createAsyncThunk(
+  "financialYear/create",
 
   async (payload, { rejectWithValue }) => {
     try {
-      const response = await itemService.create(payload);
+      const response = await financialYearService.create(payload);
 
-      return response?.data || null;
+      return response?.data ?? null;
     } catch (error) {
       return rejectWithValue(
         error?.response?.data?.message ||
-          error?.response?.data?.error ||
           error?.message ||
-          "Failed to create item.",
+          "Failed to create financial year.",
       );
     }
   },
 );
 
 // ============================================================
-// UPDATE ITEM
+// UPDATE FINANCIAL YEAR
 // ============================================================
 
-export const updateItem = createAsyncThunk(
-  "item/updateItem",
+export const updateFinancialYear = createAsyncThunk(
+  "financialYear/update",
 
   async ({ id, payload }, { rejectWithValue }) => {
     try {
-      const response = await itemService.update(id, payload);
+      const response = await financialYearService.update(id, payload);
 
-      return response?.data || null;
+      return response?.data ?? null;
     } catch (error) {
       return rejectWithValue(
         error?.response?.data?.message ||
-          error?.response?.data?.error ||
           error?.message ||
-          "Failed to update item.",
+          "Failed to update financial year.",
       );
     }
   },
 );
 
 // ============================================================
-// DELETE ITEM
+// DELETE FINANCIAL YEAR
 // ============================================================
 
-export const deleteItem = createAsyncThunk(
-  "item/deleteItem",
+export const deleteFinancialYear = createAsyncThunk(
+  "financialYear/delete",
 
   async (id, { rejectWithValue }) => {
     try {
-      const response = await itemService.delete(id);
+      const response = await financialYearService.delete(id);
 
       return {
         id,
-        response: response?.data || null,
+        ...response,
       };
     } catch (error) {
       return rejectWithValue(
         error?.response?.data?.message ||
-          error?.response?.data?.error ||
           error?.message ||
-          "Failed to delete item.",
+          "Failed to delete financial year.",
       );
     }
   },

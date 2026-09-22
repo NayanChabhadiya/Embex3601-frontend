@@ -8,7 +8,7 @@ import userReducer from "../modules/user/store/user.slice.js";
 import authenticationReducer from "../modules/auth/store/authentication.slice.js";
 import workspaceReducer from "../modules/workspace/store/workspace.slice.js";
 import workspaceMembershipReducer from "../modules/workspace-membership/store/workspace-membership.slice.js";
-import workspaceSubscriptionReducer from "../modules/workspace-subscription/store/workspace-subscription.slice.js";
+import companyReducer from "../modules/company/store/company.slice.js";
 import unitReducer from "../modules/unit/store/unit.slice.js";
 import taxReducer from "../modules/tax/store/tax.slice.js";
 import currencyReducer from "../modules/currency/store/currency.slice.js";
@@ -17,8 +17,7 @@ import bankReducer from "../modules/bank/store/bank.slice.js";
 import hsnSacReducer from "../modules/hsn-sac/store/hsn-sac.slice.js";
 import partnerCategoryReducer from "../modules/partner-category/store/partner-category.slice.js";
 import productCategoryReducer from "../modules/product-category/store/product-category.slice.js";
-import itemReducer from "../modules/item/store/item.slice.js";
-import purchaseCompanyReducer from "../modules/purchase-company/store/purchase-company.slice.js";
+import financialYearReducer from "../modules/financial-year/store/financial-year.slice.js";
 
 const store = configureStore({
   reducer: {
@@ -28,10 +27,11 @@ const store = configureStore({
     account: accountReducer,
     user: userReducer,
     authentication: authenticationReducer,
-
     workspace: workspaceReducer,
     workspaceMembership: workspaceMembershipReducer,
-    workspaceSubscription: workspaceSubscriptionReducer,
+
+    company: companyReducer,
+    financialYear: financialYearReducer,
 
     unit: unitReducer,
     tax: taxReducer,
@@ -41,8 +41,6 @@ const store = configureStore({
     hsnSac: hsnSacReducer,
     partnerCategory: partnerCategoryReducer,
     productCategory: productCategoryReducer,
-    item: itemReducer,
-    purchaseCompany: purchaseCompanyReducer,
   },
 });
 

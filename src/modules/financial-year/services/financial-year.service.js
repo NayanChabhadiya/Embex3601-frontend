@@ -1,43 +1,41 @@
 import apiClient from "../../../services/api/apiClient.js";
 import API_ENDPOINTS from "../../../services/api/endpoints.js";
 
-const purchaseCompanyService = {
+const financialYearService = {
   // ============================================================
-  // GET ALL PURCHASE COMPANIES
+  // GET ALL FINANCIAL YEARS
   // ============================================================
 
-  getAll: async (workspaceId) => {
-    const response = await apiClient.get(
-      API_ENDPOINTS.PURCHASE_COMPANIES.BASE,
-      {
-        params: {
-          workspaceId,
-        },
+  getAll: async (workspaceId, companyId) => {
+    const response = await apiClient.get(API_ENDPOINTS.FINANCIAL_YEARS.BASE, {
+      params: {
+        workspaceId,
+        companyId,
       },
-    );
+    });
 
     return response.data;
   },
 
   // ============================================================
-  // GET PURCHASE COMPANY BY ID
+  // GET FINANCIAL YEAR BY ID
   // ============================================================
 
   getById: async (id) => {
     const response = await apiClient.get(
-      API_ENDPOINTS.PURCHASE_COMPANIES.BY_ID(id),
+      API_ENDPOINTS.FINANCIAL_YEARS.BY_ID(id),
     );
 
     return response.data;
   },
 
   // ============================================================
-  // CREATE PURCHASE COMPANY
+  // CREATE FINANCIAL YEAR
   // ============================================================
 
   create: async (payload) => {
     const response = await apiClient.post(
-      API_ENDPOINTS.PURCHASE_COMPANIES.BASE,
+      API_ENDPOINTS.FINANCIAL_YEARS.BASE,
       payload,
     );
 
@@ -45,12 +43,12 @@ const purchaseCompanyService = {
   },
 
   // ============================================================
-  // UPDATE PURCHASE COMPANY
+  // UPDATE FINANCIAL YEAR
   // ============================================================
 
   update: async (id, payload) => {
-    const response = await apiClient.put(
-      API_ENDPOINTS.PURCHASE_COMPANIES.BY_ID(id),
+    const response = await apiClient.patch(
+      API_ENDPOINTS.FINANCIAL_YEARS.BY_ID(id),
       payload,
     );
 
@@ -58,16 +56,16 @@ const purchaseCompanyService = {
   },
 
   // ============================================================
-  // DELETE PURCHASE COMPANY
+  // DELETE FINANCIAL YEAR
   // ============================================================
 
   delete: async (id) => {
     const response = await apiClient.delete(
-      API_ENDPOINTS.PURCHASE_COMPANIES.BY_ID(id),
+      API_ENDPOINTS.FINANCIAL_YEARS.BY_ID(id),
     );
 
     return response.data;
   },
 };
 
-export default purchaseCompanyService;
+export default financialYearService;

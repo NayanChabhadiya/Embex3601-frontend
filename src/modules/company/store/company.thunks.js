@@ -1,107 +1,111 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-import workspaceSubscriptionService from "../services/workspace-subscription.service.js";
+import companyService from "../services/company.service.js";
 
 // ============================================================
-// GET ALL WORKSPACE SUBSCRIPTIONS
+// FETCH ALL COMPANIES
 // ============================================================
 
-export const fetchWorkspaceSubscriptions = createAsyncThunk(
-  "workspaceSubscription/fetchAll",
-  async (_, { rejectWithValue }) => {
+export const fetchCompanies = createAsyncThunk(
+  "company/fetchAll",
+  async (workspaceId, { rejectWithValue }) => {
     try {
-      const response = await workspaceSubscriptionService.getAll();
+      const response = await companyService.getAll(workspaceId);
 
-      return response.data;
+      return response?.data ?? [];
     } catch (error) {
       return rejectWithValue(
         error?.response?.data?.message ||
-          "Failed to fetch workspace subscriptions.",
+          error?.message ||
+          "Failed to fetch companies.",
       );
     }
   },
 );
 
 // ============================================================
-// GET WORKSPACE SUBSCRIPTION BY ID
+// FETCH COMPANY BY ID
 // ============================================================
 
-export const fetchWorkspaceSubscriptionById = createAsyncThunk(
-  "workspaceSubscription/fetchById",
+export const fetchCompanyById = createAsyncThunk(
+  "company/fetchById",
   async (id, { rejectWithValue }) => {
     try {
-      const response = await workspaceSubscriptionService.getById(id);
+      const response = await companyService.getById(id);
 
-      return response.data;
+      return response?.data ?? null;
     } catch (error) {
       return rejectWithValue(
         error?.response?.data?.message ||
-          "Failed to fetch workspace subscription.",
+          error?.message ||
+          "Failed to fetch company.",
       );
     }
   },
 );
 
 // ============================================================
-// CREATE WORKSPACE SUBSCRIPTION
+// CREATE COMPANY
 // ============================================================
 
-export const createWorkspaceSubscription = createAsyncThunk(
-  "workspaceSubscription/create",
+export const createCompany = createAsyncThunk(
+  "company/create",
   async (payload, { rejectWithValue }) => {
     try {
-      const response = await workspaceSubscriptionService.create(payload);
+      const response = await companyService.create(payload);
 
-      return response.data;
+      return response?.data ?? null;
     } catch (error) {
       return rejectWithValue(
         error?.response?.data?.message ||
-          "Failed to create workspace subscription.",
+          error?.message ||
+          "Failed to create company.",
       );
     }
   },
 );
 
 // ============================================================
-// UPDATE WORKSPACE SUBSCRIPTION
+// UPDATE COMPANY
 // ============================================================
 
-export const updateWorkspaceSubscription = createAsyncThunk(
-  "workspaceSubscription/update",
+export const updateCompany = createAsyncThunk(
+  "company/update",
   async ({ id, payload }, { rejectWithValue }) => {
     try {
-      const response = await workspaceSubscriptionService.update(id, payload);
+      const response = await companyService.update(id, payload);
 
-      return response.data;
+      return response?.data ?? null;
     } catch (error) {
       return rejectWithValue(
         error?.response?.data?.message ||
-          "Failed to update workspace subscription.",
+          error?.message ||
+          "Failed to update company.",
       );
     }
   },
 );
 
 // ============================================================
-// DELETE WORKSPACE SUBSCRIPTION
+// DELETE COMPANY
 // ============================================================
 
-export const deleteWorkspaceSubscription = createAsyncThunk(
-  "workspaceSubscription/delete",
+export const deleteCompany = createAsyncThunk(
+  "company/delete",
   async (id, { rejectWithValue }) => {
     try {
-      const response = await workspaceSubscriptionService.delete(id);
+      const response = await companyService.delete(id);
 
       return {
         id,
-        ...response.data,
+        ...response,
       };
     } catch (error) {
       return rejectWithValue(
         error?.response?.data?.message ||
-          "Failed to delete workspace subscription.",
+          error?.message ||
+          "Failed to delete company.",
       );
     }
   },
 );
-
