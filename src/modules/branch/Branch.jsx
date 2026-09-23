@@ -28,8 +28,6 @@ import {
   selectBranchStatus,
 } from "./store/branch.selectors.js";
 
-import { selectSelectedWorkspace } from "../workspace/store/workspace.selectors.js";
-
 import { selectCompanies } from "../company/store/company.selectors.js";
 
 // ============================================================
@@ -71,16 +69,16 @@ function Branch() {
   const status = useSelector(selectBranchStatus);
 
   // ==========================================================
-  // ACTIVE WORKSPACE
-  // ==========================================================
-
-  const selectedWorkspace = useSelector(selectSelectedWorkspace);
-
-  // ==========================================================
   // COMPANIES
   // ==========================================================
 
   const companies = useSelector(selectCompanies);
+
+  // ==========================================================
+  // COMPANY FILTER
+  // ==========================================================
+
+  const [selectedCompanyId, setSelectedCompanyId] = useState("");
 
   // ==========================================================
   // MODAL STATE
@@ -105,26 +103,74 @@ function Branch() {
   const [formData, setFormData] = useState(initialFormData);
 
   // ==========================================================
+  // COMPANY OPTIONS
+  // ==========================================================
+
+  const companyOptions = companies.map((company) => ({
+    value: company._id,
+    label: company.name || company.code || company._id,
+  }));
+
+  // ==========================================================
   // FETCH BRANCHES
   // ==========================================================
 
   useEffect(() => {
-    if (!selectedWorkspace?._id) {
+    if (!companies?.length) {
       return;
     }
 
     /*
-     * Branch API is company based.
+     * Branch is company based.
      *
-     * If a company is already selected in the form,
-     * fetch is handled after company selection.
+     * Workspace is NOT required here.
      *
-     * For now, when workspace changes, clear old branch data
-     * by fetching without company filter.
+     * Select the first available company initially so
+     * branches can be loaded immediately.
      */
 
-    dispatch(fetchBranches());
-  }, [dispatch, selectedWorkspace?._id]);
+    if (!selectedCompanyId) {
+      const firstCompanyId = companies[0]?._id;
+
+      if (firstCompanyId) {
+        setSelectedCompanyId(firstCompanyId);
+        dispatch(fetchBranches(firstCompanyId));
+      }
+
+      return;
+    }
+
+    const companyExists = companies.some(
+      (company) => company._id === selectedCompanyId,
+    );
+
+    if (!companyExists) {
+      const firstCompanyId = companies[0]?._id;
+
+      if (firstCompanyId) {
+        setSelectedCompanyId(firstCompanyId);
+        dispatch(fetchBranches(firstCompanyId));
+      }
+
+      return;
+    }
+
+    dispatch(fetchBranches(selectedCompanyId));
+  }, [dispatch, companies, selectedCompanyId]);
+
+  // ==========================================================
+  // COMPANY FILTER CHANGE
+  // ==========================================================
+
+  const handleCompanyFilterChange = (event) => {
+    const { value } = event.target;
+
+    setSelectedCompanyId(value);
+
+    if (value) {
+      dispatch(fetchBranches(value));
+    }
+  };
 
   // ==========================================================
   // FORM CHANGE
@@ -140,10 +186,10 @@ function Branch() {
   };
 
   // ==========================================================
-  // COMPANY CHANGE
+  // FORM COMPANY CHANGE
   // ==========================================================
 
-  const handleCompanyChange = (event) => {
+  const handleFormCompanyChange = (event) => {
     const { value } = event.target;
 
     setFormData((previous) => ({
@@ -151,7 +197,15 @@ function Branch() {
       companyId: value,
     }));
 
+    /*
+     * Branches are company based.
+     *
+     * Refresh branch list when company changes.
+     */
+
     if (value) {
+      setSelectedCompanyId(value);
+
       dispatch(fetchBranches(value));
     }
   };
@@ -171,17 +225,19 @@ function Branch() {
   // ==========================================================
 
   const handleCreate = () => {
-    if (!selectedWorkspace?._id) {
-      showToast({
-        type: "error",
-        title: "Workspace Required",
-        message: "Please select a workspace first.",
-      });
-
-      return;
-    }
-
     resetForm();
+
+    /*
+     * If a company is already selected in the page filter,
+     * preselect the same company in the form.
+     */
+
+    if (selectedCompanyId) {
+      setFormData((previous) => ({
+        ...previous,
+        companyId: selectedCompanyId,
+      }));
+    }
 
     setIsModalOpen(true);
   };
@@ -201,20 +257,15 @@ function Branch() {
   // ==========================================================
 
   const handleEdit = (branch) => {
-    if (!selectedWorkspace?._id) {
-      showToast({
-        type: "error",
-        title: "Workspace Required",
-        message: "Please select a workspace first.",
-      });
-
-      return;
-    }
+    const companyId =
+      typeof branch.companyId === "object"
+        ? branch.companyId?._id
+        : branch.companyId;
 
     setEditingBranch(branch);
 
     setFormData({
-      companyId: branch.companyId?._id || branch.companyId || "",
+      companyId: companyId || "",
       name: branch.name || "",
       code: branch.code || "",
       description: branch.description || "",
@@ -226,7 +277,7 @@ function Branch() {
       phone: branch.phone || "",
       email: branch.email || "",
       gstin: branch.gstin || "",
-      isMainBranch: branch.isMainBranch || false,
+      isMainBranch: Boolean(branch.isMainBranch),
       status: branch.status || "ACTIVE",
     });
 
@@ -247,6 +298,14 @@ function Branch() {
         message: "Branch deleted successfully.",
       });
 
+      /*
+       * Refresh current company branches after deletion.
+       */
+
+      if (selectedCompanyId) {
+        dispatch(fetchBranches(selectedCompanyId));
+      }
+
       return;
     }
 
@@ -257,29 +316,15 @@ function Branch() {
     });
   };
 
-  // ==========================================================
+  // ============================================================
   // SUBMIT
-  // ==========================================================
+  // ============================================================
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     // --------------------------------------------------------
-    // Workspace Required
-    // --------------------------------------------------------
-
-    if (!selectedWorkspace?._id) {
-      showToast({
-        type: "error",
-        title: "Workspace Required",
-        message: "Please select a workspace first.",
-      });
-
-      return;
-    }
-
-    // --------------------------------------------------------
-    // Company Required
+    // COMPANY REQUIRED
     // --------------------------------------------------------
 
     if (!formData.companyId) {
@@ -293,7 +338,7 @@ function Branch() {
     }
 
     // --------------------------------------------------------
-    // Basic Validation
+    // NAME REQUIRED
     // --------------------------------------------------------
 
     if (!formData.name?.trim()) {
@@ -306,6 +351,10 @@ function Branch() {
       return;
     }
 
+    // --------------------------------------------------------
+    // CODE REQUIRED
+    // --------------------------------------------------------
+
     if (!formData.code?.trim()) {
       showToast({
         type: "error",
@@ -316,9 +365,9 @@ function Branch() {
       return;
     }
 
-    // --------------------------------------------------------
+    // ========================================================
     // PAYLOAD
-    // --------------------------------------------------------
+    // ========================================================
 
     const payload = {
       companyId: formData.companyId,
@@ -367,6 +416,14 @@ function Branch() {
 
         resetForm();
 
+        /*
+         * Refresh branches for current company.
+         */
+
+        setSelectedCompanyId(formData.companyId);
+
+        dispatch(fetchBranches(formData.companyId));
+
         showToast({
           type: "success",
           title: "Branch Updated",
@@ -395,6 +452,14 @@ function Branch() {
       setIsModalOpen(false);
 
       resetForm();
+
+      /*
+       * Keep current company selected and reload branches.
+       */
+
+      setSelectedCompanyId(formData.companyId);
+
+      dispatch(fetchBranches(formData.companyId));
 
       showToast({
         type: "success",
@@ -430,6 +495,7 @@ function Branch() {
     {
       key: "companyId",
       label: "Company",
+
       render: (row) => {
         if (typeof row.companyId === "object") {
           return row.companyId?.name || row.companyId?.code || "-";
@@ -444,12 +510,14 @@ function Branch() {
     {
       key: "city",
       label: "City",
+
       render: (row) => row.city || "-",
     },
 
     {
       key: "gstin",
       label: "GSTIN",
+
       render: (row) => row.gstin || "-",
     },
 
@@ -481,15 +549,6 @@ function Branch() {
   ];
 
   // ============================================================
-  // COMPANY OPTIONS
-  // ============================================================
-
-  const companyOptions = companies.map((company) => ({
-    value: company._id,
-    label: company.name || company.code || company._id,
-  }));
-
-  // ============================================================
   // RENDER
   // ============================================================
 
@@ -510,29 +569,22 @@ function Branch() {
       />
 
       {/* ====================================================
-          ACTIVE WORKSPACE
+          COMPANY FILTER
       ==================================================== */}
 
-      {selectedWorkspace && (
-        <div
-          style={{
-            marginBottom: "16px",
-          }}
-        >
-          <strong>Active Workspace:</strong>{" "}
-          {selectedWorkspace.name || selectedWorkspace.code || "-"}
-        </div>
-      )}
-
-      {!selectedWorkspace && (
-        <div
-          style={{
-            marginBottom: "16px",
-          }}
-        >
-          <Badge>Please select a workspace</Badge>
-        </div>
-      )}
+      <div
+        style={{
+          marginBottom: "16px",
+        }}
+      >
+        <Select
+          label="Company"
+          name="selectedCompanyId"
+          value={selectedCompanyId}
+          onChange={handleCompanyFilterChange}
+          options={companyOptions}
+        />
+      </div>
 
       {/* ====================================================
           BRANCH TABLE
@@ -543,7 +595,11 @@ function Branch() {
         columns={columns}
         data={branches}
         rowKey="_id"
-        emptyMessage="No branches found."
+        emptyMessage={
+          selectedCompanyId
+            ? "No branches found for this company."
+            : "Please select a company."
+        }
         loading={status === "loading"}
         searchPlaceholder="Search branches..."
       />
@@ -581,13 +637,21 @@ function Branch() {
       >
         <form id="branch-form" onSubmit={handleSubmit}>
           <Grid>
+            {/* ==================================================
+                COMPANY
+            ================================================== */}
+
             <Select
               label="Company"
               name="companyId"
               value={formData.companyId}
-              onChange={handleCompanyChange}
+              onChange={handleFormCompanyChange}
               options={companyOptions}
             />
+
+            {/* ==================================================
+                BRANCH NAME
+            ================================================== */}
 
             <Input
               label="Branch Name"
@@ -597,6 +661,10 @@ function Branch() {
               placeholder="Enter branch name"
             />
 
+            {/* ==================================================
+                BRANCH CODE
+            ================================================== */}
+
             <Input
               label="Branch Code"
               name="code"
@@ -604,6 +672,10 @@ function Branch() {
               onChange={handleChange}
               placeholder="Enter branch code"
             />
+
+            {/* ==================================================
+                ADDRESS
+            ================================================== */}
 
             <Input
               label="Address"
@@ -613,6 +685,10 @@ function Branch() {
               placeholder="Enter branch address"
             />
 
+            {/* ==================================================
+                CITY
+            ================================================== */}
+
             <Input
               label="City"
               name="city"
@@ -620,6 +696,10 @@ function Branch() {
               onChange={handleChange}
               placeholder="Enter city"
             />
+
+            {/* ==================================================
+                STATE
+            ================================================== */}
 
             <Input
               label="State"
@@ -629,6 +709,10 @@ function Branch() {
               placeholder="Enter state"
             />
 
+            {/* ==================================================
+                COUNTRY
+            ================================================== */}
+
             <Input
               label="Country"
               name="country"
@@ -636,6 +720,10 @@ function Branch() {
               onChange={handleChange}
               placeholder="Enter country"
             />
+
+            {/* ==================================================
+                PINCODE
+            ================================================== */}
 
             <Input
               label="Pincode"
@@ -645,6 +733,10 @@ function Branch() {
               placeholder="Enter pincode"
             />
 
+            {/* ==================================================
+                PHONE
+            ================================================== */}
+
             <Input
               label="Phone"
               name="phone"
@@ -652,6 +744,10 @@ function Branch() {
               onChange={handleChange}
               placeholder="Enter phone number"
             />
+
+            {/* ==================================================
+                EMAIL
+            ================================================== */}
 
             <Input
               label="Email"
@@ -661,6 +757,10 @@ function Branch() {
               placeholder="Enter email"
             />
 
+            {/* ==================================================
+                GSTIN
+            ================================================== */}
+
             <Input
               label="GSTIN"
               name="gstin"
@@ -668,6 +768,10 @@ function Branch() {
               onChange={handleChange}
               placeholder="Enter GSTIN"
             />
+
+            {/* ==================================================
+                MAIN BRANCH
+            ================================================== */}
 
             <Select
               label="Main Branch"
@@ -691,6 +795,10 @@ function Branch() {
               ]}
             />
 
+            {/* ==================================================
+                STATUS
+            ================================================== */}
+
             <Select
               label="Status"
               name="status"
@@ -707,6 +815,10 @@ function Branch() {
                 },
               ]}
             />
+
+            {/* ==================================================
+                DESCRIPTION
+            ================================================== */}
 
             <Textarea
               label="Description"
@@ -734,6 +846,10 @@ function Branch() {
       >
         {selectedBranch && (
           <Grid columns={1}>
+            {/* ==================================================
+                COMPANY
+            ================================================== */}
+
             <div>
               <strong>Company</strong>
 
@@ -748,11 +864,19 @@ function Branch() {
               </div>
             </div>
 
+            {/* ==================================================
+                BRANCH NAME
+            ================================================== */}
+
             <div>
               <strong>Branch Name</strong>
 
               <div>{selectedBranch.name || "-"}</div>
             </div>
+
+            {/* ==================================================
+                BRANCH CODE
+            ================================================== */}
 
             <div>
               <strong>Branch Code</strong>
@@ -760,11 +884,19 @@ function Branch() {
               <div>{selectedBranch.code || "-"}</div>
             </div>
 
+            {/* ==================================================
+                DESCRIPTION
+            ================================================== */}
+
             <div>
               <strong>Description</strong>
 
               <div>{selectedBranch.description || "-"}</div>
             </div>
+
+            {/* ==================================================
+                ADDRESS
+            ================================================== */}
 
             <div>
               <strong>Address</strong>
@@ -772,11 +904,19 @@ function Branch() {
               <div>{selectedBranch.address || "-"}</div>
             </div>
 
+            {/* ==================================================
+                CITY
+            ================================================== */}
+
             <div>
               <strong>City</strong>
 
               <div>{selectedBranch.city || "-"}</div>
             </div>
+
+            {/* ==================================================
+                STATE
+            ================================================== */}
 
             <div>
               <strong>State</strong>
@@ -784,11 +924,19 @@ function Branch() {
               <div>{selectedBranch.state || "-"}</div>
             </div>
 
+            {/* ==================================================
+                COUNTRY
+            ================================================== */}
+
             <div>
               <strong>Country</strong>
 
               <div>{selectedBranch.country || "-"}</div>
             </div>
+
+            {/* ==================================================
+                PINCODE
+            ================================================== */}
 
             <div>
               <strong>Pincode</strong>
@@ -796,11 +944,19 @@ function Branch() {
               <div>{selectedBranch.pincode || "-"}</div>
             </div>
 
+            {/* ==================================================
+                PHONE
+            ================================================== */}
+
             <div>
               <strong>Phone</strong>
 
               <div>{selectedBranch.phone || "-"}</div>
             </div>
+
+            {/* ==================================================
+                EMAIL
+            ================================================== */}
 
             <div>
               <strong>Email</strong>
@@ -808,17 +964,29 @@ function Branch() {
               <div>{selectedBranch.email || "-"}</div>
             </div>
 
+            {/* ==================================================
+                GSTIN
+            ================================================== */}
+
             <div>
               <strong>GSTIN</strong>
 
               <div>{selectedBranch.gstin || "-"}</div>
             </div>
 
+            {/* ==================================================
+                MAIN BRANCH
+            ================================================== */}
+
             <div>
               <strong>Main Branch</strong>
 
               <div>{selectedBranch.isMainBranch ? "Yes" : "No"}</div>
             </div>
+
+            {/* ==================================================
+                STATUS
+            ================================================== */}
 
             <div>
               <strong>Status</strong>

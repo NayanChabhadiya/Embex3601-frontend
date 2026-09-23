@@ -103,6 +103,13 @@ export const SIDEBAR_MENU = [
         icon: "users",
       },
       {
+        key: "warehouses",
+        type: "item",
+        label: "Warehouse",
+        path: "/warehouses",
+        icon: "users",
+      },
+      {
         key: "units",
         type: "item",
         label: "Units",

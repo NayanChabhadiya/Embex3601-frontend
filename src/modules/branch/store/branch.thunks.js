@@ -1,16 +1,18 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-
 import branchService from "../services/branch.service.js";
 
 // ============================================================
 // FETCH ALL BRANCHES
 // ============================================================
-
 export const fetchBranches = createAsyncThunk(
   "branch/fetchAll",
 
   async (companyId, { rejectWithValue }) => {
     try {
+      if (!companyId) {
+        return [];
+      }
+
       const response = await branchService.getAll(companyId);
 
       return response?.data ?? [];
@@ -27,12 +29,15 @@ export const fetchBranches = createAsyncThunk(
 // ============================================================
 // FETCH BRANCH BY ID
 // ============================================================
-
 export const fetchBranchById = createAsyncThunk(
   "branch/fetchById",
 
   async (id, { rejectWithValue }) => {
     try {
+      if (!id) {
+        return null;
+      }
+
       const response = await branchService.getById(id);
 
       return response?.data ?? null;
@@ -49,7 +54,6 @@ export const fetchBranchById = createAsyncThunk(
 // ============================================================
 // CREATE BRANCH
 // ============================================================
-
 export const createBranch = createAsyncThunk(
   "branch/create",
 
@@ -71,7 +75,6 @@ export const createBranch = createAsyncThunk(
 // ============================================================
 // UPDATE BRANCH
 // ============================================================
-
 export const updateBranch = createAsyncThunk(
   "branch/update",
 
@@ -93,7 +96,6 @@ export const updateBranch = createAsyncThunk(
 // ============================================================
 // DELETE BRANCH
 // ============================================================
-
 export const deleteBranch = createAsyncThunk(
   "branch/delete",
 

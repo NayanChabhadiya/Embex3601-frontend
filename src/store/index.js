@@ -20,6 +20,7 @@ import productCategoryReducer from "../modules/product-category/store/product-ca
 import financialYearReducer from "../modules/financial-year/store/financial-year.slice.js";
 import numberSeriesReducer from "../modules/number-series/store/number-series.slice.js";
 import branchReducer from "../modules/branch/store/branch.slice.js";
+import warehouseReducer from "../modules/warehouse/store/warehouse.slice.js";
 
 const store = configureStore({
   reducer: {
@@ -36,6 +37,7 @@ const store = configureStore({
     financialYear: financialYearReducer,
     numberSeries: numberSeriesReducer,
     branch: branchReducer,
+    warehouse: warehouseReducer,
 
     unit: unitReducer,
     tax: taxReducer,
