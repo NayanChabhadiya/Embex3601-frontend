@@ -42,6 +42,14 @@ const API_ENDPOINTS = Object.freeze({
     BASE: "/financial-years",
     BY_ID: (id) => `/financial-years/${id}`,
   },
+  NUMBER_SERIES: {
+    BASE: "/number-series",
+    BY_ID: (id) => `/number-series/${id}`,
+  },
+  BRANCHES: {
+    BASE: "/branches",
+    BY_ID: (id) => `/branches/${id}`,
+  },
   UNITS: {
     BASE: "/units",
     BY_ID: (id) => `/units/${id}`,

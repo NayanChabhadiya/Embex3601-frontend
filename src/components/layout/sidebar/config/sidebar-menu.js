@@ -89,6 +89,20 @@ export const SIDEBAR_MENU = [
         icon: "users",
       },
       {
+        key: "number-series",
+        type: "item",
+        label: "Number  Series",
+        path: "/number-series",
+        icon: "users",
+      },
+      {
+        key: "branches",
+        type: "item",
+        label: "Branches",
+        path: "/branches",
+        icon: "users",
+      },
+      {
         key: "units",
         type: "item",
         label: "Units",

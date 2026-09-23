@@ -18,6 +18,8 @@ import hsnSacReducer from "../modules/hsn-sac/store/hsn-sac.slice.js";
 import partnerCategoryReducer from "../modules/partner-category/store/partner-category.slice.js";
 import productCategoryReducer from "../modules/product-category/store/product-category.slice.js";
 import financialYearReducer from "../modules/financial-year/store/financial-year.slice.js";
+import numberSeriesReducer from "../modules/number-series/store/number-series.slice.js";
+import branchReducer from "../modules/branch/store/branch.slice.js";
 
 const store = configureStore({
   reducer: {
@@ -32,6 +34,8 @@ const store = configureStore({
 
     company: companyReducer,
     financialYear: financialYearReducer,
+    numberSeries: numberSeriesReducer,
+    branch: branchReducer,
 
     unit: unitReducer,
     tax: taxReducer,
