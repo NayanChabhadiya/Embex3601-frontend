@@ -54,6 +54,10 @@ const API_ENDPOINTS = Object.freeze({
     BASE: "/warehouses",
     BY_ID: (id) => `/warehouses/${id}`,
   },
+  BANK_ACCOUNTS: {
+    BASE: "/bank-accounts",
+    BY_ID: (id) => `/bank-accounts/${id}`,
+  },
   UNITS: {
     BASE: "/units",
     BY_ID: (id) => `/units/${id}`,

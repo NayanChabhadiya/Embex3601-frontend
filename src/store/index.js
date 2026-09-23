@@ -8,7 +8,14 @@ import userReducer from "../modules/user/store/user.slice.js";
 import authenticationReducer from "../modules/auth/store/authentication.slice.js";
 import workspaceReducer from "../modules/workspace/store/workspace.slice.js";
 import workspaceMembershipReducer from "../modules/workspace-membership/store/workspace-membership.slice.js";
+
 import companyReducer from "../modules/company/store/company.slice.js";
+import financialYearReducer from "../modules/financial-year/store/financial-year.slice.js";
+import numberSeriesReducer from "../modules/number-series/store/number-series.slice.js";
+import branchReducer from "../modules/branch/store/branch.slice.js";
+import warehouseReducer from "../modules/warehouse/store/warehouse.slice.js";
+import bankAccountReducer from "../modules/bank-account/store/bank-account.slice.js";
+
 import unitReducer from "../modules/unit/store/unit.slice.js";
 import taxReducer from "../modules/tax/store/tax.slice.js";
 import currencyReducer from "../modules/currency/store/currency.slice.js";
@@ -17,10 +24,6 @@ import bankReducer from "../modules/bank/store/bank.slice.js";
 import hsnSacReducer from "../modules/hsn-sac/store/hsn-sac.slice.js";
 import partnerCategoryReducer from "../modules/partner-category/store/partner-category.slice.js";
 import productCategoryReducer from "../modules/product-category/store/product-category.slice.js";
-import financialYearReducer from "../modules/financial-year/store/financial-year.slice.js";
-import numberSeriesReducer from "../modules/number-series/store/number-series.slice.js";
-import branchReducer from "../modules/branch/store/branch.slice.js";
-import warehouseReducer from "../modules/warehouse/store/warehouse.slice.js";
 
 const store = configureStore({
   reducer: {
@@ -38,6 +41,7 @@ const store = configureStore({
     numberSeries: numberSeriesReducer,
     branch: branchReducer,
     warehouse: warehouseReducer,
+    bankAccount: bankAccountReducer,
 
     unit: unitReducer,
     tax: taxReducer,

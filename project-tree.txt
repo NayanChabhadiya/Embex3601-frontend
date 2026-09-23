@@ -188,6 +188,39 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   |           bank.slice.js
 |   |           bank.thunks.js
 |   |           
+|   +---bank-account
+|   |   |   BankAccount.jsx
+|   |   |   
+|   |   +---services
+|   |   |       bank-account.service.js
+|   |   |       
+|   |   \---store
+|   |           bank-account.selectors.js
+|   |           bank-account.slice.js
+|   |           bank-account.thunks.js
+|   |           
+|   +---branch
+|   |   |   Branch.jsx
+|   |   |   
+|   |   +---services
+|   |   |       branch.service.js
+|   |   |       
+|   |   \---store
+|   |           branch.selectors.js
+|   |           branch.slice.js
+|   |           branch.thunks.js
+|   |           
+|   +---company
+|   |   |   CompanyPage.jsx
+|   |   |   
+|   |   +---services
+|   |   |       company.service.js
+|   |   |       
+|   |   \---store
+|   |           company.selectors.js
+|   |           company.slice.js
+|   |           company.thunks.js
+|   |           
 |   +---currency
 |   |   |   CurrencyPage.jsx
 |   |   |   
@@ -206,6 +239,17 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   |               dashboard.scss
 |   |               index.js
 |   |               
+|   +---financial-year
+|   |   |   FinancialYear.jsx
+|   |   |   
+|   |   +---services
+|   |   |       financial-year.service.js
+|   |   |       
+|   |   \---store
+|   |           financial-year.selectors.js
+|   |           financial-year.slice.js
+|   |           financial-year.thunks.js
+|   |           
 |   +---hsn-sac
 |   |   |   HsnSacPage.jsx
 |   |   |   
@@ -217,16 +261,16 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   |           hsn-sac.slice.js
 |   |           hsn-sac.thunks.js
 |   |           
-|   +---item
-|   |   |   ItemPage.jsx
+|   +---number-series
+|   |   |   NumberSeries.jsx
 |   |   |   
 |   |   +---services
-|   |   |       item.service.js
+|   |   |       number-series.service.js
 |   |   |       
 |   |   \---store
-|   |           item.selectors.js
-|   |           item.slice.js
-|   |           item.thunks.js
+|   |           number-series.selectors.js
+|   |           number-series.slice.js
+|   |           number-series.thunks.js
 |   |           
 |   +---partner-category
 |   |   |   PartnerCategoryPage.jsx
@@ -301,17 +345,6 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   |               index.js
 |   |               NotFound.jsx
 |   |               
-|   +---purchase-company
-|   |   |   PurchaseCompanyPage.jsx
-|   |   |   
-|   |   +---services
-|   |   |       purchase-company.service.js
-|   |   |       
-|   |   \---store
-|   |           purchase-company.selectors.js
-|   |           purchase-company.slice.js
-|   |           purchase-company.thunks.js
-|   |           
 |   +---tax
 |   |   |   TaxPage.jsx
 |   |   |   
@@ -348,6 +381,17 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   |           user.slice.js
 |   |           user.thunks.js
 |   |           
+|   +---warehouse
+|   |   |   Warehouse.jsx
+|   |   |   
+|   |   +---services
+|   |   |       warehouse.service.js
+|   |   |       
+|   |   \---store
+|   |           warehouse.selectors.js
+|   |           warehouse.slice.js
+|   |           warehouse.thunks.js
+|   |           
 |   +---workspace
 |   |   |   WorkspacePage.jsx
 |   |   |   
@@ -359,27 +403,16 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   |           workspace.slice.js
 |   |           workspace.thunks.js
 |   |           
-|   +---workspace-membership
-|   |   |   WorkspaceMembershipPage.jsx
-|   |   |   
-|   |   +---services
-|   |   |       workspace-membership.service.js
-|   |   |       
-|   |   \---store
-|   |           workspace-membership.selectors.js
-|   |           workspace-membership.slice.js
-|   |           workspace-membership.thunks.js
-|   |           
-|   \---workspace-subscription
-|       |   WorkspaceSubscriptionPage.jsx
+|   \---workspace-membership
+|       |   WorkspaceMembershipPage.jsx
 |       |   
 |       +---services
-|       |       workspace-subscription.service.js
+|       |       workspace-membership.service.js
 |       |       
 |       \---store
-|               workspace-subscription.selectors.js
-|               workspace-subscription.slice.js
-|               workspace-subscription.thunks.js
+|               workspace-membership.selectors.js
+|               workspace-membership.slice.js
+|               workspace-membership.thunks.js
 |               
 +---router
 |       index.jsx

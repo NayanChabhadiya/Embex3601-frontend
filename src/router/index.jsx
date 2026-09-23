@@ -25,6 +25,7 @@ import FinancialYear from "../modules/financial-year/FinancialYear.jsx";
 import NumberSeries from "../modules/number-series/NumberSeries.jsx";
 import Branch from "../modules/branch/Branch.jsx";
 import WarehousePage from "../modules/warehouse/Warehouse.jsx";
+import BankAccount from "../modules/bank-account/BankAccount.jsx";
 
 const router = createBrowserRouter([
   {
@@ -82,6 +83,10 @@ const router = createBrowserRouter([
       {
         path: "/warehouses",
         element: <WarehousePage />,
+      },
+      {
+        path: "/bank-accounts",
+        element: <BankAccount />,
       },
       {
         path: "/units",

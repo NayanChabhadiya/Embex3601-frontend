@@ -109,6 +109,13 @@ export const SIDEBAR_MENU = [
         path: "/warehouses",
         icon: "users",
       },
+       {
+        key: "bank-accounts",
+        type: "item",
+        label: "Bank Accounts",
+        path: "/bank-accounts",
+        icon: "users",
+      },
       {
         key: "units",
         type: "item",
