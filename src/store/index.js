@@ -25,6 +25,8 @@ import hsnSacReducer from "../modules/hsn-sac/store/hsn-sac.slice.js";
 import partnerCategoryReducer from "../modules/partner-category/store/partner-category.slice.js";
 import productCategoryReducer from "../modules/product-category/store/product-category.slice.js";
 
+import partnerReducer from "../modules/partner/store/partner.slice.js";
+
 const store = configureStore({
   reducer: {
     subscriptionPlan: subscriptionPlanReducer,
@@ -51,6 +53,8 @@ const store = configureStore({
     hsnSac: hsnSacReducer,
     partnerCategory: partnerCategoryReducer,
     productCategory: productCategoryReducer,
+
+    partner: partnerReducer,
   },
 });
 

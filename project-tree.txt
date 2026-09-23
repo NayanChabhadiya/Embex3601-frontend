@@ -272,6 +272,9 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   |           number-series.slice.js
 |   |           number-series.thunks.js
 |   |           
+|   +---partner
+|   |   +---services
+|   |   \---store
 |   +---partner-category
 |   |   |   PartnerCategoryPage.jsx
 |   |   |   

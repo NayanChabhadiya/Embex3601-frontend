@@ -109,7 +109,7 @@ export const SIDEBAR_MENU = [
         path: "/warehouses",
         icon: "users",
       },
-       {
+      {
         key: "bank-accounts",
         type: "item",
         label: "Bank Accounts",
@@ -170,6 +170,13 @@ export const SIDEBAR_MENU = [
         type: "item",
         label: "Product Category",
         path: "/product-categories",
+        icon: "users",
+      },
+      {
+        key: "partners",
+        type: "item",
+        label: "Partners",
+        path: "/partners",
         icon: "users",
       },
     ],
