@@ -186,6 +186,13 @@ export const SIDEBAR_MENU = [
         path: "/products",
         icon: "users",
       },
+      {
+        key: "inventories",
+        type: "item",
+        label: "Inventory",
+        path: "/inventories",
+        icon: "users",
+      },
     ],
   },
   {

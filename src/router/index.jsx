@@ -28,6 +28,7 @@ import WarehousePage from "../modules/warehouse/Warehouse.jsx";
 import BankAccount from "../modules/bank-account/BankAccount.jsx";
 import PartnerPage from "../modules/partner/PartnerPage.jsx";
 import ProductPage from "../modules/product/ProductPage.jsx";
+import InventoryPage from "../modules/inventory/InventoryPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -129,6 +130,10 @@ const router = createBrowserRouter([
       {
         path: "/products",
         element: <ProductPage />,
+      },
+      {
+        path: "/inventories",
+        element: <InventoryPage />,
       },
     ],
   },

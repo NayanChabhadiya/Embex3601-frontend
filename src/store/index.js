@@ -28,6 +28,8 @@ import productCategoryReducer from "../modules/product-category/store/product-ca
 import partnerReducer from "../modules/partner/store/partner.slice.js";
 import productReducer from "../modules/product/store/product.slice.js";
 
+import inventoryReducer from "../modules/inventory/store/inventory.slice.js";
+
 const store = configureStore({
   reducer: {
     subscriptionPlan: subscriptionPlanReducer,
@@ -57,6 +59,8 @@ const store = configureStore({
 
     partner: partnerReducer,
     product: productReducer,
+
+    inventory: inventoryReducer,
   },
 });
 
