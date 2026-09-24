@@ -214,6 +214,13 @@ export const SIDEBAR_MENU = [
         path: "/job-works",
         icon: "users",
       },
+      {
+        key: "accounting",
+        type: "item",
+        label: "Accounting",
+        path: "/accounting",
+        icon: "users",
+      },
     ],
   },
   {

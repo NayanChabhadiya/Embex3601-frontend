@@ -32,6 +32,7 @@ import InventoryPage from "../modules/inventory/InventoryPage.jsx";
 import PurchasePage from "../modules/purchase/PurchasePage.jsx";
 import SalesPage from "../modules/sales/SalesPage.jsx";
 import JobWorkPage from "../modules/job-work/JobWorkPage.jsx";
+import AccountingPage from "../modules/accounting/AccountingPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -149,6 +150,10 @@ const router = createBrowserRouter([
       {
         path: "/job-works",
         element: <JobWorkPage />,
+      },
+      {
+        path: "/accounting",
+        element: <AccountingPage />,
       },
     ],
   },
