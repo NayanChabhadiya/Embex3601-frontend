@@ -1,6 +1,6 @@
-Folder PATH listing for volume NAYAN
-Volume serial number is 6C19-5F7C
-F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
+Folder PATH listing for volume New Volume
+Volume serial number is 00000080 B866:F872
+F:\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   App.jsx
 |   main.jsx
 |   
@@ -164,6 +164,17 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   |           account.slice.js
 |   |           account.thunks.js
 |   |           
+|   +---accounting
+|   |   |   AccountingPage.jsx
+|   |   |   
+|   |   +---services
+|   |   |       accounting.service.js
+|   |   |       
+|   |   \---store
+|   |           accounting.selectors.js
+|   |           accounting.slice.js
+|   |           accounting.thunks.js
+|   |           
 |   +---auth
 |   |   +---pages
 |   |   |   \---login
@@ -250,6 +261,17 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   |           financial-year.slice.js
 |   |           financial-year.thunks.js
 |   |           
+|   +---gst
+|   |   |   GstPage.jsx
+|   |   |   
+|   |   +---services
+|   |   |       gst.service.js
+|   |   |       
+|   |   \---store
+|   |           gst.selectors.js
+|   |           gst.slice.js
+|   |           gst.thunks.js
+|   |           
 |   +---hsn-sac
 |   |   |   HsnSacPage.jsx
 |   |   |   
@@ -260,6 +282,28 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   |           hsn-sac.selectors.js
 |   |           hsn-sac.slice.js
 |   |           hsn-sac.thunks.js
+|   |           
+|   +---inventory
+|   |   |   InventoryPage.jsx
+|   |   |   
+|   |   +---services
+|   |   |       inventory.service.js
+|   |   |       
+|   |   \---store
+|   |           inventory.selectors.js
+|   |           inventory.slice.js
+|   |           inventory.thunks.js
+|   |           
+|   +---job-work
+|   |   |   JobWorkPage.jsx
+|   |   |   
+|   |   +---services
+|   |   |       job-work.service.js
+|   |   |       
+|   |   \---store
+|   |           job-work.selectors.js
+|   |           job-work.slice.js
+|   |           job-work.thunks.js
 |   |           
 |   +---number-series
 |   |   |   NumberSeries.jsx
@@ -339,6 +383,17 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   |               subscription-plan.slice.js
 |   |               subscription-plan.thunks.js
 |   |               
+|   +---product
+|   |   |   ProductPage.jsx
+|   |   |   
+|   |   +---services
+|   |   |       product.service.js
+|   |   |       
+|   |   \---store
+|   |           product.selectors.js
+|   |           product.slice.js
+|   |           product.thunks.js
+|   |           
 |   +---product-category
 |   |   |   ProductCategoryPage.jsx
 |   |   |   
@@ -356,6 +411,28 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   |               index.js
 |   |               NotFound.jsx
 |   |               
+|   +---purchase
+|   |   |   PurchasePage.jsx
+|   |   |   
+|   |   +---services
+|   |   |       purchase.service.js
+|   |   |       
+|   |   \---store
+|   |           purchase.selectors.js
+|   |           purchase.slice.js
+|   |           purchase.thunks.js
+|   |           
+|   +---sales
+|   |   |   SalesPage.jsx
+|   |   |   
+|   |   +---services
+|   |   |       sales.service.js
+|   |   |       
+|   |   \---store
+|   |           sales.selectors.js
+|   |           sales.slice.js
+|   |           sales.thunks.js
+|   |           
 |   +---tax
 |   |   |   TaxPage.jsx
 |   |   |   
