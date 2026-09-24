@@ -112,6 +112,10 @@ const API_ENDPOINTS = Object.freeze({
     BASE: "/sales",
     BY_ID: (id) => `/sales/${id}`,
   },
+  JOB_WORKS: {
+    BASE: "/job-works",
+    BY_ID: (id) => `/job-works/${id}`,
+  },
 });
 
 export default API_ENDPOINTS;

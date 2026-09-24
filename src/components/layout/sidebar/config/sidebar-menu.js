@@ -207,6 +207,13 @@ export const SIDEBAR_MENU = [
         path: "/sales",
         icon: "users",
       },
+      {
+        key: "job-works",
+        type: "item",
+        label: "Job Works",
+        path: "/job-works",
+        icon: "users",
+      },
     ],
   },
   {

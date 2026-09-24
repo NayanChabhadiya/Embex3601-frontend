@@ -82,6 +82,10 @@ const partnerTypeOptions = [
     label: "Supplier",
   },
   {
+    value: "JOB_WORKER",
+    label: "Job Worker",
+  },
+  {
     value: "BOTH",
     label: "Customer & Supplier",
   },

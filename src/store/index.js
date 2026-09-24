@@ -31,6 +31,7 @@ import productReducer from "../modules/product/store/product.slice.js";
 import inventoryReducer from "../modules/inventory/store/inventory.slice.js";
 import purchaseReducer from "../modules/purchase/store/purchase.slice.js";
 import salesReducer from "../modules/sales/store/sales.slice.js";
+import jobWorkReducer from "../modules/job-work/store/job-work.slice.js";
 
 const store = configureStore({
   reducer: {
@@ -65,6 +66,7 @@ const store = configureStore({
     inventory: inventoryReducer,
     purchase: purchaseReducer,
     sales: salesReducer,
+    jobWork: jobWorkReducer,
   },
 });
 
