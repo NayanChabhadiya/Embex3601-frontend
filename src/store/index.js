@@ -29,6 +29,7 @@ import partnerReducer from "../modules/partner/store/partner.slice.js";
 import productReducer from "../modules/product/store/product.slice.js";
 
 import inventoryReducer from "../modules/inventory/store/inventory.slice.js";
+import purchaseReducer from "../modules/purchase/store/purchase.slice.js";
 
 const store = configureStore({
   reducer: {
@@ -61,6 +62,7 @@ const store = configureStore({
     product: productReducer,
 
     inventory: inventoryReducer,
+    purchase: purchaseReducer,
   },
 });
 
