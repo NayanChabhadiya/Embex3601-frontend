@@ -30,6 +30,7 @@ import PartnerPage from "../modules/partner/PartnerPage.jsx";
 import ProductPage from "../modules/product/ProductPage.jsx";
 import InventoryPage from "../modules/inventory/InventoryPage.jsx";
 import PurchasePage from "../modules/purchase/PurchasePage.jsx";
+import SalesPage from "../modules/sales/SalesPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -139,6 +140,10 @@ const router = createBrowserRouter([
       {
         path: "/purchases",
         element: <PurchasePage />,
+      },
+      {
+        path: "/sales",
+        element: <SalesPage />,
       },
     ],
   },

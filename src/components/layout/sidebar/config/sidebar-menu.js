@@ -200,6 +200,13 @@ export const SIDEBAR_MENU = [
         path: "/purchases",
         icon: "users",
       },
+      {
+        key: "sales",
+        type: "item",
+        label: "Sales",
+        path: "/sales",
+        icon: "users",
+      },
     ],
   },
   {
