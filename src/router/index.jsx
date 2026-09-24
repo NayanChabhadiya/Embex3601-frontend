@@ -33,6 +33,7 @@ import PurchasePage from "../modules/purchase/PurchasePage.jsx";
 import SalesPage from "../modules/sales/SalesPage.jsx";
 import JobWorkPage from "../modules/job-work/JobWorkPage.jsx";
 import AccountingPage from "../modules/accounting/AccountingPage.jsx";
+import GstPage from "../modules/gst/GstPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -154,6 +155,10 @@ const router = createBrowserRouter([
       {
         path: "/accounting",
         element: <AccountingPage />,
+      },
+       {
+        path: "/gst",
+        element: <GstPage />,
       },
     ],
   },

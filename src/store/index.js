@@ -33,6 +33,7 @@ import purchaseReducer from "../modules/purchase/store/purchase.slice.js";
 import salesReducer from "../modules/sales/store/sales.slice.js";
 import jobWorkReducer from "../modules/job-work/store/job-work.slice.js";
 import accountingReducer from "../modules/accounting/store/accounting.slice.js";
+import gstReducer from "../modules/gst/store/gst.slice.js";
 
 const store = configureStore({
   reducer: {
@@ -69,6 +70,7 @@ const store = configureStore({
     sales: salesReducer,
     jobWork: jobWorkReducer,
     accounting: accountingReducer,
+    gst: gstReducer,
   },
 });
 

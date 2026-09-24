@@ -221,6 +221,13 @@ export const SIDEBAR_MENU = [
         path: "/accounting",
         icon: "users",
       },
+      {
+        key: "gst",
+        type: "item",
+        label: "Gst",
+        path: "/gst",
+        icon: "users",
+      },
     ],
   },
   {
