@@ -26,6 +26,7 @@ import partnerCategoryReducer from "../modules/partner-category/store/partner-ca
 import productCategoryReducer from "../modules/product-category/store/product-category.slice.js";
 
 import partnerReducer from "../modules/partner/store/partner.slice.js";
+import productReducer from "../modules/product/store/product.slice.js";
 
 const store = configureStore({
   reducer: {
@@ -55,6 +56,7 @@ const store = configureStore({
     productCategory: productCategoryReducer,
 
     partner: partnerReducer,
+    product: productReducer,
   },
 });
 
