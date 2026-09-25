@@ -5,6 +5,12 @@ const store = configureStore({
   reducer: {
     authentication: authenticationReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: true,
+    }),
+
+  devTools: import.meta.env.DEV,
 });
 
 export default store;

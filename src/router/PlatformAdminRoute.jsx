@@ -1,30 +1,38 @@
-import { Navigate, Outlet } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 
-import { selectIsAuthenticated } from "../modules/auth/store/auth.selectors.js";
-import {
-  selectIsPlatformAdmin,
-  selectIsPlatformAdminLoading,
-} from "../modules/platform-admin/store/platform-admin.selectors.js";
+import useAuthentication from "../modules/auth/hooks/useAuthentication.js";
+import AUTHENTICATION_CONSTANTS from "../modules/auth/constants/authentication.constants.js";
 
-const PlatformAdminRoute = () => {
-  const isAuthenticated = useSelector(selectIsAuthenticated);
-  const isPlatformAdmin = useSelector(selectIsPlatformAdmin);
-  const isLoading = useSelector(selectIsPlatformAdminLoading);
+function PlatformAdminRoute() {
+  const location = useLocation();
 
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
+  const { user, isAuthenticated, isLoading } = useAuthentication();
 
+  // Authentication is still being resolved.
   if (isLoading) {
     return null;
   }
 
-  if (!isPlatformAdmin) {
-    return <Navigate to="/dashboard" replace />;
+  // User is not authenticated.
+  if (!isAuthenticated || !user) {
+    return (
+      <Navigate
+        to="/login"
+        replace
+        state={{
+          from: location,
+        }}
+      />
+    );
   }
 
+  // Platform Admin Authorization
+  if (user.type !== AUTHENTICATION_CONSTANTS.USER_TYPES.PLATFORM_ADMIN) {
+    return <Navigate to="/" replace />;
+  }
+
+  // Authorized Platform Admin
   return <Outlet />;
-};
+}
 
 export default PlatformAdminRoute;

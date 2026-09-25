@@ -1,13 +1,28 @@
-export const selectAuthentication = (state) => state.authentication;
+const selectAuthenticationState = (state) => state.authentication;
 
-export const selectAuthUser = (state) => state.authentication.user;
+const selectCurrentUser = (state) => selectAuthenticationState(state).user;
 
-export const selectAuthSession = (state) => state.authentication.session;
+const selectIsAuthenticated = (state) =>
+  selectAuthenticationState(state).isAuthenticated;
 
-export const selectIsAuthenticated = (state) =>
-  state.authentication.isAuthenticated;
+const selectAuthenticationStatus = (state) =>
+  selectAuthenticationState(state).status;
 
-export const selectAuthenticationStatus = (state) =>
-  state.authentication.status;
+const selectAuthenticationError = (state) =>
+  selectAuthenticationState(state).error;
 
-export const selectAuthenticationError = (state) => state.authentication.error;
+const selectIsAuthenticationLoading = (state) =>
+  selectAuthenticationStatus(state) === "loading";
+
+const selectHasAuthenticationError = (state) =>
+  Boolean(selectAuthenticationError(state));
+
+export {
+  selectAuthenticationState,
+  selectCurrentUser,
+  selectIsAuthenticated,
+  selectAuthenticationStatus,
+  selectAuthenticationError,
+  selectIsAuthenticationLoading,
+  selectHasAuthenticationError,
+};

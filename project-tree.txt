@@ -1,6 +1,6 @@
-Folder PATH listing for volume NAYAN
-Volume serial number is 6C19-5F7C
-F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
+Folder PATH listing for volume New Volume
+Volume serial number is 00000049 B866:F872
+F:\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   App.jsx
 |   main.jsx
 |   
@@ -153,95 +153,30 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |                   is-sidebar-section-active.js
 |                   
 +---modules
-|   +---account
-|   |   |   AccountPage.jsx
-|   |   |   
-|   |   +---services
-|   |   |       account.service.js
-|   |   |       
-|   |   \---store
-|   |           account.selectors.js
-|   |           account.slice.js
-|   |           account.thunks.js
-|   |           
-|   +---accounting
-|   |   |   AccountingPage.jsx
-|   |   |   
-|   |   +---services
-|   |   |       accounting.service.js
-|   |   |       
-|   |   \---store
-|   |           accounting.selectors.js
-|   |           accounting.slice.js
-|   |           accounting.thunks.js
-|   |           
 |   +---auth
+|   |   +---components
+|   |   +---constants
+|   |   |       authentication.constants.js
+|   |   |       authentication.messages.js
+|   |   |       
+|   |   +---hooks
+|   |   |       useAuthentication.js
+|   |   |       
 |   |   +---pages
 |   |   |   \---login
 |   |   |           Login.jsx
+|   |   |           login.scss
 |   |   |           
 |   |   +---services
 |   |   |       authentication.service.js
 |   |   |       
-|   |   \---store
-|   |           authentication.selectors.js
-|   |           authentication.slice.js
-|   |           authentication.thunks.js
-|   |           
-|   +---bank
-|   |   |   BankPage.jsx
-|   |   |   
-|   |   +---services
-|   |   |       bank.service.js
+|   |   +---store
+|   |   |       authentication.selectors.js
+|   |   |       authentication.slice.js
+|   |   |       authentication.thunks.js
 |   |   |       
-|   |   \---store
-|   |           bank.selectors.js
-|   |           bank.slice.js
-|   |           bank.thunks.js
-|   |           
-|   +---bank-account
-|   |   |   BankAccount.jsx
-|   |   |   
-|   |   +---services
-|   |   |       bank-account.service.js
-|   |   |       
-|   |   \---store
-|   |           bank-account.selectors.js
-|   |           bank-account.slice.js
-|   |           bank-account.thunks.js
-|   |           
-|   +---branch
-|   |   |   Branch.jsx
-|   |   |   
-|   |   +---services
-|   |   |       branch.service.js
-|   |   |       
-|   |   \---store
-|   |           branch.selectors.js
-|   |           branch.slice.js
-|   |           branch.thunks.js
-|   |           
-|   +---company
-|   |   |   CompanyPage.jsx
-|   |   |   
-|   |   +---services
-|   |   |       company.service.js
-|   |   |       
-|   |   \---store
-|   |           company.selectors.js
-|   |           company.slice.js
-|   |           company.thunks.js
-|   |           
-|   +---currency
-|   |   |   CurrencyPage.jsx
-|   |   |   
-|   |   +---services
-|   |   |       currency.service.js
-|   |   |       
-|   |   \---store
-|   |           currency.selectors.js
-|   |           currency.slice.js
-|   |           currency.thunks.js
+|   |   \---validations
+|   |           authentication.validation.js
 |   |           
 |   +---dashboard
 |   |   \---pages
@@ -250,269 +185,12 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   |               dashboard.scss
 |   |               index.js
 |   |               
-|   +---financial-year
-|   |   |   FinancialYear.jsx
-|   |   |   
-|   |   +---services
-|   |   |       financial-year.service.js
-|   |   |       
-|   |   \---store
-|   |           financial-year.selectors.js
-|   |           financial-year.slice.js
-|   |           financial-year.thunks.js
-|   |           
-|   +---gst
-|   |   |   GstPage.jsx
-|   |   |   
-|   |   +---services
-|   |   |       gst.service.js
-|   |   |       
-|   |   \---store
-|   |           gst.selectors.js
-|   |           gst.slice.js
-|   |           gst.thunks.js
-|   |           
-|   +---hsn-sac
-|   |   |   HsnSacPage.jsx
-|   |   |   
-|   |   +---services
-|   |   |       hsn-sac.service.js
-|   |   |       
-|   |   \---store
-|   |           hsn-sac.selectors.js
-|   |           hsn-sac.slice.js
-|   |           hsn-sac.thunks.js
-|   |           
-|   +---inventory
-|   |   |   InventoryPage.jsx
-|   |   |   
-|   |   +---services
-|   |   |       inventory.service.js
-|   |   |       
-|   |   \---store
-|   |           inventory.selectors.js
-|   |           inventory.slice.js
-|   |           inventory.thunks.js
-|   |           
-|   +---job-work
-|   |   |   JobWorkPage.jsx
-|   |   |   
-|   |   +---services
-|   |   |       job-work.service.js
-|   |   |       
-|   |   \---store
-|   |           job-work.selectors.js
-|   |           job-work.slice.js
-|   |           job-work.thunks.js
-|   |           
-|   +---number-series
-|   |   |   NumberSeries.jsx
-|   |   |   
-|   |   +---services
-|   |   |       number-series.service.js
-|   |   |       
-|   |   \---store
-|   |           number-series.selectors.js
-|   |           number-series.slice.js
-|   |           number-series.thunks.js
-|   |           
-|   +---partner
-|   |   |   PartnerPage.jsx
-|   |   |   
-|   |   +---services
-|   |   |       partner.service.js
-|   |   |       
-|   |   \---store
-|   |           partner.selectors.js
-|   |           partner.slice.js
-|   |           partner.thunks.js
-|   |           
-|   +---partner-category
-|   |   |   PartnerCategoryPage.jsx
-|   |   |   
-|   |   +---services
-|   |   |       partner-category.service.js
-|   |   |       
-|   |   \---store
-|   |           partner-category.selectors.js
-|   |           partner-category.slice.js
-|   |           partner-category.thunks.js
-|   |           
-|   +---payment-term
-|   |   |   PaymentTermPage.jsx
-|   |   |   
-|   |   +---services
-|   |   |       payment-term.service.js
-|   |   |       
-|   |   \---store
-|   |           payment-term.selectors.js
-|   |           payment-term.slice.js
-|   |           payment-term.thunks.js
-|   |           
-|   +---platform-admin
-|   |   +---features
-|   |   |   |   FeaturePage.jsx
-|   |   |   |   
-|   |   |   +---services
-|   |   |   |       feature.service.js
-|   |   |   |       
-|   |   |   \---store
-|   |   |           feature.selectors.js
-|   |   |           feature.slice.js
-|   |   |           feature.thunks.js
-|   |   |           
-|   |   +---plan-features
-|   |   |   |   PlanFeaturePage.jsx
-|   |   |   |   
-|   |   |   +---services
-|   |   |   |       plan-feature.service.js
-|   |   |   |       
-|   |   |   \---store
-|   |   |           plan-feature.selectors.js
-|   |   |           plan-feature.slice.js
-|   |   |           plan-feature.thunks.js
-|   |   |           
-|   |   \---subscription-plans
-|   |       |   SubscriptionPlanPage.jsx
-|   |       |   
-|   |       +---services
-|   |       |       subscription-plan.service.js
-|   |       |       
-|   |       \---store
-|   |               subscription-plan.selectors.js
-|   |               subscription-plan.slice.js
-|   |               subscription-plan.thunks.js
-|   |               
-|   +---product
-|   |   |   ProductPage.jsx
-|   |   |   
-|   |   +---services
-|   |   |       product.service.js
-|   |   |       
-|   |   \---store
-|   |           product.selectors.js
-|   |           product.slice.js
-|   |           product.thunks.js
-|   |           
-|   +---product-category
-|   |   |   ProductCategoryPage.jsx
-|   |   |   
-|   |   +---services
-|   |   |       product-category.service.js
-|   |   |       
-|   |   \---store
-|   |           product-category.selectors.js
-|   |           product-category.slice.js
-|   |           product-category.thunks.js
-|   |           
-|   +---public
-|   |   \---pages
-|   |       \---not-found
-|   |               index.js
-|   |               NotFound.jsx
-|   |               
-|   +---purchase
-|   |   |   PurchasePage.jsx
-|   |   |   
-|   |   +---services
-|   |   |       purchase.service.js
-|   |   |       
-|   |   \---store
-|   |           purchase.selectors.js
-|   |           purchase.slice.js
-|   |           purchase.thunks.js
-|   |           
-|   +---report
-|   |   |   ReportPage.jsx
-|   |   |   
-|   |   +---routes
-|   |   |       report.selectors.js
-|   |   |       report.slice.js
-|   |   |       report.thunks.js
-|   |   |       
-|   |   \---services
-|   |           report.service.js
-|   |           
-|   +---sales
-|   |   |   SalesPage.jsx
-|   |   |   
-|   |   +---services
-|   |   |       sales.service.js
-|   |   |       
-|   |   \---store
-|   |           sales.selectors.js
-|   |           sales.slice.js
-|   |           sales.thunks.js
-|   |           
-|   +---tax
-|   |   |   TaxPage.jsx
-|   |   |   
-|   |   +---services
-|   |   |       tax.service.js
-|   |   |       
-|   |   \---store
-|   |           tax.selectors.js
-|   |           tax.slice.js
-|   |           tax.thunks.js
-|   |           
-|   +---unit
-|   |   |   UnitPage.jsx
-|   |   |   
-|   |   +---routes
-|   |   |       tax.routes.js
-|   |   |       
-|   |   +---services
-|   |   |       unit.service.js
-|   |   |       
-|   |   \---store
-|   |           unit.selectors.js
-|   |           unit.slice.js
-|   |           unit.thunks.js
-|   |           
-|   +---user
-|   |   |   UserPage.jsx
-|   |   |   
-|   |   +---services
-|   |   |       user.service.js
-|   |   |       
-|   |   \---store
-|   |           user.selectors.js
-|   |           user.slice.js
-|   |           user.thunks.js
-|   |           
-|   +---warehouse
-|   |   |   Warehouse.jsx
-|   |   |   
-|   |   +---services
-|   |   |       warehouse.service.js
-|   |   |       
-|   |   \---store
-|   |           warehouse.selectors.js
-|   |           warehouse.slice.js
-|   |           warehouse.thunks.js
-|   |           
-|   +---workspace
-|   |   |   WorkspacePage.jsx
-|   |   |   
-|   |   +---services
-|   |   |       workspace.service.js
-|   |   |       
-|   |   \---store
-|   |           workspace.selectors.js
-|   |           workspace.slice.js
-|   |           workspace.thunks.js
-|   |           
-|   \---workspace-membership
-|       |   WorkspaceMembershipPage.jsx
-|       |   
-|       +---services
-|       |       workspace-membership.service.js
-|       |       
-|       \---store
-|               workspace-membership.selectors.js
-|               workspace-membership.slice.js
-|               workspace-membership.thunks.js
-|               
+|   \---public
+|       \---pages
+|           \---not-found
+|                   index.js
+|                   NotFound.jsx
+|                   
 +---router
 |       index.jsx
 |       PlatformAdminRoute.jsx
