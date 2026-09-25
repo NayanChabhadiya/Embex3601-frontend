@@ -1,6 +1,6 @@
-Folder PATH listing for volume New Volume
-Volume serial number is 00000080 B866:F872
-F:\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
+Folder PATH listing for volume NAYAN
+Volume serial number is 6C19-5F7C
+F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   App.jsx
 |   main.jsx
 |   
@@ -421,6 +421,17 @@ F:\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   |           purchase.selectors.js
 |   |           purchase.slice.js
 |   |           purchase.thunks.js
+|   |           
+|   +---report
+|   |   |   ReportPage.jsx
+|   |   |   
+|   |   +---routes
+|   |   |       report.selectors.js
+|   |   |       report.slice.js
+|   |   |       report.thunks.js
+|   |   |       
+|   |   \---services
+|   |           report.service.js
 |   |           
 |   +---sales
 |   |   |   SalesPage.jsx
