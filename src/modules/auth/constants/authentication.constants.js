@@ -14,6 +14,7 @@ const AUTHENTICATION_CONSTANTS = Object.freeze({
   STORAGE_KEYS: Object.freeze({
     ACCESS_TOKEN: "embex360_access_token",
     REFRESH_TOKEN: "embex360_refresh_token",
+    SESSION_ID: "embex360_session_id",
     USER: "embex360_user",
   }),
 

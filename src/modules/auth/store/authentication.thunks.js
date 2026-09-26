@@ -2,8 +2,12 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import authenticationService from "../services/authentication.service.js";
 import AUTH_MESSAGES from "../constants/authentication.messages.js";
+import AUTHENTICATION_CONSTANTS from "../constants/authentication.constants.js";
 
+// -----------------------------------------------------------------------------
 // Normalize API Error
+// -----------------------------------------------------------------------------
+
 const getErrorMessage = (error, fallbackMessage) => {
   const responseData = error?.response?.data;
 
@@ -22,14 +26,38 @@ const getErrorMessage = (error, fallbackMessage) => {
   return fallbackMessage;
 };
 
+// -----------------------------------------------------------------------------
 // Login
+// -----------------------------------------------------------------------------
+
 export const login = createAsyncThunk(
   "authentication/login",
   async (payload, { rejectWithValue }) => {
     try {
       const response = await authenticationService.login(payload);
 
-      return response?.data ?? null;
+      const data = response?.data ?? null;
+
+      if (data?.accessToken) {
+        localStorage.setItem("embex360_access_token", data.accessToken);
+      }
+
+      if (data?.refreshToken) {
+        localStorage.setItem("embex360_refresh_token", data.refreshToken);
+      }
+
+      if (data?.sessionId) {
+        localStorage.setItem(
+          AUTHENTICATION_CONSTANTS.STORAGE_KEYS.SESSION_ID,
+          data.sessionId,
+        );
+      }
+
+      if (data?.user) {
+        localStorage.setItem("embex360_user", JSON.stringify(data.user));
+      }
+
+      return data;
     } catch (error) {
       return rejectWithValue(
         getErrorMessage(error, AUTH_MESSAGES.LOGIN_FAILED),
@@ -37,16 +65,36 @@ export const login = createAsyncThunk(
     }
   },
 );
-
+// -----------------------------------------------------------------------------
 // Refresh
+// -----------------------------------------------------------------------------
+
 export const refresh = createAsyncThunk(
   "authentication/refresh",
   async (payload, { rejectWithValue }) => {
     try {
       const response = await authenticationService.refresh(payload);
 
-      return response?.data ?? null;
+      const data = response?.data ?? null;
+
+      if (data?.accessToken) {
+        localStorage.setItem("embex360_access_token", data.accessToken);
+      }
+
+      if (data?.refreshToken) {
+        localStorage.setItem("embex360_refresh_token", data.refreshToken);
+      }
+
+      if (data?.user) {
+        localStorage.setItem("embex360_user", JSON.stringify(data.user));
+      }
+
+      return data;
     } catch (error) {
+      localStorage.removeItem("embex360_access_token");
+      localStorage.removeItem("embex360_refresh_token");
+      localStorage.removeItem("embex360_user");
+
       return rejectWithValue(
         getErrorMessage(error, AUTH_MESSAGES.REFRESH_FAILED),
       );
@@ -54,14 +102,26 @@ export const refresh = createAsyncThunk(
   },
 );
 
+// -----------------------------------------------------------------------------
 // Current User
+// -----------------------------------------------------------------------------
+
 export const getCurrentUser = createAsyncThunk(
   "authentication/getCurrentUser",
   async (_, { rejectWithValue }) => {
     try {
       const response = await authenticationService.getCurrentUser();
 
-      return response?.data ?? null;
+      const data = response?.data ?? null;
+
+      if (data) {
+        localStorage.setItem(
+          AUTHENTICATION_CONSTANTS.STORAGE_KEYS.USER,
+          JSON.stringify(data),
+        );
+      }
+
+      return data;
     } catch (error) {
       return rejectWithValue(
         getErrorMessage(error, AUTH_MESSAGES.CURRENT_USER_FETCH_FAILED),
@@ -70,12 +130,35 @@ export const getCurrentUser = createAsyncThunk(
   },
 );
 
+// -----------------------------------------------------------------------------
 // Logout
+// -----------------------------------------------------------------------------
+
 export const logout = createAsyncThunk(
   "authentication/logout",
   async (payload, { rejectWithValue }) => {
     try {
-      const response = await authenticationService.logout(payload);
+      const sessionId = localStorage.getItem(
+        AUTHENTICATION_CONSTANTS.STORAGE_KEYS.SESSION_ID,
+      );
+
+      const response = await authenticationService.logout({
+        sessionId,
+      });
+
+      // -----------------------------------------------------------------------
+      // Clear Authentication Storage
+      // -----------------------------------------------------------------------
+
+      localStorage.removeItem(
+        AUTHENTICATION_CONSTANTS.STORAGE_KEYS.ACCESS_TOKEN,
+      );
+
+      localStorage.removeItem(
+        AUTHENTICATION_CONSTANTS.STORAGE_KEYS.REFRESH_TOKEN,
+      );
+
+      localStorage.removeItem(AUTHENTICATION_CONSTANTS.STORAGE_KEYS.USER);
 
       return response?.data ?? null;
     } catch (error) {

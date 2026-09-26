@@ -11,14 +11,24 @@ const registerApiInterceptors = (apiClient) => {
         config.headers["Content-Type"] = "application/json";
       }
 
+      const accessToken = localStorage.getItem("embex360_access_token");
+
+      if (accessToken) {
+        config.headers.Authorization = `Bearer ${accessToken}`;
+      }
+
       return config;
     },
+
     (error) => Promise.reject(error),
   );
 
   apiClient.interceptors.response.use(
     (response) => response,
-    (error) => Promise.reject(error),
+
+    async (error) => {
+      return Promise.reject(error);
+    },
   );
 };
 

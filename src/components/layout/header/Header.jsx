@@ -2,19 +2,23 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import "./header.scss";
+
 import Badge from "../../common/badge/Badge.jsx";
+
+import { logout } from "../../../modules/auth/store/authentication.thunks.js";
 
 function Header() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const user = null;
+  const user = useSelector((state) => state.authentication?.user);
 
   const platformAdminAccess = {
-    role: "super_admin",
+    role: user?.role || "super_admin",
   };
 
   const platformAdminRoles = platformAdminAccess?.role
-    ? platformAdminAccess.role.replace(/\_/g, " ").toUpperCase()
+    ? platformAdminAccess.role.replace(/_/g, " ").toUpperCase()
     : null;
 
   const displayName =
@@ -24,6 +28,19 @@ function Header() {
     "User";
 
   const userType = (user?.type || "User").toUpperCase();
+
+  const handleLogout = async () => {
+    try {
+      await dispatch(logout()).unwrap();
+
+      navigate("/login", { replace: true });
+    } catch (error) {
+      console.error("Logout failed:", error);
+
+      navigate("/login", { replace: true });
+    }
+  };
+
   return (
     <header className="app-header">
       <div className="app-header__left">
@@ -44,6 +61,14 @@ function Header() {
             )}
           </div>
         </div>
+
+        <button
+          type="button"
+          className="app-header__logout"
+          onClick={handleLogout}
+        >
+          Logout
+        </button>
       </div>
     </header>
   );
