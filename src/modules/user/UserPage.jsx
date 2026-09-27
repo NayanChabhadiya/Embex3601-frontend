@@ -32,6 +32,8 @@ import {
 
 import USER_MESSAGES from "./constants/user.messages.js";
 
+import { useToast } from "../../components/common";
+
 const INITIAL_FORM = {
   firstName: "",
   lastName: "",
@@ -58,6 +60,8 @@ function UserPage() {
   const [form, setForm] = useState(INITIAL_FORM);
   const [formErrors, setFormErrors] = useState({});
   const [search, setSearch] = useState("");
+
+  const { showToast } = useToast();
 
   useEffect(() => {
     dispatch(
@@ -155,6 +159,10 @@ function UserPage() {
       verificationStatus: form.verificationStatus,
     };
 
+    // ------------------------------------------------------------
+    // Validation
+    // ------------------------------------------------------------
+
     const validationErrors = validateCreateUser(values);
 
     if (Object.keys(validationErrors).length > 0) {
@@ -164,9 +172,23 @@ function UserPage() {
 
     setFormErrors({});
 
+    // ------------------------------------------------------------
+    // Create User
+    // ------------------------------------------------------------
+
     const result = await dispatch(createUser(values));
 
+    // ------------------------------------------------------------
+    // Success
+    // ------------------------------------------------------------
+
     if (createUser.fulfilled.match(result)) {
+      showToast({
+        type: "success",
+        title: "User Created",
+        message: USER_MESSAGES.CREATE_SUCCESS,
+      });
+
       setIsCreateModalOpen(false);
       setForm(INITIAL_FORM);
       setFormErrors({});
@@ -182,9 +204,23 @@ function UserPage() {
       return;
     }
 
+    // ------------------------------------------------------------
+    // Backend Validation Errors
+    // ------------------------------------------------------------
+
     if (result.payload?.errors) {
       setFormErrors(result.payload.errors);
     }
+
+    // ------------------------------------------------------------
+    // Error Toast
+    // ------------------------------------------------------------
+
+    showToast({
+      type: "error",
+      title: "Create User Failed",
+      message: result.payload?.message || USER_MESSAGES.CREATE_ERROR,
+    });
   };
 
   const handlePageChange = (page) => {

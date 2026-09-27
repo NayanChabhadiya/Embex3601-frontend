@@ -50,3 +50,4 @@ export { default as Loader } from "./loader/Loader.jsx";
 // -----------------------------------------------------------------------------
 
 export { default as Toast } from "./toast/Toast.jsx";
+export { default as ToastProvider, useToast } from "./toast/ToastProvider.jsx";

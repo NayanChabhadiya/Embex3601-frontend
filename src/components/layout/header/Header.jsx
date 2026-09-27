@@ -55,10 +55,6 @@ function Header() {
 
           <div className="app-header__badges">
             <Badge variant="neutral">{userType}</Badge>
-
-            {platformAdminRoles && (
-              <Badge variant="primary">{platformAdminRoles}</Badge>
-            )}
           </div>
         </div>
 
