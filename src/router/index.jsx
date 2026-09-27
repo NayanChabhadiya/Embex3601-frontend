@@ -10,6 +10,7 @@ import { NotFound } from "../modules/public/pages/not-found";
 import PublicRoutes from "./PublicRoutes.jsx";
 import ProtectedRoutes from "./ProtectedRoutes.jsx";
 import PlatformAdminRoute from "./PlatformAdminRoute.jsx";
+import UserPage from "../modules/user/UserPage.jsx";
 
 const router = createBrowserRouter([
   // PUBLIC ROUTES
@@ -47,10 +48,10 @@ const router = createBrowserRouter([
             children: [
               // Platform Admin routes will be added here.
               // Example:
-              // {
-              //   path: "/platform-admin",
-              //   element: <PlatformAdminDashboard />,
-              // },
+              {
+                path: "/users",
+                element: <UserPage />,
+              },
             ],
           },
         ],

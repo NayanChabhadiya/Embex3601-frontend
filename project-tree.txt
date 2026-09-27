@@ -1,5 +1,5 @@
 Folder PATH listing for volume New Volume
-Volume serial number is 000000F3 B866:F872
+Volume serial number is 00000018 B866:F872
 F:\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   App.jsx
 |   main.jsx
@@ -155,6 +155,8 @@ F:\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 +---modules
 |   +---auth
 |   |   +---components
+|   |   |       AuthenticationBootstrap.jsx
+|   |   |       
 |   |   +---constants
 |   |   |       authentication.constants.js
 |   |   |       authentication.messages.js
@@ -185,12 +187,30 @@ F:\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   |               dashboard.scss
 |   |               index.js
 |   |               
-|   \---public
-|       \---pages
-|           \---not-found
-|                   index.js
-|                   NotFound.jsx
-|                   
+|   +---public
+|   |   \---pages
+|   |       \---not-found
+|   |               index.js
+|   |               NotFound.jsx
+|   |               
+|   \---user
+|       |   UserPage.jsx
+|       |   
+|       +---constants
+|       |       user.constants.js
+|       |       user.messages.js
+|       |       
+|       +---services
+|       |       user.service.js
+|       |       
+|       +---store
+|       |       user.selectors.js
+|       |       user.slice.js
+|       |       user.thunks.js
+|       |       
+|       \---validations
+|               user.validation.js
+|               
 +---router
 |       index.jsx
 |       PlatformAdminRoute.jsx
