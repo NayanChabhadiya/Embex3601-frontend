@@ -39,11 +39,17 @@ export const login = createAsyncThunk(
       const data = response?.data ?? null;
 
       if (data?.accessToken) {
-        localStorage.setItem("embex360_access_token", data.accessToken);
+        localStorage.setItem(
+          AUTHENTICATION_CONSTANTS.STORAGE_KEYS.ACCESS_TOKEN,
+          data.accessToken,
+        );
       }
 
       if (data?.refreshToken) {
-        localStorage.setItem("embex360_refresh_token", data.refreshToken);
+        localStorage.setItem(
+          AUTHENTICATION_CONSTANTS.STORAGE_KEYS.REFRESH_TOKEN,
+          data.refreshToken,
+        );
       }
 
       if (data?.sessionId) {
@@ -54,7 +60,10 @@ export const login = createAsyncThunk(
       }
 
       if (data?.user) {
-        localStorage.setItem("embex360_user", JSON.stringify(data.user));
+        localStorage.setItem(
+          AUTHENTICATION_CONSTANTS.STORAGE_KEYS.USER,
+          JSON.stringify(data.user),
+        );
       }
 
       return data;
@@ -78,23 +87,28 @@ export const refresh = createAsyncThunk(
       const data = response?.data ?? null;
 
       if (data?.accessToken) {
-        localStorage.setItem("embex360_access_token", data.accessToken);
+        localStorage.setItem(
+          AUTHENTICATION_CONSTANTS.STORAGE_KEYS.ACCESS_TOKEN,
+          data.accessToken,
+        );
       }
 
       if (data?.refreshToken) {
-        localStorage.setItem("embex360_refresh_token", data.refreshToken);
+        localStorage.setItem(
+          AUTHENTICATION_CONSTANTS.STORAGE_KEYS.REFRESH_TOKEN,
+          data.refreshToken,
+        );
       }
 
       if (data?.user) {
-        localStorage.setItem("embex360_user", JSON.stringify(data.user));
+        localStorage.setItem(
+          AUTHENTICATION_CONSTANTS.STORAGE_KEYS.USER,
+          JSON.stringify(data.user),
+        );
       }
 
       return data;
     } catch (error) {
-      localStorage.removeItem("embex360_access_token");
-      localStorage.removeItem("embex360_refresh_token");
-      localStorage.removeItem("embex360_user");
-
       return rejectWithValue(
         getErrorMessage(error, AUTH_MESSAGES.REFRESH_FAILED),
       );

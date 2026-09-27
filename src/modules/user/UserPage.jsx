@@ -354,6 +354,12 @@ function UserPage() {
         <>
           <ViewIcon size={4} onClick={() => handleViewUser(user._id)} />
         </>
+
+
+
+
+
+
       ),
     },
   ];
