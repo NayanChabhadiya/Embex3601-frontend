@@ -11,9 +11,13 @@ import {
   Select,
   Button,
   Badge,
+  PageSection,
+  TablePagination,
+  useToast,
+  Loader,
 } from "../../components/common";
 
-import { createUser, getUsers } from "./store/user.thunks.js";
+import { createUser, getUsers, getUserById } from "./store/user.thunks.js";
 import { validateCreateUser } from "./validations/user.validation.js";
 
 import {
@@ -21,6 +25,9 @@ import {
   selectUserPagination,
   selectUserListLoading,
   selectUserListError,
+  selectSelectedUser,
+  selectUserDetailLoading,
+  selectUserDetailError,
   selectCreateUserLoading,
 } from "./store/user.selectors.js";
 
@@ -31,8 +38,7 @@ import {
 } from "./constants/user.constants";
 
 import USER_MESSAGES from "./constants/user.messages.js";
-
-import { useToast } from "../../components/common";
+import { ViewIcon } from "../../components/common/icons";
 
 const INITIAL_FORM = {
   firstName: "",
@@ -55,8 +61,13 @@ function UserPage() {
   const submitting = useSelector(selectCreateUserLoading);
   const error = useSelector(selectUserListError);
   const pagination = useSelector(selectUserPagination);
+  const selectedUser = useSelector(selectSelectedUser);
+  const detailLoading = useSelector(selectUserDetailLoading);
+  const detailError = useSelector(selectUserDetailError);
 
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
+
   const [form, setForm] = useState(INITIAL_FORM);
   const [formErrors, setFormErrors] = useState({});
   const [search, setSearch] = useState("");
@@ -223,6 +234,21 @@ function UserPage() {
     });
   };
 
+  const handleViewUser = async (userId) => {
+    const result = await dispatch(getUserById(userId));
+
+    if (getUserById.fulfilled.match(result)) {
+      setIsViewModalOpen(true);
+      return;
+    }
+
+    showToast({
+      type: "error",
+      title: "Unable to Load User",
+      message: result.payload?.message || USER_MESSAGES.FETCH_BY_ID_ERROR,
+    });
+  };
+
   const handlePageChange = (page) => {
     dispatch(
       getUsers({
@@ -319,6 +345,15 @@ function UserPage() {
         <Badge variant={getVerificationVariant(user.verificationStatus)}>
           {user.verificationStatus}
         </Badge>
+      ),
+    },
+    {
+      key: "actions",
+      label: "Actions",
+      render: (user) => (
+        <>
+          <ViewIcon size={4} onClick={() => handleViewUser(user._id)} />
+        </>
       ),
     },
   ];
@@ -526,6 +561,78 @@ function UserPage() {
             />
           </FormField>
         </form>
+      </Modal>
+
+      <Modal
+        isOpen={isViewModalOpen}
+        onClose={() => setIsViewModalOpen(false)}
+        title="User Details"
+      >
+        {detailLoading ? (
+          <Loader />
+        ) : detailError ? (
+          <div>{detailError}</div>
+        ) : selectedUser ? (
+          <div className="user-details">
+            <div className="user-details__row">
+              <span>First Name</span>
+              <strong>{selectedUser.firstName || "-"}</strong>
+            </div>
+
+            <div className="user-details__row">
+              <span>Last Name</span>
+              <strong>{selectedUser.lastName || "-"}</strong>
+            </div>
+
+            <div className="user-details__row">
+              <span>Display Name</span>
+              <strong>{selectedUser.displayName || "-"}</strong>
+            </div>
+
+            <div className="user-details__row">
+              <span>Email</span>
+              <strong>{selectedUser.email || "-"}</strong>
+            </div>
+
+            <div className="user-details__row">
+              <span>Mobile</span>
+              <strong>{selectedUser.mobile || "-"}</strong>
+            </div>
+
+            <div className="user-details__row">
+              <span>User Type</span>
+              <strong>{selectedUser.type || "-"}</strong>
+            </div>
+
+            <div className="user-details__row">
+              <span>Status</span>
+              <Badge>{selectedUser.status || "-"}</Badge>
+            </div>
+
+            <div className="user-details__row">
+              <span>Verification Status</span>
+              <Badge>{selectedUser.verificationStatus || "-"}</Badge>
+            </div>
+
+            <div className="user-details__row">
+              <span>Created At</span>
+              <strong>
+                {selectedUser.createdAt
+                  ? new Date(selectedUser.createdAt).toLocaleString()
+                  : "-"}
+              </strong>
+            </div>
+
+            <div className="user-details__row">
+              <span>Updated At</span>
+              <strong>
+                {selectedUser.updatedAt
+                  ? new Date(selectedUser.updatedAt).toLocaleString()
+                  : "-"}
+              </strong>
+            </div>
+          </div>
+        ) : null}
       </Modal>
     </PageContainer>
   );
