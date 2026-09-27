@@ -11,6 +11,7 @@ import PublicRoutes from "./PublicRoutes.jsx";
 import ProtectedRoutes from "./ProtectedRoutes.jsx";
 import PlatformAdminRoute from "./PlatformAdminRoute.jsx";
 import UserPage from "../modules/user/UserPage.jsx";
+import ProfilePage from "../modules/profile/ProfilePage.jsx";
 
 const router = createBrowserRouter([
   // PUBLIC ROUTES
@@ -35,6 +36,13 @@ const router = createBrowserRouter([
           {
             path: "/",
             element: <Dashboard />,
+          },
+          // -------------------------------------------------------------------
+          // Profile
+          // -------------------------------------------------------------------
+          {
+            path: "/profile",
+            element: <ProfilePage />,
           },
         ],
       },

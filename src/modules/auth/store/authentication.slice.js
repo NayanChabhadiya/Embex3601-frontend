@@ -142,36 +142,6 @@ const authenticationSlice = createSlice({
       })
 
       // -----------------------------------------------------------------------
-      // Current User
-      // -----------------------------------------------------------------------
-
-      .addCase(getCurrentUser.pending, (state) => {
-        state.status = AUTHENTICATION_CONSTANTS.AUTHENTICATION_STATUS.LOADING;
-
-        state.error = null;
-      })
-
-      .addCase(getCurrentUser.fulfilled, (state, action) => {
-        state.status = AUTHENTICATION_CONSTANTS.AUTHENTICATION_STATUS.SUCCEEDED;
-
-        state.error = null;
-
-        state.user = action.payload ?? null;
-
-        state.isAuthenticated = Boolean(action.payload);
-      })
-
-      .addCase(getCurrentUser.rejected, (state, action) => {
-        state.status = AUTHENTICATION_CONSTANTS.AUTHENTICATION_STATUS.FAILED;
-
-        state.error = action.payload || null;
-
-        state.user = null;
-
-        state.isAuthenticated = false;
-      })
-
-      // -----------------------------------------------------------------------
       // Logout
       // -----------------------------------------------------------------------
 

@@ -1,5 +1,5 @@
 Folder PATH listing for volume New Volume
-Volume serial number is 00000018 B866:F872
+Volume serial number is 000000C2 B866:F872
 F:\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   App.jsx
 |   main.jsx
@@ -187,6 +187,11 @@ F:\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   |               dashboard.scss
 |   |               index.js
 |   |               
+|   +---profile
+|   |   |   ProfilePage.jsx
+|   |   |   
+|   |   +---services
+|   |   \---store
 |   +---public
 |   |   \---pages
 |   |       \---not-found
