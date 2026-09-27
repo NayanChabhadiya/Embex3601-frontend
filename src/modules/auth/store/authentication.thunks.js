@@ -117,6 +117,34 @@ export const refresh = createAsyncThunk(
 );
 
 // -----------------------------------------------------------------------------
+// Current User
+// -----------------------------------------------------------------------------
+
+export const getCurrentUser = createAsyncThunk(
+  "authentication/getCurrentUser",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await authenticationService.getCurrentUser();
+
+      const data = response?.data ?? null;
+
+      if (data) {
+        localStorage.setItem(
+          AUTHENTICATION_CONSTANTS.STORAGE_KEYS.USER,
+          JSON.stringify(data),
+        );
+      }
+
+      return data;
+    } catch (error) {
+      return rejectWithValue(
+        getErrorMessage(error, AUTH_MESSAGES.CURRENT_USER_FETCH_FAILED),
+      );
+    }
+  },
+);
+
+// -----------------------------------------------------------------------------
 // Logout
 // -----------------------------------------------------------------------------
 
