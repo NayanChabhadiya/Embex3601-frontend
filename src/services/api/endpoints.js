@@ -10,8 +10,13 @@ const API_ENDPOINTS = Object.freeze({
   // Users
   USERS: Object.freeze({
     BASE: "/users",
-
     BY_ID: (id) => `/users/${id}`,
+  }),
+
+  // Accounts
+  ACCOUNTS: Object.freeze({
+    BASE: "/accounts",
+    BY_ID: (id) => `/accounts/${id}`,
   }),
 });
 
