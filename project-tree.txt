@@ -1,5 +1,5 @@
 Folder PATH listing for volume New Volume
-Volume serial number is 000000EE B866:F872
+Volume serial number is 000000D9 B866:F872
 F:\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   App.jsx
 |   main.jsx
@@ -152,7 +152,16 @@ F:\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |                   filter-sidebar-menu.js
 |                   is-sidebar-section-active.js
 |                   
++---dashboard
+|   +---customer
+|   \---platform
 +---modules
+|   +---account
+|   |   +---permission
+|   |   +---role
+|   |   +---role-permission
+|   |   +---workspace
+|   |   \---workspace-membership
 |   +---auth
 |   |   +---components
 |   |   |       AuthenticationBootstrap.jsx
@@ -180,6 +189,13 @@ F:\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   |   \---validations
 |   |           authentication.validation.js
 |   |           
+|   +---company
+|   |   +---bank-account
+|   |   +---branch
+|   |   +---company
+|   |   +---financial-year
+|   |   +---number-series
+|   |   \---warehouse
 |   +---dashboard
 |   |   \---pages
 |   |       \---dashboard
@@ -187,6 +203,23 @@ F:\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   |               dashboard.scss
 |   |               index.js
 |   |               
+|   +---identity
+|   |   +---auth
+|   |   \---user
+|   +---masters
+|   |   +---bank
+|   |   +---currency
+|   |   +---hsn-sac
+|   |   +---partner-category
+|   |   +---payment-term
+|   |   +---product-category
+|   |   +---tax
+|   |   \---unit
+|   +---platform
+|   |   +---account
+|   |   +---feature
+|   |   +---plan-feature
+|   |   \---subscription-plan
 |   +---profile
 |   |   |   profile.scss
 |   |   |   ProfilePage.jsx
@@ -205,6 +238,7 @@ F:\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   |               index.js
 |   |               NotFound.jsx
 |   |               
+|   +---shared
 |   \---user
 |       |   UserPage.jsx
 |       |   
