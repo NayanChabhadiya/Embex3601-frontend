@@ -2,16 +2,17 @@ import { createBrowserRouter } from "react-router-dom";
 
 import AppLayout from "../components/layout/AppLayout.jsx";
 
-import Login from "../modules/auth/pages/login/Login.jsx";
-import Dashboard from "../modules/dashboard/pages/dashboard/Dashboard.jsx";
+// import Login from "../modules/auth/pages/login/Login.jsx";
+import Login from "../modules/identity/auth/pages/login/Login.jsx";
 
 import { NotFound } from "../modules/public/pages/not-found";
 
 import PublicRoutes from "./PublicRoutes.jsx";
 import ProtectedRoutes from "./ProtectedRoutes.jsx";
 import PlatformAdminRoute from "./PlatformAdminRoute.jsx";
-import UserPage from "../modules/user/UserPage.jsx";
+import Dashboard from "../dashboard/customer/Dashboard.jsx";
 import ProfilePage from "../modules/profile/ProfilePage.jsx";
+import UserPage from "../modules/identity/user/UserPage.jsx";
 
 const router = createBrowserRouter([
   // PUBLIC ROUTES
@@ -44,8 +45,6 @@ const router = createBrowserRouter([
             path: "/profile",
             element: <ProfilePage />,
           },
-
-       
         ],
       },
 

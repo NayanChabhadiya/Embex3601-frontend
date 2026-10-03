@@ -1,5 +1,5 @@
-import apiClient from "../../../services/api/apiClient.js";
-import API_ENDPOINTS from "../../../services/api/endpoints.js";
+import apiClient from "../../../../services/api/apiClient.js";
+import API_ENDPOINTS from "../../../../services/api/endpoints.js";
 
 const authenticationService = Object.freeze({
   // ---------------------------------------------------------------------------

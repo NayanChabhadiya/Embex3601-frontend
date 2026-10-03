@@ -1,7 +1,7 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 
-import useAuthentication from "../modules/auth/hooks/useAuthentication.js";
-import AUTHENTICATION_CONSTANTS from "../modules/auth/constants/authentication.constants.js";
+import useAuthentication from "../modules/identity/auth/hooks/useAuthentication.js";
+import AUTHENTICATION_CONSTANTS from "../modules/identity/auth/constants/authentication.constants.js";
 
 function PlatformAdminRoute() {
   const location = useLocation();

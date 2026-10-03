@@ -5,8 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import "./header.scss";
 
 import Badge from "../../common/badge/Badge.jsx";
-
-import { logout } from "../../../modules/auth/store/authentication.thunks.js";
+import { logout } from "../../../modules/identity/auth/store/authentication.thunks.js";
 
 function Header() {
   const navigate = useNavigate();

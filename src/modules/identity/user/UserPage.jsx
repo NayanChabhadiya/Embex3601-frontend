@@ -15,7 +15,7 @@ import {
   TablePagination,
   useToast,
   Loader,
-} from "../../components/common";
+} from "../../../components/common";
 
 import { createUser, getUsers, getUserById } from "./store/user.thunks.js";
 import { validateCreateUser } from "./validations/user.validation.js";
@@ -38,7 +38,7 @@ import {
 } from "./constants/user.constants";
 
 import USER_MESSAGES from "./constants/user.messages.js";
-import { ViewIcon } from "../../components/common/icons";
+import { ViewIcon } from "../../../components/common/icons";
 
 const INITIAL_FORM = {
   firstName: "",

@@ -1,9 +1,9 @@
 import { useState } from "react";
 
-import Input from "../../../../components/common/form/input/Input.jsx";
-import Checkbox from "../../../../components/common/form/checkbox/Checkbox.jsx";
-import Button from "../../../../components/common/button/Button.jsx";
-import { useToast } from "../../../../components/common/toast/ToastProvider.jsx";
+import Checkbox from "../../../../../components/common/form/checkbox/Checkbox.jsx";
+import { Input } from "../../../../../components/common/index.js";
+import Button from "../../../../../components/common/button/Button.jsx";
+import { useToast } from "../../../../../components/common/toast/ToastProvider.jsx";
 
 import useAuthentication from "../../hooks/useAuthentication.js";
 import AUTHENTICATION_VALIDATION from "../../validations/authentication.validation.js";

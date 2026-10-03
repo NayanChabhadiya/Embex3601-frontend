@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { SummaryCard } from "../../../../components/common/card";
-import { Grid } from "../../../../components/common/grid";
-import { Table } from "../../../../components/common/table";
-import PageHeader from "../../../../components/layout/page/components/PageHeader";
-import PageSection from "../../../../components/layout/page/components/PageSection";
+import PageHeader from "../../components/layout/page/components/PageHeader";
+import PageSection from "../../components/layout/page/components/PageSection";
+import SummaryCard from "../../components/common/card/SummaryCard";
+import Grid from "../../components/common/grid/Grid";
+import { Table } from "../../components/common";
 
 function Dashboard() {
   const columns = [
