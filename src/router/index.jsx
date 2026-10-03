@@ -14,6 +14,7 @@ import Dashboard from "../dashboard/customer/Dashboard.jsx";
 import ProfilePage from "../modules/profile/ProfilePage.jsx";
 import UserPage from "../modules/identity/user/UserPage.jsx";
 import SubscriptionPlanPage from "../modules/platform/subscription-plan/SubscriptionPlanPage.jsx";
+import FeaturePage from "../modules/platform/feature/FeaturePage.jsx";
 
 const router = createBrowserRouter([
   // PUBLIC ROUTES
@@ -66,6 +67,11 @@ const router = createBrowserRouter([
               {
                 path: "/subscription-plans",
                 element: <SubscriptionPlanPage />,
+              },
+              // Features
+              {
+                path: "/features",
+                element: <FeaturePage />,
               },
             ],
           },

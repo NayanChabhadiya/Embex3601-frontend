@@ -23,6 +23,11 @@ const API_ENDPOINTS = Object.freeze({
   SUBSCRIPTION_PLANS: Object.freeze({
     BASE: "/subscription-plans",
   }),
+
+  // Fratures
+  FEATURES: Object.freeze({
+    BASE: "/features",
+  }),
 });
 
 export default API_ENDPOINTS;
