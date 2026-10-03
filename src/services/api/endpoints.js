@@ -28,6 +28,11 @@ const API_ENDPOINTS = Object.freeze({
   FEATURES: Object.freeze({
     BASE: "/features",
   }),
+
+  // Plan Features
+  PLAN_FEATURES: Object.freeze({
+    BASE: "/plan-features",
+  }),
 });
 
 export default API_ENDPOINTS;

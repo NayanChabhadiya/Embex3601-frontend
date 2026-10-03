@@ -15,6 +15,7 @@ import ProfilePage from "../modules/profile/ProfilePage.jsx";
 import UserPage from "../modules/identity/user/UserPage.jsx";
 import SubscriptionPlanPage from "../modules/platform/subscription-plan/SubscriptionPlanPage.jsx";
 import FeaturePage from "../modules/platform/feature/FeaturePage.jsx";
+import PlanFeaturePage from "../modules/platform/plan-feature/PlanFeaturePage.jsx";
 
 const router = createBrowserRouter([
   // PUBLIC ROUTES
@@ -72,6 +73,11 @@ const router = createBrowserRouter([
               {
                 path: "/features",
                 element: <FeaturePage />,
+              },
+              // Plan Features
+              {
+                path: "/plan-features",
+                element: <PlanFeaturePage />,
               },
             ],
           },

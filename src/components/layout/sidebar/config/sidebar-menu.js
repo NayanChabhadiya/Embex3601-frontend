@@ -13,11 +13,11 @@ export const SIDEBAR_MENU = [
     access: "platform-admin",
     children: [
       {
-        key: "platform-admin-dashboard",
+        key: "users",
         type: "item",
-        label: "Platform Dashboard",
-        path: "/platform-admin",
-        icon: "dashboard",
+        label: "Users",
+        path: "/users",
+        icon: "users",
         access: "platform-admin",
       },
       {
@@ -28,7 +28,7 @@ export const SIDEBAR_MENU = [
         icon: "credit-card",
         access: "platform-admin",
       },
-            {
+      {
         key: "platform-admin-features",
         type: "item",
         label: "Features",
@@ -40,7 +40,7 @@ export const SIDEBAR_MENU = [
         key: "platform-admin-plan-features",
         type: "item",
         label: "Plan Features",
-        path: "/platform-admin/plan-features",
+        path: "/plan-features",
         icon: "credit-card",
         access: "platform-admin",
       },
@@ -52,14 +52,7 @@ export const SIDEBAR_MENU = [
         icon: "credit-card",
         access: "platform-admin",
       },
-      {
-        key: "users",
-        type: "item",
-        label: "Users",
-        path: "/users",
-        icon: "users",
-        access: "platform-admin",
-      },
+
       {
         key: "workspaces",
         type: "item",

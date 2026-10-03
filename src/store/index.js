@@ -5,6 +5,7 @@ import userReducer from "../modules/identity/user/store/user.slice.js";
 import profileReducer from "../modules/profile/store/profile.slice.js";
 import subscriptionPlanReducer from "../modules/platform/subscription-plan/store/subscription-plan.slice.js";
 import featureReducer from "../modules/platform/feature/store/feature.slice.js";
+import planFeatureReducer from "../modules/platform/plan-feature/store/plan-feature.slice.js";
 
 const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ const store = configureStore({
     profile: profileReducer,
     subscriptionPlan: subscriptionPlanReducer,
     feature: featureReducer,
+    planFeature: planFeatureReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
