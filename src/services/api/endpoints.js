@@ -18,6 +18,11 @@ const API_ENDPOINTS = Object.freeze({
     BASE: "/accounts",
     BY_ID: (id) => `/accounts/${id}`,
   }),
+
+  // Subscription Plans
+  SUBSCRIPTION_PLANS: Object.freeze({
+    BASE: "/subscription-plans",
+  }),
 });
 
 export default API_ENDPOINTS;

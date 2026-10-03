@@ -13,6 +13,7 @@ import PlatformAdminRoute from "./PlatformAdminRoute.jsx";
 import Dashboard from "../dashboard/customer/Dashboard.jsx";
 import ProfilePage from "../modules/profile/ProfilePage.jsx";
 import UserPage from "../modules/identity/user/UserPage.jsx";
+import SubscriptionPlanPage from "../modules/platform/subscription-plan/SubscriptionPlanPage.jsx";
 
 const router = createBrowserRouter([
   // PUBLIC ROUTES
@@ -60,6 +61,11 @@ const router = createBrowserRouter([
               {
                 path: "/users",
                 element: <UserPage />,
+              },
+              // Subscription Plans
+              {
+                path: "/subscription-plans",
+                element: <SubscriptionPlanPage />,
               },
             ],
           },

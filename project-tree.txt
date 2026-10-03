@@ -1,5 +1,5 @@
 Folder PATH listing for volume New Volume
-Volume serial number is 00000009 B866:F872
+Volume serial number is 0000004E B866:F872
 F:\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   App.jsx
 |   main.jsx
@@ -154,6 +154,10 @@ F:\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |                   
 +---dashboard
 |   +---customer
+|   |       Dashboard.jsx
+|   |       dashboard.scss
+|   |       index.js
+|   |       
 |   \---platform
 +---modules
 |   +---account
@@ -162,33 +166,6 @@ F:\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   |   +---role-permission
 |   |   +---workspace
 |   |   \---workspace-membership
-|   +---auth
-|   |   +---components
-|   |   |       AuthenticationBootstrap.jsx
-|   |   |       
-|   |   +---constants
-|   |   |       authentication.constants.js
-|   |   |       authentication.messages.js
-|   |   |       
-|   |   +---hooks
-|   |   |       useAuthentication.js
-|   |   |       
-|   |   +---pages
-|   |   |   \---login
-|   |   |           Login.jsx
-|   |   |           login.scss
-|   |   |           
-|   |   +---services
-|   |   |       authentication.service.js
-|   |   |       
-|   |   +---store
-|   |   |       authentication.selectors.js
-|   |   |       authentication.slice.js
-|   |   |       authentication.thunks.js
-|   |   |       
-|   |   \---validations
-|   |           authentication.validation.js
-|   |           
 |   +---company
 |   |   +---bank-account
 |   |   +---branch
@@ -196,16 +173,52 @@ F:\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   |   +---financial-year
 |   |   +---number-series
 |   |   \---warehouse
-|   +---dashboard
-|   |   \---pages
-|   |       \---dashboard
-|   |               Dashboard.jsx
-|   |               dashboard.scss
-|   |               index.js
-|   |               
 |   +---identity
 |   |   +---auth
+|   |   |   +---components
+|   |   |   |       AuthenticationBootstrap.jsx
+|   |   |   |       
+|   |   |   +---constants
+|   |   |   |       authentication.constants.js
+|   |   |   |       authentication.messages.js
+|   |   |   |       
+|   |   |   +---hooks
+|   |   |   |       useAuthentication.js
+|   |   |   |       
+|   |   |   +---pages
+|   |   |   |   \---login
+|   |   |   |           Login.jsx
+|   |   |   |           login.scss
+|   |   |   |           
+|   |   |   +---services
+|   |   |   |       authentication.service.js
+|   |   |   |       
+|   |   |   +---store
+|   |   |   |       authentication.selectors.js
+|   |   |   |       authentication.slice.js
+|   |   |   |       authentication.thunks.js
+|   |   |   |       
+|   |   |   \---validations
+|   |   |           authentication.validation.js
+|   |   |           
 |   |   \---user
+|   |       |   UserPage.jsx
+|   |       |   
+|   |       +---constants
+|   |       |       user.constants.js
+|   |       |       user.messages.js
+|   |       |       
+|   |       +---services
+|   |       |       user.service.js
+|   |       |       
+|   |       +---store
+|   |       |       user.selectors.js
+|   |       |       user.slice.js
+|   |       |       user.thunks.js
+|   |       |       
+|   |       \---validations
+|   |               user.validation.js
+|   |               
 |   +---masters
 |   |   +---bank
 |   |   +---currency
@@ -238,25 +251,7 @@ F:\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   |               index.js
 |   |               NotFound.jsx
 |   |               
-|   +---shared
-|   \---user
-|       |   UserPage.jsx
-|       |   
-|       +---constants
-|       |       user.constants.js
-|       |       user.messages.js
-|       |       
-|       +---services
-|       |       user.service.js
-|       |       
-|       +---store
-|       |       user.selectors.js
-|       |       user.slice.js
-|       |       user.thunks.js
-|       |       
-|       \---validations
-|               user.validation.js
-|               
+|   \---shared
 +---router
 |       index.jsx
 |       PlatformAdminRoute.jsx
