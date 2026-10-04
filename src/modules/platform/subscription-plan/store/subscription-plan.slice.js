@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   createSubscriptionPlan,
   getSubscriptionPlans,
+  getAvailableSubscriptionPlans,
 } from "./subscription-plan.thunks.js";
 
 // --------------------------------------------------------------------------
@@ -11,7 +12,7 @@ import {
 
 const initialState = {
   // ------------------------------------------------------------------------
-  // Subscription Plans List
+  // Subscription Plans List - Platform Admin
   // ------------------------------------------------------------------------
 
   subscriptionPlans: [],
@@ -29,7 +30,25 @@ const initialState = {
   listError: null,
 
   // ------------------------------------------------------------------------
-  // Create Subscription Plan
+  // Available Subscription Plans - Customer
+  // ------------------------------------------------------------------------
+
+  availableSubscriptionPlans: [],
+
+  availablePagination: {
+    page: 1,
+    limit: 20,
+    total: 0,
+    totalPages: 0,
+    hasNextPage: false,
+    hasPreviousPage: false,
+  },
+
+  availableLoading: false,
+  availableError: null,
+
+  // ------------------------------------------------------------------------
+  // Create Subscription Plan - Platform Admin
   // ------------------------------------------------------------------------
 
   createLoading: false,
@@ -63,12 +82,32 @@ const subscriptionPlanSlice = createSlice({
     clearSubscriptionPlanErrors: (state) => {
       state.listError = null;
       state.createError = null;
+      state.availableError = null;
+    },
+
+    // ----------------------------------------------------------------------
+    // Clear Available Subscription Plans
+    // ----------------------------------------------------------------------
+
+    clearAvailableSubscriptionPlans: (state) => {
+      state.availableSubscriptionPlans = [];
+
+      state.availablePagination = {
+        page: 1,
+        limit: 20,
+        total: 0,
+        totalPages: 0,
+        hasNextPage: false,
+        hasPreviousPage: false,
+      };
+
+      state.availableError = null;
     },
   },
 
   extraReducers: (builder) => {
     // ======================================================================
-    // Create Subscription Plan
+    // Create Subscription Plan - Platform Admin
     // ======================================================================
 
     builder
@@ -93,7 +132,7 @@ const subscriptionPlanSlice = createSlice({
       });
 
     // ======================================================================
-    // Get Subscription Plans
+    // Get Subscription Plans - Platform Admin
     // ======================================================================
 
     builder
@@ -118,6 +157,33 @@ const subscriptionPlanSlice = createSlice({
         state.listError =
           action.payload || "Failed to fetch subscription plans.";
       });
+
+    // ======================================================================
+    // Get Available Subscription Plans - Customer
+    // ======================================================================
+
+    builder
+      .addCase(getAvailableSubscriptionPlans.pending, (state) => {
+        state.availableLoading = true;
+        state.availableError = null;
+      })
+
+      .addCase(getAvailableSubscriptionPlans.fulfilled, (state, action) => {
+        state.availableLoading = false;
+
+        const response = action.payload || {};
+
+        state.availableSubscriptionPlans = response.data || [];
+
+        state.availablePagination = response.meta || state.availablePagination;
+      })
+
+      .addCase(getAvailableSubscriptionPlans.rejected, (state, action) => {
+        state.availableLoading = false;
+
+        state.availableError =
+          action.payload || "Failed to fetch available subscription plans.";
+      });
   },
 });
 
@@ -125,8 +191,11 @@ const subscriptionPlanSlice = createSlice({
 // Actions
 // --------------------------------------------------------------------------
 
-export const { clearCreatedSubscriptionPlan, clearSubscriptionPlanErrors } =
-  subscriptionPlanSlice.actions;
+export const {
+  clearCreatedSubscriptionPlan,
+  clearSubscriptionPlanErrors,
+  clearAvailableSubscriptionPlans,
+} = subscriptionPlanSlice.actions;
 
 // --------------------------------------------------------------------------
 // Reducer

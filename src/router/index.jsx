@@ -15,6 +15,9 @@ import Dashboard from "../dashboard/customer/Dashboard.jsx";
 import ProfilePage from "../modules/profile/ProfilePage.jsx";
 import UserPage from "../modules/identity/user/UserPage.jsx";
 import SubscriptionPlanPage from "../modules/platform/subscription-plan/SubscriptionPlanPage.jsx";
+import CustomerSubscriptionPlansPage from "../modules/subscription/CustomerSubscriptionPlansPage.jsx";
+import SubscriptionCheckoutPage from "../modules/subscription/SubscriptionCheckoutPage.jsx";
+
 import FeaturePage from "../modules/platform/feature/FeaturePage.jsx";
 import PlanFeaturePage from "../modules/platform/plan-feature/PlanFeaturePage.jsx";
 
@@ -56,6 +59,17 @@ const router = createBrowserRouter([
           {
             path: "/profile",
             element: <ProfilePage />,
+          },
+          // -----------------------------------------------------------------
+          // Customer Subscription Plans
+          // -----------------------------------------------------------------
+          {
+            path: "/subscription",
+            element: <CustomerSubscriptionPlansPage />,
+          },
+          {
+            path: "/subscription/:planId",
+            element: <SubscriptionCheckoutPage />,
           },
         ],
       },

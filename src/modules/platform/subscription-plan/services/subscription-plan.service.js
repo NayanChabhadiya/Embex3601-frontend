@@ -20,12 +20,27 @@ const subscriptionPlanService = {
   },
 
   // ------------------------------------------------------------------------
-  // Get Subscription Plans
+  // Get Subscription Plans - Platform Admin
   // ------------------------------------------------------------------------
 
   getSubscriptionPlans: async (params = {}) => {
     const response = await apiClient.get(
       API_ENDPOINTS.SUBSCRIPTION_PLANS.BASE,
+      {
+        params,
+      },
+    );
+
+    return response.data;
+  },
+
+  // ------------------------------------------------------------------------
+  // Get Available Subscription Plans - Customer
+  // ------------------------------------------------------------------------
+
+  getAvailableSubscriptionPlans: async (params = {}) => {
+    const response = await apiClient.get(
+      API_ENDPOINTS.SUBSCRIPTION_PLANS.AVAILABLE,
       {
         params,
       },

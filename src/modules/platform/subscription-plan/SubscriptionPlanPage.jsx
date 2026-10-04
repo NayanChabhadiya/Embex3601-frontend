@@ -41,6 +41,7 @@ import {
 import { validateCreateSubscriptionPlan } from "./validations/subscription-plan.validation.js";
 
 import SUBSCRIPTION_PLAN_MESSAGES from "./constants/subscription-plan.messages.js";
+import Textarea from "../../../components/common/form/textarea/Textarea.jsx";
 
 // =============================================================================
 // Initial Form
@@ -597,7 +598,7 @@ function SubscriptionPlanPage() {
             name="description"
             error={formErrors.description}
           >
-            <Input
+            <Textarea
               name="description"
               value={form.description}
               onChange={handleFormChange}

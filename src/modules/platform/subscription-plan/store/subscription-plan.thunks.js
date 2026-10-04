@@ -24,7 +24,7 @@ export const createSubscriptionPlan = createAsyncThunk(
 );
 
 // --------------------------------------------------------------------------
-// Get Subscription Plans
+// Get Subscription Plans - Platform Admin
 // --------------------------------------------------------------------------
 
 export const getSubscriptionPlans = createAsyncThunk(
@@ -37,6 +37,27 @@ export const getSubscriptionPlans = createAsyncThunk(
         error?.response?.data ||
           error?.message ||
           "Failed to fetch subscription plans.",
+      );
+    }
+  },
+);
+
+// --------------------------------------------------------------------------
+// Get Available Subscription Plans - Customer
+// --------------------------------------------------------------------------
+
+export const getAvailableSubscriptionPlans = createAsyncThunk(
+  "subscriptionPlan/getAvailableSubscriptionPlans",
+  async (params = {}, { rejectWithValue }) => {
+    try {
+      return await subscriptionPlanService.getAvailableSubscriptionPlans(
+        params,
+      );
+    } catch (error) {
+      return rejectWithValue(
+        error?.response?.data ||
+          error?.message ||
+          "Failed to fetch available subscription plans.",
       );
     }
   },

@@ -5,7 +5,7 @@
 const selectSubscriptionPlanState = (state) => state.subscriptionPlan;
 
 // --------------------------------------------------------------------------
-// Subscription Plans List
+// Subscription Plans List - Platform Admin
 // --------------------------------------------------------------------------
 
 export const selectSubscriptionPlans = (state) =>
@@ -21,7 +21,23 @@ export const selectSubscriptionPlanListError = (state) =>
   selectSubscriptionPlanState(state).listError;
 
 // --------------------------------------------------------------------------
-// Create Subscription Plan
+// Available Subscription Plans - Customer
+// --------------------------------------------------------------------------
+
+export const selectAvailableSubscriptionPlans = (state) =>
+  selectSubscriptionPlanState(state).availableSubscriptionPlans;
+
+export const selectAvailableSubscriptionPlanPagination = (state) =>
+  selectSubscriptionPlanState(state).availablePagination;
+
+export const selectAvailableSubscriptionPlanLoading = (state) =>
+  selectSubscriptionPlanState(state).availableLoading;
+
+export const selectAvailableSubscriptionPlanError = (state) =>
+  selectSubscriptionPlanState(state).availableError;
+
+// --------------------------------------------------------------------------
+// Create Subscription Plan - Platform Admin
 // --------------------------------------------------------------------------
 
 export const selectCreatedSubscriptionPlan = (state) =>
@@ -42,6 +58,12 @@ const subscriptionPlanSelectors = Object.freeze({
   selectSubscriptionPlanPagination,
   selectSubscriptionPlanListLoading,
   selectSubscriptionPlanListError,
+
+  selectAvailableSubscriptionPlans,
+  selectAvailableSubscriptionPlanPagination,
+  selectAvailableSubscriptionPlanLoading,
+  selectAvailableSubscriptionPlanError,
+
   selectCreatedSubscriptionPlan,
   selectCreateSubscriptionPlanLoading,
   selectCreateSubscriptionPlanError,

@@ -1,5 +1,5 @@
 Folder PATH listing for volume New Volume
-Volume serial number is 000000C9 B866:F872
+Volume serial number is 0000005C B866:F872
 F:\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   App.jsx
 |   main.jsx
@@ -161,6 +161,22 @@ F:\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   \---platform
 +---modules
 |   +---account
+|   |   +---account
+|   |   |   +---constants
+|   |   |   |       account.constants.js
+|   |   |   |       account.messages.js
+|   |   |   |       
+|   |   |   +---services
+|   |   |   |       account.service.js
+|   |   |   |       
+|   |   |   +---store
+|   |   |   |       account.selectors.js
+|   |   |   |       account.slice.js
+|   |   |   |       account.thunks.js
+|   |   |   |       
+|   |   |   \---validations
+|   |   |           account.validation.js
+|   |   |           
 |   |   +---permission
 |   |   +---role
 |   |   +---role-permission
@@ -237,7 +253,6 @@ F:\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   |   +---tax
 |   |   \---unit
 |   +---platform
-|   |   +---account
 |   |   +---feature
 |   |   |   |   FeaturePage.jsx
 |   |   |   |   
@@ -310,7 +325,19 @@ F:\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   |               index.js
 |   |               NotFound.jsx
 |   |               
-|   \---shared
+|   +---shared
+|   \---subscription
+|       |   CustomerSubscriptionPlansPage.jsx
+|       |   SubscriptionCheckoutPage.jsx
+|       |   
+|       +---services
+|       |       subscription.service.js
+|       |       
+|       \---store
+|               subscription.selectors.js
+|               subscription.slice.js
+|               subscription.thunks.js
+|               
 +---router
 |       index.jsx
 |       PlatformAdminRoute.jsx

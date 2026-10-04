@@ -6,6 +6,23 @@ export const SIDEBAR_MENU = [
     path: "/",
     icon: "dashboard",
   },
+
+  // --------------------------------------------------------------------------
+  // Customer Subscription
+  // --------------------------------------------------------------------------
+
+  {
+    key: "subscription",
+    type: "item",
+    label: "Subscription",
+    path: "/subscription",
+    icon: "credit-card",
+  },
+
+  // --------------------------------------------------------------------------
+  // Platform Administration
+  // --------------------------------------------------------------------------
+
   {
     key: "platform-admin",
     type: "group",
@@ -46,6 +63,7 @@ export const SIDEBAR_MENU = [
       },
     ],
   },
+
   {
     key: "masters",
     type: "group",

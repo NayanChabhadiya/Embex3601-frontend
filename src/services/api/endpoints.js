@@ -24,6 +24,13 @@ const API_ENDPOINTS = Object.freeze({
   // Subscription Plans
   SUBSCRIPTION_PLANS: Object.freeze({
     BASE: "/subscription-plans",
+    AVAILABLE: "/subscription-plans/available",
+  }),
+
+  // Subscriptions
+  SUBSCRIPTIONS: Object.freeze({
+    BASE: "/subscriptions",
+    ACTIVE: "/subscriptions/active",
   }),
 
   // Features
