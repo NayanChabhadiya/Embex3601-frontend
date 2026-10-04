@@ -31,6 +31,12 @@ const API_ENDPOINTS = Object.freeze({
   SUBSCRIPTIONS: Object.freeze({
     BASE: "/subscriptions",
     ACTIVE: "/subscriptions/active",
+
+    PAYMENTS: Object.freeze({
+      ORDER: "/subscriptions/payments/order",
+      VERIFY: "/subscriptions/payments/verify",
+      BY_ID: (paymentId) => `/subscriptions/payments/${paymentId}`,
+    }),
   }),
 
   // Features
