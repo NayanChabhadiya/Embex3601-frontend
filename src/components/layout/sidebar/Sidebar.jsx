@@ -1,22 +1,48 @@
 import { useEffect, useMemo, useState } from "react";
+import { NavLink, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 import SidebarHeader from "./components/SidebarHeader";
 import SidebarFooter from "./components/SidebarFooter";
-import "./sidebar.scss";
-import { NavLink, useLocation } from "react-router-dom";
-import { SIDEBAR_MENU } from "./config/sidebar-menu";
 import SidebarIcon from "./components/SidebarIcon";
+
+import "./sidebar.scss";
+
+import { SIDEBAR_MENU } from "./config/sidebar-menu";
 import { isSidebarSectionActive } from "./utils/is-sidebar-section-active";
-import { useSelector } from "react-redux";
 import { filterSidebarMenu } from "./utils/filter-sidebar-menu";
 
+import { selectCurrentUser } from "../../../modules/identity/auth/store/authentication.selectors.js";
+import AUTHENTICATION_CONSTANTS from "../../../modules/identity/auth/constants/authentication.constants.js";
+
 function Sidebar() {
-  const isPlatformAdmin = true;
+  const location = useLocation();
+
+  // ---------------------------------------------------------------------------
+  // Current User
+  // ---------------------------------------------------------------------------
+
+  const currentUser = useSelector(selectCurrentUser);
+
+  // ---------------------------------------------------------------------------
+  // Platform Admin Access
+  // ---------------------------------------------------------------------------
+
+  const isPlatformAdmin =
+    currentUser?.type === AUTHENTICATION_CONSTANTS.USER_TYPES.PLATFORM_ADMIN;
+
+  // ---------------------------------------------------------------------------
+  // Filter Sidebar Menu
+  // ---------------------------------------------------------------------------
 
   const menuItems = useMemo(
     () => filterSidebarMenu(SIDEBAR_MENU, [], isPlatformAdmin),
     [isPlatformAdmin],
   );
-  const location = useLocation();
+
+  // ---------------------------------------------------------------------------
+  // Open Sections
+  // ---------------------------------------------------------------------------
 
   const [openSections, setOpenSections] = useState(() =>
     Object.fromEntries(
@@ -26,12 +52,20 @@ function Sidebar() {
     ),
   );
 
+  // ---------------------------------------------------------------------------
+  // Toggle Section
+  // ---------------------------------------------------------------------------
+
   const toggleSection = (key) => {
     setOpenSections((current) => ({
       ...current,
       [key]: !current[key],
     }));
   };
+
+  // ---------------------------------------------------------------------------
+  // Sync Sections With Menu
+  // ---------------------------------------------------------------------------
 
   useEffect(() => {
     setOpenSections((current) => {
@@ -44,6 +78,11 @@ function Sidebar() {
       return next;
     });
   }, [menuItems]);
+
+  // ---------------------------------------------------------------------------
+  // Render
+  // ---------------------------------------------------------------------------
+
   return (
     <aside className="app-sidebar">
       <SidebarHeader />
