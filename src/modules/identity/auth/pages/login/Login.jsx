@@ -189,6 +189,20 @@ function Login() {
                 Sign in to Embex360
               </Button>
             </form>
+            <div className="login-form__register">
+              <span>Don't have an account?</span>
+
+              <button
+                type="button"
+                className="login-form__register-link"
+                disabled={isLoading}
+                onClick={() => {
+                  window.location.href = "/register";
+                }}
+              >
+                Create an account
+              </button>
+            </div>
 
             <div className="login-form__footer">
               <span>© {new Date().getFullYear()} Embex360</span>

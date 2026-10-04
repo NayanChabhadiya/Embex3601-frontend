@@ -1,6 +1,7 @@
 const API_ENDPOINTS = Object.freeze({
   // Authentication
   AUTH: Object.freeze({
+    REGISTER: "/users/register",
     LOGIN: "/auth/login",
     REFRESH: "/auth/refresh",
     LOGOUT: "/auth/logout",
@@ -24,7 +25,7 @@ const API_ENDPOINTS = Object.freeze({
     BASE: "/subscription-plans",
   }),
 
-  // Fratures
+  // Features
   FEATURES: Object.freeze({
     BASE: "/features",
   }),

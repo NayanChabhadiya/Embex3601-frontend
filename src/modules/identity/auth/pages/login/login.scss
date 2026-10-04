@@ -289,6 +289,10 @@
     width: 100%;
   }
 
+  // --------------------------------------------------------------------------
+  // Form Options
+  // --------------------------------------------------------------------------
+
   &__options {
     display: flex;
     align-items: center;
@@ -320,18 +324,66 @@
     }
   }
 
+  // --------------------------------------------------------------------------
+  // Submit
+  // --------------------------------------------------------------------------
+
   &__submit {
     width: 100%;
     min-height: 50px;
     margin-top: 6px;
   }
 
+  // --------------------------------------------------------------------------
+  // Register CTA
+  // --------------------------------------------------------------------------
+
+  &__register {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 0;
+    padding-top: 2px;
+    color: #64748b;
+    font-size: 13px;
+    line-height: 1.5;
+    text-align: center;
+  }
+
+  &__register-link {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #2563eb;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+      color 0.2s ease,
+      opacity 0.2s ease;
+
+    &:hover:not(:disabled) {
+      color: #1d4ed8;
+      text-decoration: underline;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+  }
+
+  // --------------------------------------------------------------------------
+  // Footer
+  // --------------------------------------------------------------------------
+
   &__footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
-    margin-top: 34px;
+    margin-top: 6px;
     padding-top: 22px;
     border-top: 1px solid #e2e8f0;
     color: #94a3b8;
@@ -401,6 +453,12 @@
     align-items: flex-start;
     flex-direction: column;
     gap: 12px;
+  }
+
+  .login-form__register {
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
   }
 
   .login-form__footer {

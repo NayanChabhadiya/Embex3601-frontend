@@ -3,6 +3,16 @@ import API_ENDPOINTS from "../../../../services/api/endpoints.js";
 
 const authenticationService = Object.freeze({
   // ---------------------------------------------------------------------------
+  // Register
+  // ---------------------------------------------------------------------------
+
+  register: async (payload) => {
+    const response = await apiClient.post(API_ENDPOINTS.AUTH.REGISTER, payload);
+
+    return response.data;
+  },
+
+  // ---------------------------------------------------------------------------
   // Login
   // ---------------------------------------------------------------------------
 

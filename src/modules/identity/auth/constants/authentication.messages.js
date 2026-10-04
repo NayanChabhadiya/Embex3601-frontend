@@ -1,4 +1,9 @@
 const AUTH_MESSAGES = Object.freeze({
+  // Registration
+  REGISTRATION_SUCCESS:
+    "Registration successful. Please verify your email address.",
+  REGISTRATION_FAILED: "Registration failed. Please try again.",
+
   // Login
   LOGIN_SUCCESS: "Login successful.",
   LOGIN_FAILED: "Login failed.",

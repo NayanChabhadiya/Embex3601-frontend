@@ -27,6 +27,27 @@ const getErrorMessage = (error, fallbackMessage) => {
 };
 
 // -----------------------------------------------------------------------------
+// Register User
+// -----------------------------------------------------------------------------
+
+export const registerUser = createAsyncThunk(
+  "authentication/registerUser",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const response = await authenticationService.register(payload);
+
+      const data = response?.data ?? null;
+
+      return data;
+    } catch (error) {
+      return rejectWithValue(
+        getErrorMessage(error, AUTH_MESSAGES.REGISTRATION_FAILED),
+      );
+    }
+  },
+);
+
+// -----------------------------------------------------------------------------
 // Login
 // -----------------------------------------------------------------------------
 
@@ -74,6 +95,7 @@ export const login = createAsyncThunk(
     }
   },
 );
+
 // -----------------------------------------------------------------------------
 // Refresh
 // -----------------------------------------------------------------------------

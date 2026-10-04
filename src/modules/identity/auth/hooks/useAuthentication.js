@@ -2,6 +2,7 @@ import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
+  registerUser,
   login,
   refresh,
   getCurrentUser,
@@ -66,6 +67,23 @@ const useAuthentication = () => {
   const error = useSelector(selectAuthenticationError);
   const isLoading = useSelector(selectIsAuthenticationLoading);
   const hasError = useSelector(selectHasAuthenticationError);
+
+  // ---------------------------------------------------------------------------
+  // Register User
+  // ---------------------------------------------------------------------------
+
+  const handleRegister = useCallback(
+    async (payload) => {
+      const result = await dispatch(registerUser(payload));
+
+      return normalizeThunkResult(
+        result,
+        registerUser.fulfilled.match,
+        AUTH_MESSAGES.REGISTRATION_FAILED,
+      );
+    },
+    [dispatch],
+  );
 
   // ---------------------------------------------------------------------------
   // Login
@@ -162,6 +180,7 @@ const useAuthentication = () => {
     hasError,
 
     // Operations
+    register: handleRegister,
     login: handleLogin,
     refresh: handleRefresh,
     getCurrentUser: handleGetCurrentUser,

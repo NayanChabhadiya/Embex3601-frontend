@@ -1,0 +1,493 @@
+.register-page {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  background: #f4f7fb;
+}
+
+.register-card {
+  width: 100%;
+  max-width: 1180px;
+  min-height: 720px;
+  display: grid;
+  grid-template-columns: 42% 58%;
+  overflow: hidden;
+  background: #ffffff;
+  border-radius: 24px;
+  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.12);
+}
+
+/* =========================================================
+   LEFT INTRO
+========================================================= */
+
+.register-card__intro {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 48px;
+  overflow: hidden;
+  color: #ffffff;
+  background:
+    radial-gradient(
+      circle at 15% 15%,
+      rgba(59, 130, 246, 0.28),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 90% 85%,
+      rgba(37, 99, 235, 0.22),
+      transparent 32%
+    ),
+    linear-gradient(145deg, #0f172a 0%, #172554 48%, #1d4ed8 100%);
+}
+
+.register-card__intro::before {
+  content: "";
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  top: -130px;
+  right: -120px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+}
+
+.register-card__intro::after {
+  content: "";
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  bottom: -260px;
+  left: -230px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 50%;
+}
+
+.register-card__brand {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.register-card__brand-mark {
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  backdrop-filter: blur(10px);
+}
+
+.register-card__brand-name {
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.register-card__brand-name span {
+  color: #60a5fa;
+}
+
+.register-card__intro-content {
+  position: relative;
+  z-index: 2;
+  max-width: 430px;
+}
+
+.register-card__eyebrow {
+  display: inline-block;
+  margin-bottom: 18px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+  color: #93c5fd;
+}
+
+.register-card__intro-content h1 {
+  margin: 0;
+  font-size: clamp(34px, 3vw, 48px);
+  line-height: 1.08;
+  font-weight: 800;
+  letter-spacing: -1.8px;
+}
+
+.register-card__intro-content h1 span {
+  display: block;
+  color: #60a5fa;
+}
+
+.register-card__intro-content > p {
+  max-width: 390px;
+  margin: 22px 0 34px;
+  font-size: 14px;
+  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.register-card__highlights {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.register-card__highlight {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.register-card__highlight-icon {
+  flex: 0 0 auto;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+  border-radius: 8px;
+  background: rgba(96, 165, 250, 0.14);
+  border: 1px solid rgba(147, 197, 253, 0.16);
+  color: #93c5fd;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.register-card__highlight strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.register-card__highlight span {
+  display: block;
+  font-size: 12px;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.58);
+}
+
+.register-card__intro-footer {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 10px;
+  letter-spacing: 0.5px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* =========================================================
+   RIGHT FORM
+========================================================= */
+
+.register-card__form-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 58px;
+  background: #ffffff;
+}
+
+.register-form {
+  width: 100%;
+  max-width: 610px;
+}
+
+.register-form__header {
+  margin-bottom: 30px;
+}
+
+.register-form__welcome {
+  display: inline-block;
+  margin-bottom: 8px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.8px;
+  color: #2563eb;
+}
+
+.register-form__header h2 {
+  margin: 0;
+  color: #0f172a;
+  font-size: 30px;
+  line-height: 1.2;
+  font-weight: 800;
+  letter-spacing: -0.8px;
+}
+
+.register-form__header p {
+  margin: 9px 0 0;
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* =========================================================
+   FORM SECTIONS
+========================================================= */
+
+.register-form__section {
+  margin-bottom: 25px;
+}
+
+.register-form__section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+  color: #334155;
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.register-form__section-title::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #e2e8f0;
+}
+
+.register-form__row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.register-form__field {
+  min-width: 0;
+}
+
+/* =========================================================
+   TERMS
+========================================================= */
+
+.register-form__terms {
+  margin: 2px 0 20px;
+  padding: 12px 14px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background: #f8fafc;
+}
+
+.register-form__terms span {
+  display: block;
+  color: #64748b;
+  font-size: 10.5px;
+  line-height: 1.6;
+}
+
+/* =========================================================
+   SUBMIT
+========================================================= */
+
+.register-form__submit {
+  width: 100%;
+  min-height: 46px;
+}
+
+/* =========================================================
+   LOGIN LINK
+========================================================= */
+
+.register-form__login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 22px;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.register-form__login-link {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #2563eb;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.register-form__login-link:hover {
+  color: #1d4ed8;
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1024px) {
+  .register-page {
+    padding: 24px;
+  }
+
+  .register-card {
+    grid-template-columns: 38% 62%;
+  }
+
+  .register-card__intro {
+    padding: 38px 32px;
+  }
+
+  .register-card__form-wrapper {
+    padding: 40px 38px;
+  }
+
+  .register-card__intro-content h1 {
+    font-size: 36px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+  .register-page {
+    min-height: 100vh;
+    padding: 16px;
+    align-items: flex-start;
+  }
+
+  .register-card {
+    min-height: auto;
+    grid-template-columns: 1fr;
+    border-radius: 18px;
+  }
+
+  .register-card__intro {
+    min-height: 390px;
+    padding: 30px 26px;
+  }
+
+  .register-card__intro-content {
+    max-width: none;
+  }
+
+  .register-card__intro-content h1 {
+    font-size: 34px;
+  }
+
+  .register-card__intro-content > p {
+    margin: 16px 0 24px;
+  }
+
+  .register-card__highlights {
+    gap: 14px;
+  }
+
+  .register-card__highlight:nth-child(3) {
+    display: none;
+  }
+
+  .register-card__intro-footer {
+    display: none;
+  }
+
+  .register-card__form-wrapper {
+    padding: 34px 26px 30px;
+  }
+
+  .register-form {
+    max-width: none;
+  }
+
+  .register-form__header {
+    margin-bottom: 26px;
+  }
+
+  .register-form__header h2 {
+    font-size: 27px;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 520px) {
+  .register-page {
+    padding: 0;
+  }
+
+  .register-card {
+    min-height: 100vh;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .register-card__intro {
+    min-height: 330px;
+    padding: 26px 22px;
+  }
+
+  .register-card__brand-mark {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    font-size: 18px;
+  }
+
+  .register-card__brand-name {
+    font-size: 19px;
+  }
+
+  .register-card__intro-content h1 {
+    font-size: 30px;
+    letter-spacing: -1px;
+  }
+
+  .register-card__intro-content > p {
+    font-size: 13px;
+    margin: 14px 0 20px;
+  }
+
+  .register-card__highlight strong {
+    font-size: 12px;
+  }
+
+  .register-card__highlight span {
+    font-size: 11px;
+  }
+
+  .register-card__form-wrapper {
+    padding: 30px 22px 28px;
+  }
+
+  .register-form__row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .register-form__section {
+    margin-bottom: 20px;
+  }
+
+  .register-form__header h2 {
+    font-size: 25px;
+  }
+
+  .register-form__header p {
+    font-size: 12px;
+  }
+}

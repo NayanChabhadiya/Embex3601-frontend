@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import {
+  registerUser,
   login,
   refresh,
   getCurrentUser,
@@ -76,13 +77,44 @@ const authenticationSlice = createSlice({
       localStorage.removeItem(
         AUTHENTICATION_CONSTANTS.STORAGE_KEYS.REFRESH_TOKEN,
       );
+
       localStorage.removeItem(AUTHENTICATION_CONSTANTS.STORAGE_KEYS.SESSION_ID);
+
       localStorage.removeItem(AUTHENTICATION_CONSTANTS.STORAGE_KEYS.USER);
     },
   },
 
   extraReducers: (builder) => {
     builder
+
+      // -----------------------------------------------------------------------
+      // Register User
+      // -----------------------------------------------------------------------
+
+      .addCase(registerUser.pending, (state) => {
+        state.status = AUTHENTICATION_CONSTANTS.AUTHENTICATION_STATUS.LOADING;
+
+        state.error = null;
+      })
+
+      .addCase(registerUser.fulfilled, (state) => {
+        state.status = AUTHENTICATION_CONSTANTS.AUTHENTICATION_STATUS.SUCCEEDED;
+
+        state.error = null;
+
+        // Registration does not authenticate the user.
+        state.user = null;
+        state.isAuthenticated = false;
+      })
+
+      .addCase(registerUser.rejected, (state, action) => {
+        state.status = AUTHENTICATION_CONSTANTS.AUTHENTICATION_STATUS.FAILED;
+
+        state.error = action.payload || null;
+
+        state.user = null;
+        state.isAuthenticated = false;
+      })
 
       // -----------------------------------------------------------------------
       // Login

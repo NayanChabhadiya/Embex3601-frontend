@@ -16,6 +16,7 @@ import UserPage from "../modules/identity/user/UserPage.jsx";
 import SubscriptionPlanPage from "../modules/platform/subscription-plan/SubscriptionPlanPage.jsx";
 import FeaturePage from "../modules/platform/feature/FeaturePage.jsx";
 import PlanFeaturePage from "../modules/platform/plan-feature/PlanFeaturePage.jsx";
+import Register from "../modules/identity/auth/pages/register/Register.jsx";
 
 const router = createBrowserRouter([
   // PUBLIC ROUTES
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login />,
+      },
+      {
+        path: "/register",
+        element: <Register />,
       },
     ],
   },
