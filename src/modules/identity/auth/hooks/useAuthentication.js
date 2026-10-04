@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import {
   registerUser,
+  verifyEmail,
   login,
   refresh,
   getCurrentUser,
@@ -80,6 +81,23 @@ const useAuthentication = () => {
         result,
         registerUser.fulfilled.match,
         AUTH_MESSAGES.REGISTRATION_FAILED,
+      );
+    },
+    [dispatch],
+  );
+
+  // ---------------------------------------------------------------------------
+  // Verify Email
+  // ---------------------------------------------------------------------------
+
+  const handleVerifyEmail = useCallback(
+    async (payload) => {
+      const result = await dispatch(verifyEmail(payload));
+
+      return normalizeThunkResult(
+        result,
+        verifyEmail.fulfilled.match,
+        AUTH_MESSAGES.EMAIL_VERIFICATION_FAILED,
       );
     },
     [dispatch],
@@ -181,6 +199,7 @@ const useAuthentication = () => {
 
     // Operations
     register: handleRegister,
+    verifyEmail: handleVerifyEmail,
     login: handleLogin,
     refresh: handleRefresh,
     getCurrentUser: handleGetCurrentUser,

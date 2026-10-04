@@ -2,6 +2,7 @@ const API_ENDPOINTS = Object.freeze({
   // Authentication
   AUTH: Object.freeze({
     REGISTER: "/users/register",
+    VERIFY_EMAIL: "/users/verify-email",
     LOGIN: "/auth/login",
     REFRESH: "/auth/refresh",
     LOGOUT: "/auth/logout",

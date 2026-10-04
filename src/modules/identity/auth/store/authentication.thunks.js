@@ -48,6 +48,30 @@ export const registerUser = createAsyncThunk(
 );
 
 // -----------------------------------------------------------------------------
+// Verify Email
+// -----------------------------------------------------------------------------
+
+export const verifyEmail = createAsyncThunk(
+  "authentication/verifyEmail",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const response = await authenticationService.verifyEmail(payload);
+
+      const data = response?.data ?? null;
+
+      return data;
+    } catch (error) {
+      return rejectWithValue(
+        getErrorMessage(
+          error,
+          AUTH_MESSAGES.EMAIL_VERIFICATION_FAILED,
+        ),
+      );
+    }
+  },
+);
+
+// -----------------------------------------------------------------------------
 // Login
 // -----------------------------------------------------------------------------
 

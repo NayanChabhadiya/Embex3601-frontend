@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import Input from "../../../../../components/common/form/input/Input";
 import Button from "../../../../../components/common/button/Button";
+import { useToast } from "../../../../../components/common/toast/ToastProvider.jsx";
 
 import useAuthentication from "../../hooks/useAuthentication.js";
 import AUTHENTICATION_VALIDATION from "../../validations/authentication.validation.js";
@@ -10,6 +11,9 @@ import AUTH_MESSAGES from "../../constants/authentication.messages.js";
 import "./register.scss";
 
 const Register = () => {
+  const { register, isLoading } = useAuthentication();
+  const { showToast } = useToast();
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -20,10 +24,6 @@ const Register = () => {
   });
 
   const [errors, setErrors] = useState({});
-  const [registrationSuccess, setRegistrationSuccess] = useState(false);
-  const [registeredEmail, setRegisteredEmail] = useState("");
-
-  const { register, isLoading } = useAuthentication();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -36,6 +36,7 @@ const Register = () => {
     setErrors((previous) => ({
       ...previous,
       [name]: "",
+      form: "",
     }));
   };
 
@@ -45,8 +46,6 @@ const Register = () => {
     if (isLoading) {
       return;
     }
-
-    setRegistrationSuccess(false);
 
     const validationErrors =
       AUTHENTICATION_VALIDATION.validateRegister(formData);
@@ -72,11 +71,20 @@ const Register = () => {
         form: result.error || AUTH_MESSAGES.REGISTRATION_FAILED,
       });
 
+      showToast({
+        type: "error",
+        title: "Registration Failed",
+        message: result.error || AUTH_MESSAGES.REGISTRATION_FAILED,
+      });
+
       return;
     }
 
-    setRegisteredEmail(formData.email.trim());
-    setRegistrationSuccess(true);
+    showToast({
+      type: "success",
+      title: "Registration Successful",
+      message: AUTH_MESSAGES.REGISTRATION_SUCCESS,
+    });
 
     setFormData({
       firstName: "",
@@ -88,132 +96,11 @@ const Register = () => {
     });
 
     setErrors({});
+
+    window.setTimeout(() => {
+      window.location.href = "/login";
+    }, 1200);
   };
-
-  if (registrationSuccess) {
-    return (
-      <div className="register-page">
-        <div className="register-card">
-          <section className="register-card__intro">
-            <div className="register-card__brand">
-              <div className="register-card__brand-mark">E</div>
-
-              <span className="register-card__brand-name">
-                EMBEX<span>360</span>
-              </span>
-            </div>
-
-            <div className="register-card__intro-content">
-              <span className="register-card__eyebrow">ACCOUNT CREATED</span>
-
-              <h1>
-                Welcome to
-                <span> EMBEX360.</span>
-              </h1>
-
-              <p>
-                Your account has been created successfully. One more step is
-                required before you can sign in.
-              </p>
-
-              <div className="register-card__highlights">
-                <div className="register-card__highlight">
-                  <div className="register-card__highlight-icon">✓</div>
-
-                  <div>
-                    <strong>Account created</strong>
-                    <span>Your EMBEX360 customer account is ready.</span>
-                  </div>
-                </div>
-
-                <div className="register-card__highlight">
-                  <div className="register-card__highlight-icon">✉</div>
-
-                  <div>
-                    <strong>Verify your email</strong>
-                    <span>
-                      Check your inbox and click the verification link.
-                    </span>
-                  </div>
-                </div>
-
-                <div className="register-card__highlight">
-                  <div className="register-card__highlight-icon">→</div>
-
-                  <div>
-                    <strong>Then sign in</strong>
-                    <span>
-                      After verification, you can access your account.
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="register-card__intro-footer">
-              <span>© EMBEX360</span>
-              <span>Enterprise Business Management</span>
-            </div>
-          </section>
-
-          <section className="register-card__form-wrapper">
-            <div className="register-form">
-              <div className="register-form__header">
-                <span className="register-form__welcome">
-                  REGISTRATION COMPLETE
-                </span>
-
-                <h2>Verify your email</h2>
-
-                <p>{AUTH_MESSAGES.REGISTRATION_SUCCESS}</p>
-              </div>
-
-              <div className="register-form__terms">
-                <strong>{registeredEmail}</strong>
-
-                <span>
-                  We have sent a verification link to this email address. Please
-                  check your inbox and follow the instructions to activate your
-                  account.
-                </span>
-              </div>
-
-              <div className="register-form__terms">
-                <span>
-                  If you do not see the email, please check your spam or junk
-                  folder.
-                </span>
-              </div>
-
-              <Button
-                type="button"
-                className="register-form__submit"
-                onClick={() => {
-                  window.location.href = "/login";
-                }}
-              >
-                Go to Sign In
-              </Button>
-
-              <div className="register-form__login">
-                <span>Already verified your email?</span>
-
-                <button
-                  type="button"
-                  className="register-form__login-link"
-                  onClick={() => {
-                    window.location.href = "/login";
-                  }}
-                >
-                  Sign In
-                </button>
-              </div>
-            </div>
-          </section>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="register-page">

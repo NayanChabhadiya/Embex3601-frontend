@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import {
   registerUser,
+  verifyEmail,
   login,
   refresh,
   getCurrentUser,
@@ -108,6 +109,35 @@ const authenticationSlice = createSlice({
       })
 
       .addCase(registerUser.rejected, (state, action) => {
+        state.status = AUTHENTICATION_CONSTANTS.AUTHENTICATION_STATUS.FAILED;
+
+        state.error = action.payload || null;
+
+        state.user = null;
+        state.isAuthenticated = false;
+      })
+
+      // -----------------------------------------------------------------------
+      // Verify Email
+      // -----------------------------------------------------------------------
+
+      .addCase(verifyEmail.pending, (state) => {
+        state.status = AUTHENTICATION_CONSTANTS.AUTHENTICATION_STATUS.LOADING;
+
+        state.error = null;
+      })
+
+      .addCase(verifyEmail.fulfilled, (state) => {
+        state.status = AUTHENTICATION_CONSTANTS.AUTHENTICATION_STATUS.SUCCEEDED;
+
+        state.error = null;
+
+        // Email verification does not authenticate the user.
+        state.user = null;
+        state.isAuthenticated = false;
+      })
+
+      .addCase(verifyEmail.rejected, (state, action) => {
         state.status = AUTHENTICATION_CONSTANTS.AUTHENTICATION_STATUS.FAILED;
 
         state.error = action.payload || null;

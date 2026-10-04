@@ -1,5 +1,5 @@
 Folder PATH listing for volume New Volume
-Volume serial number is 0000004E B866:F872
+Volume serial number is 00000012 B866:F872
 F:\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   App.jsx
 |   main.jsx
@@ -186,9 +186,13 @@ F:\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   |   |   |       useAuthentication.js
 |   |   |   |       
 |   |   |   +---pages
-|   |   |   |   \---login
-|   |   |   |           Login.jsx
-|   |   |   |           login.scss
+|   |   |   |   +---login
+|   |   |   |   |       Login.jsx
+|   |   |   |   |       login.scss
+|   |   |   |   |       
+|   |   |   |   \---register
+|   |   |   |           Register.jsx
+|   |   |   |           register.scss
 |   |   |   |           
 |   |   |   +---services
 |   |   |   |       authentication.service.js
@@ -231,8 +235,59 @@ F:\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   +---platform
 |   |   +---account
 |   |   +---feature
+|   |   |   |   FeaturePage.jsx
+|   |   |   |   
+|   |   |   +---constants
+|   |   |   |       feature.constants.js
+|   |   |   |       feature.messages.js
+|   |   |   |       
+|   |   |   +---services
+|   |   |   |       feature.service.js
+|   |   |   |       
+|   |   |   +---store
+|   |   |   |       feature.selectors.js
+|   |   |   |       feature.slice.js
+|   |   |   |       feature.thunks.js
+|   |   |   |       
+|   |   |   \---validations
+|   |   |           feature.validation.js
+|   |   |           
 |   |   +---plan-feature
+|   |   |   |   PlanFeaturePage.jsx
+|   |   |   |   
+|   |   |   +---constants
+|   |   |   |       plan-feature.constants.js
+|   |   |   |       plan-feature.messages.js
+|   |   |   |       
+|   |   |   +---services
+|   |   |   |       plan-feature.service.js
+|   |   |   |       
+|   |   |   +---store
+|   |   |   |       plan-feature.selectors.js
+|   |   |   |       plan-feature.slice.js
+|   |   |   |       plan-feature.thunks.js
+|   |   |   |       
+|   |   |   \---validations
+|   |   |           plan-feature.validation.js
+|   |   |           
 |   |   \---subscription-plan
+|   |       |   SubscriptionPlanPage.jsx
+|   |       |   
+|   |       +---constants
+|   |       |       subscription-plan.constants.js
+|   |       |       subscription-plan.messages.js
+|   |       |       
+|   |       +---services
+|   |       |       subscription-plan.service.js
+|   |       |       
+|   |       +---store
+|   |       |       subscription-plan.selectors.js
+|   |       |       subscription-plan.slice.js
+|   |       |       subscription-plan.thunks.js
+|   |       |       
+|   |       \---validations
+|   |               subscription-plan.validation.js
+|   |               
 |   +---profile
 |   |   |   profile.scss
 |   |   |   ProfilePage.jsx

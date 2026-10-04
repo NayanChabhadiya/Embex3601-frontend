@@ -13,6 +13,19 @@ const authenticationService = Object.freeze({
   },
 
   // ---------------------------------------------------------------------------
+  // Verify Email
+  // ---------------------------------------------------------------------------
+
+  verifyEmail: async (payload) => {
+    const response = await apiClient.post(
+      API_ENDPOINTS.AUTH.VERIFY_EMAIL,
+      payload,
+    );
+
+    return response.data;
+  },
+
+  // ---------------------------------------------------------------------------
   // Login
   // ---------------------------------------------------------------------------
 

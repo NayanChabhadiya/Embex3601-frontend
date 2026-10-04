@@ -2,7 +2,8 @@ import { createBrowserRouter } from "react-router-dom";
 
 import AppLayout from "../components/layout/AppLayout.jsx";
 
-// import Login from "../modules/auth/pages/login/Login.jsx";
+import Register from "../modules/identity/auth/pages/register/Register.jsx";
+import VerifyEmail from "../modules/identity/auth/pages/verify-email/VerifyEmail.jsx";
 import Login from "../modules/identity/auth/pages/login/Login.jsx";
 
 import { NotFound } from "../modules/public/pages/not-found";
@@ -16,7 +17,6 @@ import UserPage from "../modules/identity/user/UserPage.jsx";
 import SubscriptionPlanPage from "../modules/platform/subscription-plan/SubscriptionPlanPage.jsx";
 import FeaturePage from "../modules/platform/feature/FeaturePage.jsx";
 import PlanFeaturePage from "../modules/platform/plan-feature/PlanFeaturePage.jsx";
-import Register from "../modules/identity/auth/pages/register/Register.jsx";
 
 const router = createBrowserRouter([
   // PUBLIC ROUTES
@@ -24,12 +24,16 @@ const router = createBrowserRouter([
     element: <PublicRoutes />,
     children: [
       {
-        path: "/login",
-        element: <Login />,
-      },
-      {
         path: "/register",
         element: <Register />,
+      },
+      {
+        path: "/verify-email",
+        element: <VerifyEmail />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
       },
     ],
   },
