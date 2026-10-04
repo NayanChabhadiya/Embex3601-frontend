@@ -91,7 +91,7 @@ const subscriptionPaymentSlice = createSlice({
       });
 
     // -------------------------------------------------------------------------
-    // Verify Payment
+    // Verify / Submit Payment
     // -------------------------------------------------------------------------
 
     builder
@@ -103,12 +103,29 @@ const subscriptionPaymentSlice = createSlice({
 
       .addCase(verifyPayment.fulfilled, (state, action) => {
         state.verifyLoading = false;
-        state.paymentVerified = true;
 
-        state.currentPayment =
-          action.payload?.data?.payment ||
-          action.payload?.payment ||
-          state.currentPayment;
+        const payment =
+          action.payload?.data?.payment || action.payload?.payment || null;
+
+        const subscription =
+          action.payload?.data?.subscription ||
+          action.payload?.subscription ||
+          null;
+
+        state.currentPayment = payment || state.currentPayment;
+
+        // ---------------------------------------------------------------------
+        // IMPORTANT:
+        //
+        // A successful API response only means the request was processed.
+        // It does NOT automatically mean that the payment is verified.
+        //
+        // Manual payment remains pending until backend/admin verification.
+        // ---------------------------------------------------------------------
+
+        state.paymentVerified =
+          payment?.paymentStatus === "captured" &&
+          subscription?.status === "active";
       })
 
       .addCase(verifyPayment.rejected, (state, action) => {

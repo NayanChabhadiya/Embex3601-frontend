@@ -43,59 +43,15 @@ import {
 
 import { SUBSCRIPTION_PLAN_BILLING_CYCLE } from "../platform/subscription-plan/constants/subscription-plan.constants.js";
 
-// =============================================================================
-// Razorpay Script Loader
-// =============================================================================
-
-const RAZORPAY_SCRIPT_URL = "https://checkout.razorpay.com/v1/checkout.js";
-
-const loadRazorpayScript = () =>
-  new Promise((resolve, reject) => {
-    if (window.Razorpay) {
-      resolve(true);
-      return;
-    }
-
-    const existingScript = document.querySelector(
-      `script[src="${RAZORPAY_SCRIPT_URL}"]`,
-    );
-
-    if (existingScript) {
-      existingScript.addEventListener("load", () => resolve(true));
-
-      existingScript.addEventListener("error", () =>
-        reject(new Error("Unable to load Razorpay checkout.")),
-      );
-
-      return;
-    }
-
-    const script = document.createElement("script");
-
-    script.src = RAZORPAY_SCRIPT_URL;
-    script.async = true;
-
-    script.onload = () => resolve(true);
-
-    script.onerror = () =>
-      reject(new Error("Unable to load Razorpay checkout."));
-
-    document.body.appendChild(script);
-  });
-
-// =============================================================================
-// Page
-// =============================================================================
-
 function SubscriptionCheckoutPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { planId } = useParams();
   const { showToast } = useToast();
 
-  // ---------------------------------------------------------------------------
+  // ===========================================================================
   // Subscription Plan State
-  // ---------------------------------------------------------------------------
+  // ===========================================================================
 
   const subscriptionPlans = useSelector(selectAvailableSubscriptionPlans);
 
@@ -103,9 +59,9 @@ function SubscriptionCheckoutPage() {
 
   const plansError = useSelector(selectAvailableSubscriptionPlanError);
 
-  // ---------------------------------------------------------------------------
+  // ===========================================================================
   // Subscription State
-  // ---------------------------------------------------------------------------
+  // ===========================================================================
 
   const createSubscriptionLoading = useSelector(
     selectCreateSubscriptionLoading,
@@ -113,9 +69,9 @@ function SubscriptionCheckoutPage() {
 
   const createSubscriptionError = useSelector(selectCreateSubscriptionError);
 
-  // ---------------------------------------------------------------------------
+  // ===========================================================================
   // Payment State
-  // ---------------------------------------------------------------------------
+  // ===========================================================================
 
   const paymentOrder = useSelector(selectPaymentOrder);
 
@@ -129,17 +85,21 @@ function SubscriptionCheckoutPage() {
 
   const paymentVerified = useSelector(selectPaymentVerified);
 
-  // ---------------------------------------------------------------------------
+  // ===========================================================================
   // Local State
-  // ---------------------------------------------------------------------------
+  // ===========================================================================
 
   const [paymentProcessing, setPaymentProcessing] = useState(false);
 
-  const [paymentSubscriptionId, setPaymentSubscriptionId] = useState(null);
+  const [subscriptionId, setSubscriptionId] = useState(null);
 
-  // ---------------------------------------------------------------------------
+  const [paymentReference, setPaymentReference] = useState("");
+
+  const [paymentSubmitted, setPaymentSubmitted] = useState(false);
+
+  // ===========================================================================
   // Load Available Plans
-  // ---------------------------------------------------------------------------
+  // ===========================================================================
 
   useEffect(() => {
     if (!planId) {
@@ -154,9 +114,9 @@ function SubscriptionCheckoutPage() {
     );
   }, [dispatch, planId]);
 
-  // ---------------------------------------------------------------------------
+  // ===========================================================================
   // Selected Plan
-  // ---------------------------------------------------------------------------
+  // ===========================================================================
 
   const selectedPlan = useMemo(
     () =>
@@ -165,9 +125,9 @@ function SubscriptionCheckoutPage() {
     [subscriptionPlans, planId],
   );
 
-  // ---------------------------------------------------------------------------
+  // ===========================================================================
   // Billing Label
-  // ---------------------------------------------------------------------------
+  // ===========================================================================
 
   const getBillingLabel = (plan) => {
     const interval = plan?.billingInterval || 1;
@@ -186,121 +146,9 @@ function SubscriptionCheckoutPage() {
     return `${interval} ${cycleLabel}${interval > 1 ? "s" : ""}`;
   };
 
-  // ---------------------------------------------------------------------------
-  // Open Razorpay Checkout
-  // ---------------------------------------------------------------------------
-
-  const openRazorpayCheckout = async ({ subscriptionId, order }) => {
-    if (!subscriptionId || !order?.id) {
-      showToast({
-        type: "error",
-        title: "Payment Error",
-        message: "Unable to initialize the payment.",
-      });
-
-      return;
-    }
-
-    try {
-      setPaymentProcessing(true);
-
-      await loadRazorpayScript();
-
-      if (!window.Razorpay) {
-        throw new Error("Razorpay checkout is unavailable.");
-      }
-
-      const options = {
-        key: order.keyId,
-
-        amount: order.amount,
-
-        currency: order.currency,
-
-        order_id: order.id,
-
-        name: "EMBEX360",
-
-        description: selectedPlan?.name || "EMBEX360 Subscription",
-
-        handler: async (response) => {
-          const verifyResult = await dispatch(
-            verifyPayment({
-              subscriptionId,
-
-              providerOrderId: response?.razorpay_order_id,
-
-              providerPaymentId: response?.razorpay_payment_id,
-
-              signature: response?.razorpay_signature,
-            }),
-          );
-
-          if (verifyPayment.fulfilled.match(verifyResult)) {
-            showToast({
-              type: "success",
-              title: "Payment Successful",
-              message: "Your subscription has been activated successfully.",
-            });
-          } else {
-            showToast({
-              type: "error",
-              title: "Payment Verification Failed",
-              message:
-                verifyResult?.payload?.message ||
-                "Payment verification failed.",
-            });
-          }
-
-          setPaymentProcessing(false);
-        },
-
-        modal: {
-          ondismiss: () => {
-            setPaymentProcessing(false);
-
-            showToast({
-              type: "warning",
-              title: "Payment Cancelled",
-              message:
-                "The payment window was closed. Your subscription remains pending.",
-            });
-          },
-        },
-
-        theme: {
-          color: "#2563eb",
-        },
-      };
-
-      const razorpay = new window.Razorpay(options);
-
-      razorpay.on("payment.failed", (response) => {
-        setPaymentProcessing(false);
-
-        showToast({
-          type: "error",
-          title: "Payment Failed",
-          message:
-            response?.error?.description || "Payment could not be completed.",
-        });
-      });
-
-      razorpay.open();
-    } catch (error) {
-      setPaymentProcessing(false);
-
-      showToast({
-        type: "error",
-        title: "Payment Error",
-        message: error?.message || "Unable to open payment checkout.",
-      });
-    }
-  };
-
-  // ---------------------------------------------------------------------------
-  // Create Subscription + Payment Order
-  // ---------------------------------------------------------------------------
+  // ===========================================================================
+  // Create Subscription + Manual Payment Order
+  // ===========================================================================
 
   const handleCreateSubscription = async () => {
     if (!planId) {
@@ -354,9 +202,10 @@ function SubscriptionCheckoutPage() {
       const subscription =
         subscriptionResult?.payload?.data || subscriptionResult?.payload;
 
-      const subscriptionId = subscription?._id || subscription?.subscriptionId;
+      const createdSubscriptionId =
+        subscription?._id || subscription?.subscriptionId;
 
-      if (!subscriptionId) {
+      if (!createdSubscriptionId) {
         setPaymentProcessing(false);
 
         showToast({
@@ -369,15 +218,15 @@ function SubscriptionCheckoutPage() {
         return;
       }
 
-      setPaymentSubscriptionId(subscriptionId);
+      setSubscriptionId(createdSubscriptionId);
 
       // -----------------------------------------------------------------------
-      // Step 2 - Create Razorpay Order
+      // Step 2 - Create Manual Payment Record
       // -----------------------------------------------------------------------
 
       const paymentOrderResult = await dispatch(
         createPaymentOrder({
-          subscriptionId,
+          subscriptionId: createdSubscriptionId,
         }),
       );
 
@@ -390,52 +239,110 @@ function SubscriptionCheckoutPage() {
           message:
             paymentOrderResult?.payload?.message ||
             paymentOrderResult?.payload ||
-            "Failed to create payment order.",
+            "Failed to create payment record.",
         });
 
         return;
       }
 
-      const paymentData =
-        paymentOrderResult?.payload?.data || paymentOrderResult?.payload;
+      setPaymentProcessing(false);
 
-      const order = paymentData?.order;
-
-      if (!order?.id) {
-        setPaymentProcessing(false);
-
-        showToast({
-          type: "error",
-          title: "Payment Error",
-          message: "Payment order could not be initialized.",
-        });
-
-        return;
-      }
-
-      // -----------------------------------------------------------------------
-      // Step 3 - Open Razorpay Checkout
-      // -----------------------------------------------------------------------
-
-      await openRazorpayCheckout({
-        subscriptionId,
-        order,
+      showToast({
+        type: "success",
+        title: "Subscription Created",
+        message: "Your subscription is pending payment verification.",
       });
     } catch (error) {
       setPaymentProcessing(false);
 
       showToast({
         type: "error",
-        title: "Subscription Payment Error",
-        message:
-          error?.message || "Unable to continue with subscription payment.",
+        title: "Subscription Error",
+        message: error?.message || "Unable to continue with subscription.",
       });
     }
   };
 
-  // ---------------------------------------------------------------------------
-  // Payment Success
-  // ---------------------------------------------------------------------------
+  // ===========================================================================
+  // Submit Manual Payment Reference
+  // ===========================================================================
+
+  const handleSubmitPaymentReference = async () => {
+    const trimmedReference = paymentReference.trim();
+
+    if (!subscriptionId) {
+      showToast({
+        type: "error",
+        title: "Subscription Not Found",
+        message: "Please initialize the subscription payment first.",
+      });
+
+      return;
+    }
+
+    if (!trimmedReference) {
+      showToast({
+        type: "error",
+        title: "Payment Reference Required",
+        message: "Please enter your payment reference or UTR number.",
+      });
+
+      return;
+    }
+
+    try {
+      setPaymentProcessing(true);
+
+      /*
+       * IMPORTANT:
+       * Backend validation currently still expects a signature field.
+       * We intentionally do not send a fake signature here.
+       *
+       * The validation file will be updated next so manual payment
+       * submission can be handled correctly.
+       */
+
+      const result = await dispatch(
+        verifyPayment({
+          subscriptionId,
+          providerOrderId: paymentOrder?.id,
+          providerPaymentId: trimmedReference,
+        }),
+      );
+
+      if (verifyPayment.fulfilled.match(result)) {
+        setPaymentSubmitted(true);
+
+        showToast({
+          type: "success",
+          title: "Payment Submitted",
+          message:
+            "Your payment reference has been submitted and is awaiting verification.",
+        });
+      } else {
+        showToast({
+          type: "error",
+          title: "Payment Submission Failed",
+          message:
+            result?.payload?.message ||
+            result?.payload ||
+            "Unable to submit payment reference.",
+        });
+      }
+    } catch (error) {
+      showToast({
+        type: "error",
+        title: "Payment Submission Failed",
+        message: error?.message || "Unable to submit payment reference.",
+      });
+    } finally {
+      setPaymentProcessing(false);
+    }
+  };
+
+  // ===========================================================================
+  // Subscription Activated
+  // ===========================================================================
 
   if (paymentVerified) {
     return (
@@ -456,8 +363,6 @@ function SubscriptionCheckoutPage() {
               now active.
             </p>
 
-            <p>You can now continue with your EMBEX360 account setup.</p>
-
             <Button
               type="button"
               variant="primary"
@@ -471,9 +376,9 @@ function SubscriptionCheckoutPage() {
     );
   }
 
-  // ---------------------------------------------------------------------------
+  // ===========================================================================
   // Loading Plan
-  // ---------------------------------------------------------------------------
+  // ===========================================================================
 
   if (plansLoading) {
     return (
@@ -490,9 +395,9 @@ function SubscriptionCheckoutPage() {
     );
   }
 
-  // ---------------------------------------------------------------------------
+  // ===========================================================================
   // Plan Error
-  // ---------------------------------------------------------------------------
+  // ===========================================================================
 
   if (plansError) {
     return (
@@ -521,9 +426,9 @@ function SubscriptionCheckoutPage() {
     );
   }
 
-  // ---------------------------------------------------------------------------
+  // ===========================================================================
   // Invalid Plan
-  // ---------------------------------------------------------------------------
+  // ===========================================================================
 
   if (!selectedPlan) {
     return (
@@ -551,9 +456,9 @@ function SubscriptionCheckoutPage() {
     );
   }
 
-  // ---------------------------------------------------------------------------
-  // Checkout
-  // ---------------------------------------------------------------------------
+  // ===========================================================================
+  // Payment State
+  // ===========================================================================
 
   const isProcessing =
     createSubscriptionLoading ||
@@ -564,11 +469,59 @@ function SubscriptionCheckoutPage() {
   const paymentError =
     createSubscriptionError || createOrderError || verifyPaymentError;
 
+  // ===========================================================================
+  // Manual Payment Submitted
+  // ===========================================================================
+
+  if (paymentSubmitted) {
+    return (
+      <PageContainer>
+        <PageHeader
+          title="Payment Submitted"
+          description="Your payment is awaiting verification."
+        />
+
+        <Card>
+          <div>
+            <Badge variant="warning">Awaiting Verification</Badge>
+
+            <h2>{selectedPlan.name}</h2>
+
+            <p>Your payment reference has been submitted successfully.</p>
+
+            <p>
+              EMBEX360 will verify the payment before activating your
+              subscription.
+            </p>
+
+            {paymentReference && (
+              <div>
+                <strong>Payment Reference:</strong> {paymentReference}
+              </div>
+            )}
+
+            <Button
+              type="button"
+              variant="primary"
+              onClick={() => navigate("/")}
+            >
+              Continue
+            </Button>
+          </div>
+        </Card>
+      </PageContainer>
+    );
+  }
+
+  // ===========================================================================
+  // Checkout
+  // ===========================================================================
+
   return (
     <PageContainer>
       <PageHeader
         title="Confirm Subscription"
-        description="Review your selected subscription plan before continuing."
+        description="Review your selected subscription plan and complete the manual payment."
       />
 
       <Card>
@@ -604,11 +557,69 @@ function SubscriptionCheckoutPage() {
           </div>
         )}
 
+        {!paymentOrder && (
+          <div>
+            <h3>Manual Payment</h3>
+
+            <p>Click the button below to generate your payment reference.</p>
+
+            <p>
+              After completing the payment manually, you will submit your UTR or
+              transaction reference for verification.
+            </p>
+          </div>
+        )}
+
         {paymentOrder && (
           <div>
-            <Badge variant="warning">Payment Ready</Badge>
+            <Badge variant="warning">Payment Pending</Badge>
 
-            <p>Your secure payment checkout is ready.</p>
+            <h3>Manual Payment Instructions</h3>
+
+            <p>
+              Please complete the payment manually using the payment method
+              provided by EMBEX360.
+            </p>
+
+            <div>
+              <strong>Payment Amount:</strong>{" "}
+              {paymentOrder.currency || selectedPlan.currency}{" "}
+              {(Number(paymentOrder.amount || 0) / 100).toLocaleString()}
+            </div>
+
+            <div>
+              <strong>Payment Reference:</strong> {paymentOrder.id || "-"}
+            </div>
+
+            <div>
+              <strong>Status:</strong> Awaiting Payment
+            </div>
+
+            <div>
+              <label htmlFor="paymentReference">
+                Payment UTR / Transaction Reference
+              </label>
+
+              <input
+                id="paymentReference"
+                type="text"
+                value={paymentReference}
+                onChange={(event) => setPaymentReference(event.target.value)}
+                placeholder="Enter UTR / transaction reference"
+                disabled={isProcessing}
+              />
+            </div>
+
+            <Button
+              type="button"
+              variant="primary"
+              onClick={handleSubmitPaymentReference}
+              disabled={isProcessing}
+            >
+              {verifyPaymentLoading
+                ? "Submitting..."
+                : "Submit Payment Reference"}
+            </Button>
           </div>
         )}
 
@@ -622,22 +633,22 @@ function SubscriptionCheckoutPage() {
             Back
           </Button>
 
-          <Button
-            type="button"
-            variant="primary"
-            onClick={handleCreateSubscription}
-            disabled={isProcessing}
-          >
-            {verifyPaymentLoading
-              ? "Verifying Payment..."
-              : paymentProcessing
-                ? "Opening Payment..."
-                : createOrderLoading
-                  ? "Preparing Payment..."
-                  : createSubscriptionLoading
-                    ? "Creating Subscription..."
-                    : "Proceed to Payment"}
-          </Button>
+          {!paymentOrder && (
+            <Button
+              type="button"
+              variant="primary"
+              onClick={handleCreateSubscription}
+              disabled={isProcessing}
+            >
+              {createOrderLoading
+                ? "Preparing Payment..."
+                : createSubscriptionLoading
+                  ? "Creating Subscription..."
+                  : paymentProcessing
+                    ? "Processing..."
+                    : "Proceed to Manual Payment"}
+            </Button>
+          )}
         </div>
       </Card>
     </PageContainer>
