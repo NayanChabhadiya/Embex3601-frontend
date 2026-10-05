@@ -10,6 +10,10 @@ import API_ENDPOINTS from "../../../services/api/endpoints.js";
 // =============================================================================
 
 const subscriptionPaymentService = {
+  // ---------------------------------------------------------------------------
+  // Create Payment Order
+  // ---------------------------------------------------------------------------
+
   createPaymentOrder: async (data) => {
     const response = await apiClient.post(
       API_ENDPOINTS.SUBSCRIPTIONS.PAYMENTS.ORDER,
@@ -19,6 +23,10 @@ const subscriptionPaymentService = {
     return response.data;
   },
 
+  // ---------------------------------------------------------------------------
+  // Customer Manual Payment Submission
+  // ---------------------------------------------------------------------------
+
   verifyPayment: async (data) => {
     const response = await apiClient.post(
       API_ENDPOINTS.SUBSCRIPTIONS.PAYMENTS.VERIFY,
@@ -27,6 +35,22 @@ const subscriptionPaymentService = {
 
     return response.data;
   },
+
+  // ---------------------------------------------------------------------------
+  // Platform Admin Manual Payment Verification
+  // ---------------------------------------------------------------------------
+
+  verifyManualPayment: async (paymentId) => {
+    const response = await apiClient.post(
+      API_ENDPOINTS.SUBSCRIPTIONS.PAYMENTS.MANUAL_VERIFY(paymentId),
+    );
+
+    return response.data;
+  },
+
+  // ---------------------------------------------------------------------------
+  // Get Payment By ID
+  // ---------------------------------------------------------------------------
 
   getPaymentById: async (paymentId) => {
     const response = await apiClient.get(

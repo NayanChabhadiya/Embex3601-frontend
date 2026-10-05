@@ -43,6 +43,30 @@ export const verifyPayment = createAsyncThunk(
 );
 
 // =============================================================================
+// Verify Manual Payment
+// =============================================================================
+//
+// Platform Admin verifies a customer-submitted manual payment / UTR.
+// The backend performs the actual authorization and payment verification.
+//
+// =============================================================================
+
+export const verifyManualPayment = createAsyncThunk(
+  "subscriptionPayment/verifyManualPayment",
+  async (paymentId, { rejectWithValue }) => {
+    try {
+      return await subscriptionPaymentService.verifyManualPayment(paymentId);
+    } catch (error) {
+      return rejectWithValue(
+        error?.response?.data ||
+          error?.message ||
+          "Failed to verify manual payment.",
+      );
+    }
+  },
+);
+
+// =============================================================================
 // Get Payment By ID
 // =============================================================================
 

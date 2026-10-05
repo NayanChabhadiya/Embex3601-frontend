@@ -1,3 +1,7 @@
+// =============================================================================
+// API Endpoints
+// =============================================================================
+
 const API_ENDPOINTS = Object.freeze({
   // Authentication
   AUTH: Object.freeze({
@@ -35,6 +39,8 @@ const API_ENDPOINTS = Object.freeze({
     PAYMENTS: Object.freeze({
       ORDER: "/subscriptions/payments/order",
       VERIFY: "/subscriptions/payments/verify",
+      MANUAL_VERIFY: (paymentId) =>
+        `/subscriptions/payments/manual/${paymentId}/verify`,
       BY_ID: (paymentId) => `/subscriptions/payments/${paymentId}`,
     }),
   }),
