@@ -12,6 +12,7 @@ import { createAccount, getAccounts } from "./account.thunks.js";
 
 const initialState = {
   accounts: [],
+
   currentAccount: null,
 
   pagination: {
@@ -24,9 +25,11 @@ const initialState = {
   },
 
   listStatus: "idle",
+
   createStatus: "idle",
 
   listError: null,
+
   createError: null,
 
   createSuccess: false,
@@ -38,19 +41,32 @@ const initialState = {
 
 const accountSlice = createSlice({
   name: "account",
+
   initialState,
 
   reducers: {
+    // -------------------------------------------------------------------------
+    // Clear Account Errors
+    // -------------------------------------------------------------------------
+
     clearAccountErrors: (state) => {
       state.listError = null;
       state.createError = null;
     },
+
+    // -------------------------------------------------------------------------
+    // Clear Create Account State
+    // -------------------------------------------------------------------------
 
     clearCreateAccountState: (state) => {
       state.createStatus = "idle";
       state.createError = null;
       state.createSuccess = false;
     },
+
+    // -------------------------------------------------------------------------
+    // Clear Current Account
+    // -------------------------------------------------------------------------
 
     clearCurrentAccount: (state) => {
       state.currentAccount = null;
@@ -78,22 +94,15 @@ const accountSlice = createSlice({
 
         if (account) {
           state.currentAccount = account;
-
-          state.accounts = [
-            account,
-            ...state.accounts.filter(
-              (item) =>
-                item._id !== account._id &&
-                item.accountId !== account.accountId,
-            ),
-          ];
         }
       })
 
       .addCase(createAccount.rejected, (state, action) => {
         state.createStatus = "failed";
+
         state.createError =
           action.payload?.message || "Failed to create account.";
+
         state.createSuccess = false;
       });
 
@@ -125,6 +134,7 @@ const accountSlice = createSlice({
 
       .addCase(getAccounts.rejected, (state, action) => {
         state.listStatus = "failed";
+
         state.listError =
           action.payload?.message || "Failed to fetch accounts.";
       });

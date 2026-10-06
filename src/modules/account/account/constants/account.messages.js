@@ -12,6 +12,15 @@ const ACCOUNT_MESSAGES = Object.freeze({
   FORBIDDEN: "You do not have permission to perform this action.",
 
   // ---------------------------------------------------------------------------
+  // Subscription
+  // ---------------------------------------------------------------------------
+
+  SUBSCRIPTION_REQUIRED: "An active subscription is required.",
+  SUBSCRIPTION_NOT_FOUND: "Subscription not found.",
+  SUBSCRIPTION_ACCESS_DENIED:
+    "You are not authorized to use this subscription.",
+
+  // ---------------------------------------------------------------------------
   // Validation
   // ---------------------------------------------------------------------------
 

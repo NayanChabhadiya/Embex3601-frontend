@@ -6,6 +6,7 @@ import Joi from "joi";
 
 import {
   ACCOUNT_TYPES,
+  ACCOUNT_STATUS,
   ACCOUNT_LIMITS,
 } from "../constants/account.constants.js";
 
@@ -60,13 +61,23 @@ const createAccountSchema = Joi.object({
   // ---------------------------------------------------------------------------
 
   accountId: Joi.forbidden(),
+
+  subscriptionId: Joi.forbidden(),
+
   ownerId: Joi.forbidden(),
+
   status: Joi.forbidden(),
+
   subscriptionPlanId: Joi.forbidden(),
+
   createdBy: Joi.forbidden(),
+
   updatedBy: Joi.forbidden(),
+
   isDeleted: Joi.forbidden(),
+
   deletedAt: Joi.forbidden(),
+
   deletedBy: Joi.forbidden(),
 });
 
@@ -83,11 +94,7 @@ const listAccountsSchema = Joi.object({
     .max(ACCOUNT_LIMITS.MAX_LIST_LIMIT)
     .default(20),
 
-  search: Joi.string()
-    .trim()
-    .max(100)
-    .allow("")
-    .optional(),
+  search: Joi.string().trim().max(100).allow("").optional(),
 
   type: Joi.string()
     .valid(...Object.values(ACCOUNT_TYPES))
@@ -97,7 +104,7 @@ const listAccountsSchema = Joi.object({
     }),
 
   status: Joi.string()
-    .valid("active", "inactive", "suspended")
+    .valid(...Object.values(ACCOUNT_STATUS))
     .optional()
     .messages({
       "any.only": ACCOUNT_MESSAGES.INVALID_STATUS,

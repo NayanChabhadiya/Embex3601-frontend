@@ -20,7 +20,7 @@ const API_ENDPOINTS = Object.freeze({
   }),
 
   // Accounts
-  ACCOUNTS: Object.freeze({
+  ACCOUNT: Object.freeze({
     BASE: "/accounts",
     BY_ID: (id) => `/accounts/${id}`,
   }),

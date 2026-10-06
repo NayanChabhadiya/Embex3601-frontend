@@ -78,6 +78,13 @@ export const SIDEBAR_MENU = [
     label: "Masters",
     children: [
       {
+        key: "accounts",
+        type: "item",
+        label: "Accounts",
+        path: "/accounts",
+        icon: "accounts",
+      },
+      {
         key: "customers",
         type: "item",
         label: "Customers",

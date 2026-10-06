@@ -21,6 +21,7 @@ import SubscriptionCheckoutPage from "../modules/subscription/SubscriptionChecko
 import FeaturePage from "../modules/platform/feature/FeaturePage.jsx";
 import PlanFeaturePage from "../modules/platform/plan-feature/PlanFeaturePage.jsx";
 import PendingManualPaymentsPage from "../modules/platform/subscription-payment/PendingManualPaymentsPage.jsx";
+import AccountPage from "../modules/account/account/AccountPage.jsx";
 
 const router = createBrowserRouter([
   // PUBLIC ROUTES
@@ -71,6 +72,13 @@ const router = createBrowserRouter([
           {
             path: "/subscription/:planId",
             element: <SubscriptionCheckoutPage />,
+          },
+          // -----------------------------------------------------------------
+          // Accounts
+          // -----------------------------------------------------------------
+          {
+            path: "/accounts",
+            element: <AccountPage />,
           },
         ],
       },

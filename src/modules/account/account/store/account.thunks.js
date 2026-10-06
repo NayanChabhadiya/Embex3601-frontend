@@ -5,6 +5,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import accountService from "../services/account.service.js";
+import ACCOUNT_MESSAGES from "../constants/account.messages.js";
 
 // =============================================================================
 // Create Account
@@ -20,7 +21,7 @@ export const createAccount = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(
         error.response?.data || {
-          message: "Failed to create account.",
+          message: ACCOUNT_MESSAGES.CREATE_FAILED,
         },
       );
     }
@@ -41,7 +42,7 @@ export const getAccounts = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(
         error.response?.data || {
-          message: "Failed to fetch accounts.",
+          message: ACCOUNT_MESSAGES.LIST_FAILED,
         },
       );
     }
