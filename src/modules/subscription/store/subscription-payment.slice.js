@@ -7,6 +7,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   createPaymentOrder,
   verifyPayment,
+  getPendingManualPayments,
   verifyManualPayment,
   getPaymentById,
 } from "./subscription-payment.thunks.js";
@@ -30,6 +31,19 @@ const initialState = {
   manualVerifyLoading: false,
   manualVerifyError: null,
   manualPaymentVerified: false,
+
+  pendingPayments: [],
+  pendingPaymentsMeta: {
+    page: 1,
+    limit: 20,
+    total: 0,
+    totalPages: 0,
+    hasNextPage: false,
+    hasPreviousPage: false,
+  },
+
+  pendingPaymentsLoading: false,
+  pendingPaymentsError: null,
 
   fetchLoading: false,
   fetchError: null,
@@ -65,7 +79,23 @@ const subscriptionPaymentSlice = createSlice({
       state.createOrderError = null;
       state.verifyError = null;
       state.manualVerifyError = null;
+      state.pendingPaymentsError = null;
       state.fetchError = null;
+    },
+
+    clearPendingPayments: (state) => {
+      state.pendingPayments = [];
+
+      state.pendingPaymentsMeta = {
+        page: 1,
+        limit: 20,
+        total: 0,
+        totalPages: 0,
+        hasNextPage: false,
+        hasPreviousPage: false,
+      };
+
+      state.pendingPaymentsError = null;
     },
 
     clearSubscriptionPaymentState: () => initialState,
@@ -144,6 +174,37 @@ const subscriptionPaymentSlice = createSlice({
       });
 
     // -------------------------------------------------------------------------
+    // Platform Admin - Get Pending Manual Payments
+    // -------------------------------------------------------------------------
+
+    builder
+      .addCase(getPendingManualPayments.pending, (state) => {
+        state.pendingPaymentsLoading = true;
+        state.pendingPaymentsError = null;
+      })
+
+      .addCase(getPendingManualPayments.fulfilled, (state, action) => {
+        state.pendingPaymentsLoading = false;
+
+        state.pendingPayments = action.payload?.data || [];
+
+        state.pendingPaymentsMeta = action.payload?.meta || {
+          page: 1,
+          limit: 20,
+          total: 0,
+          totalPages: 0,
+          hasNextPage: false,
+          hasPreviousPage: false,
+        };
+      })
+
+      .addCase(getPendingManualPayments.rejected, (state, action) => {
+        state.pendingPaymentsLoading = false;
+        state.pendingPaymentsError = action.payload;
+        state.pendingPayments = [];
+      });
+
+    // -------------------------------------------------------------------------
     // Platform Admin Manual Payment Verification
     // -------------------------------------------------------------------------
 
@@ -175,6 +236,30 @@ const subscriptionPaymentSlice = createSlice({
         state.manualPaymentVerified =
           payment?.paymentStatus === "captured" &&
           subscription?.status === "active";
+
+        // ---------------------------------------------------------------------
+        // Remove successfully verified payment from pending list.
+        // ---------------------------------------------------------------------
+
+        if (state.manualPaymentVerified && payment?.paymentId) {
+          state.pendingPayments = state.pendingPayments.filter(
+            (pendingPayment) =>
+              String(pendingPayment.paymentId) !== String(payment.paymentId),
+          );
+
+          if (state.pendingPaymentsMeta.total > 0) {
+            state.pendingPaymentsMeta.total -= 1;
+          }
+
+          if (
+            state.pendingPaymentsMeta.totalPages > 0 &&
+            state.pendingPaymentsMeta.page >
+              state.pendingPaymentsMeta.totalPages
+          ) {
+            state.pendingPaymentsMeta.page =
+              state.pendingPaymentsMeta.totalPages;
+          }
+        }
       })
 
       .addCase(verifyManualPayment.rejected, (state, action) => {
@@ -215,6 +300,7 @@ export const {
   clearCreatedPayment,
   clearPaymentVerification,
   clearPaymentErrors,
+  clearPendingPayments,
   clearSubscriptionPaymentState,
 } = subscriptionPaymentSlice.actions;
 

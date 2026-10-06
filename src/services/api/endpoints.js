@@ -39,6 +39,7 @@ const API_ENDPOINTS = Object.freeze({
     PAYMENTS: Object.freeze({
       ORDER: "/subscriptions/payments/order",
       VERIFY: "/subscriptions/payments/verify",
+      PENDING: "/subscriptions/payments/pending",
       MANUAL_VERIFY: (paymentId) =>
         `/subscriptions/payments/manual/${paymentId}/verify`,
       BY_ID: (paymentId) => `/subscriptions/payments/${paymentId}`,

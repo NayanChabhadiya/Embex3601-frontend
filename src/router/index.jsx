@@ -20,6 +20,7 @@ import SubscriptionCheckoutPage from "../modules/subscription/SubscriptionChecko
 
 import FeaturePage from "../modules/platform/feature/FeaturePage.jsx";
 import PlanFeaturePage from "../modules/platform/plan-feature/PlanFeaturePage.jsx";
+import PendingManualPaymentsPage from "../modules/platform/subscription-payment/PendingManualPaymentsPage.jsx";
 
 const router = createBrowserRouter([
   // PUBLIC ROUTES
@@ -101,6 +102,11 @@ const router = createBrowserRouter([
               {
                 path: "/plan-features",
                 element: <PlanFeaturePage />,
+              },
+              // Pending Manual Payments
+              {
+                path: "/pending-manual-payments",
+                element: <PendingManualPaymentsPage />,
               },
             ],
           },

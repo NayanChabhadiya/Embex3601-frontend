@@ -37,6 +37,24 @@ const subscriptionPaymentService = {
   },
 
   // ---------------------------------------------------------------------------
+  // Platform Admin - Get Pending Manual Payments
+  // ---------------------------------------------------------------------------
+
+  getPendingManualPayments: async ({ page = 1, limit = 20 } = {}) => {
+    const response = await apiClient.get(
+      API_ENDPOINTS.SUBSCRIPTIONS.PAYMENTS.PENDING,
+      {
+        params: {
+          page,
+          limit,
+        },
+      },
+    );
+
+    return response.data;
+  },
+
+  // ---------------------------------------------------------------------------
   // Platform Admin Manual Payment Verification
   // ---------------------------------------------------------------------------
 

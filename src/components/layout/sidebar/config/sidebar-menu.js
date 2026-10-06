@@ -61,6 +61,14 @@ export const SIDEBAR_MENU = [
         icon: "credit-card",
         access: "platform-admin",
       },
+      {
+        key: "platform-admin-pending-manual-payments",
+        type: "item",
+        label: "Pending Manual Payments",
+        path: "/pending-manual-payments",
+        icon: "credit-card",
+        access: "platform-admin",
+      },
     ],
   },
 

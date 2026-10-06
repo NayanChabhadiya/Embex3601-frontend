@@ -43,6 +43,33 @@ export const verifyPayment = createAsyncThunk(
 );
 
 // =============================================================================
+// Get Pending Manual Payments
+// =============================================================================
+//
+// Platform Admin gets customer-submitted manual payments
+// waiting for verification.
+//
+// =============================================================================
+
+export const getPendingManualPayments = createAsyncThunk(
+  "subscriptionPayment/getPendingManualPayments",
+  async ({ page = 1, limit = 20 } = {}, { rejectWithValue }) => {
+    try {
+      return await subscriptionPaymentService.getPendingManualPayments({
+        page,
+        limit,
+      });
+    } catch (error) {
+      return rejectWithValue(
+        error?.response?.data ||
+          error?.message ||
+          "Failed to fetch pending payments.",
+      );
+    }
+  },
+);
+
+// =============================================================================
 // Verify Manual Payment
 // =============================================================================
 //

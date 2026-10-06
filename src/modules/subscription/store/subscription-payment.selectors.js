@@ -2,8 +2,7 @@
 // Subscription Payment Selectors
 // =============================================================================
 
-const selectSubscriptionPaymentState = (state) =>
-  state.subscriptionPayment;
+const selectSubscriptionPaymentState = (state) => state.subscriptionPayment;
 
 // =============================================================================
 // Payment Selectors
@@ -40,6 +39,22 @@ export const selectVerifyPaymentError = (state) =>
 
 export const selectPaymentVerified = (state) =>
   selectSubscriptionPaymentState(state).paymentVerified;
+
+// =============================================================================
+// Platform Admin - Pending Manual Payments Selectors
+// =============================================================================
+
+export const selectPendingPayments = (state) =>
+  selectSubscriptionPaymentState(state).pendingPayments;
+
+export const selectPendingPaymentsMeta = (state) =>
+  selectSubscriptionPaymentState(state).pendingPaymentsMeta;
+
+export const selectPendingPaymentsLoading = (state) =>
+  selectSubscriptionPaymentState(state).pendingPaymentsLoading;
+
+export const selectPendingPaymentsError = (state) =>
+  selectSubscriptionPaymentState(state).pendingPaymentsError;
 
 // =============================================================================
 // Platform Admin Manual Payment Verification Selectors
@@ -79,6 +94,11 @@ const subscriptionPaymentSelectors = Object.freeze({
   selectVerifyPaymentLoading,
   selectVerifyPaymentError,
   selectPaymentVerified,
+
+  selectPendingPayments,
+  selectPendingPaymentsMeta,
+  selectPendingPaymentsLoading,
+  selectPendingPaymentsError,
 
   selectManualVerifyPaymentLoading,
   selectManualVerifyPaymentError,
