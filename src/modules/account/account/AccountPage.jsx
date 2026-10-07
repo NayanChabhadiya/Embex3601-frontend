@@ -13,7 +13,8 @@ import {
   Badge,
   useToast,
 } from "../../../components/common";
-import { createAccount, getAccounts } from "../../store/account.thunks.js";
+
+import { createAccount, getAccounts } from "./store/account.thunks.js";
 
 import {
   selectAccounts,
@@ -24,16 +25,16 @@ import {
   selectIsAccountCreating,
   selectAccountCreateError,
   selectAccountCreateSuccess,
-} from "../store/account.selectors.js";
+} from "./store/account.selectors.js";
 
 import {
   ACCOUNT_TYPES,
   ACCOUNT_STATUS,
-} from "../constants/account.constants.js";
+} from "./constants/account.constants.js";
 
-import ACCOUNT_MESSAGES from "../constants/account.messages.js";
+import ACCOUNT_MESSAGES from "./constants/account.messages.js";
 
-import { validateCreateAccount } from "../validations/account.validation.js";
+import { validateCreateAccount } from "./validations/account.validation.js";
 
 // =============================================================================
 // Initial Form
@@ -398,9 +399,7 @@ function AccountPage() {
         searchPlaceholder="Search accounts..."
         onPageChange={handlePageChange}
         onLimitChange={handleLimitChange}
-        emptyMessage={
-          error || ACCOUNT_MESSAGES.LIST_FAILED || "No accounts found."
-        }
+        emptyMessage={error || "No accounts found."}
       />
 
       {/* --------------------------------------------------------------------- */}
