@@ -26,6 +26,7 @@ export { default as Modal } from "./modal/Modal.jsx";
 export { default as FormField } from "./form/form-field/FormField.jsx";
 export { default as Input } from "./form/input/Input.jsx";
 export { default as Select } from "./form/select/Select.jsx";
+export { default as Textarea } from "./form/textarea/Textarea.jsx";
 
 // -----------------------------------------------------------------------------
 // Button

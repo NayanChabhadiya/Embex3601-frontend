@@ -25,6 +25,12 @@ const API_ENDPOINTS = Object.freeze({
     BY_ID: (id) => `/accounts/${id}`,
   }),
 
+  // Workspaces
+  WORKSPACE: Object.freeze({
+    BASE: "/workspaces",
+    BY_ID: (id) => `/workspaces/${id}`,
+  }),
+
   // Subscription Plans
   SUBSCRIPTION_PLANS: Object.freeze({
     BASE: "/subscription-plans",

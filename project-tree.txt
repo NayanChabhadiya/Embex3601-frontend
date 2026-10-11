@@ -1,6 +1,6 @@
-Folder PATH listing for volume New Volume
-Volume serial number is 0000002D B866:F872
-F:\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
+Folder PATH listing for volume NAYAN
+Volume serial number is 6C19-5F7C
+F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   App.jsx
 |   main.jsx
 |   
@@ -153,44 +153,31 @@ F:\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |                   is-sidebar-section-active.js
 |                   
 +---dashboard
-|   +---customer
-|   |       Dashboard.jsx
-|   |       dashboard.scss
-|   |       index.js
-|   |       
-|   \---platform
+|   \---customer
+|           Dashboard.jsx
+|           dashboard.scss
+|           index.js
+|           
 +---modules
 |   +---account
-|   |   +---account
-|   |   |   |   AccountPage.jsx
-|   |   |   |   
-|   |   |   +---constants
-|   |   |   |       account.constants.js
-|   |   |   |       account.messages.js
-|   |   |   |       
-|   |   |   +---services
-|   |   |   |       account.service.js
-|   |   |   |       
-|   |   |   +---store
-|   |   |   |       account.selectors.js
-|   |   |   |       account.slice.js
-|   |   |   |       account.thunks.js
-|   |   |   |       
-|   |   |   \---validations
-|   |   |           account.validation.js
-|   |   |           
-|   |   +---permission
-|   |   +---role
-|   |   +---role-permission
-|   |   +---workspace
-|   |   \---workspace-membership
-|   +---company
-|   |   +---bank-account
-|   |   +---branch
-|   |   +---company
-|   |   +---financial-year
-|   |   +---number-series
-|   |   \---warehouse
+|   |   \---account
+|   |       |   AccountPage.jsx
+|   |       |   
+|   |       +---constants
+|   |       |       account.constants.js
+|   |       |       account.messages.js
+|   |       |       
+|   |       +---services
+|   |       |       account.service.js
+|   |       |       
+|   |       +---store
+|   |       |       account.selectors.js
+|   |       |       account.slice.js
+|   |       |       account.thunks.js
+|   |       |       
+|   |       \---validations
+|   |               account.validation.js
+|   |               
 |   +---identity
 |   |   +---auth
 |   |   |   +---components
@@ -245,15 +232,6 @@ F:\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   |       \---validations
 |   |               user.validation.js
 |   |               
-|   +---masters
-|   |   +---bank
-|   |   +---currency
-|   |   +---hsn-sac
-|   |   +---partner-category
-|   |   +---payment-term
-|   |   +---product-category
-|   |   +---tax
-|   |   \---unit
 |   +---platform
 |   |   +---feature
 |   |   |   |   FeaturePage.jsx
@@ -330,23 +308,41 @@ F:\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   |               index.js
 |   |               NotFound.jsx
 |   |               
-|   +---shared
-|   \---subscription
-|       |   CustomerSubscriptionPlansPage.jsx
-|       |   SubscriptionCheckoutPage.jsx
-|       |   
-|       +---services
-|       |       subscription-payment.service.js
-|       |       subscription.service.js
-|       |       
-|       \---store
-|               subscription-payment.selectors.js
-|               subscription-payment.slice.js
-|               subscription-payment.thunks.js
-|               subscription.selectors.js
-|               subscription.slice.js
-|               subscription.thunks.js
-|               
+|   +---subscription
+|   |   |   CustomerSubscriptionPlansPage.jsx
+|   |   |   SubscriptionCheckoutPage.jsx
+|   |   |   
+|   |   +---services
+|   |   |       subscription-payment.service.js
+|   |   |       subscription.service.js
+|   |   |       
+|   |   \---store
+|   |           subscription-payment.selectors.js
+|   |           subscription-payment.slice.js
+|   |           subscription-payment.thunks.js
+|   |           subscription.selectors.js
+|   |           subscription.slice.js
+|   |           subscription.thunks.js
+|   |           
+|   \---workspace
+|       \---workspace
+|           |   WorkspacePage.jsx
+|           |   
+|           +---constants
+|           |       workspace.constants.js
+|           |       workspace.messages.js
+|           |       
+|           +---services
+|           |       workspace.service.js
+|           |       
+|           +---store
+|           |       workspace.selectors.js
+|           |       workspace.slice.js
+|           |       workspace.thunks.js
+|           |       
+|           \---validations
+|                   workspace.validation.js
+|                   
 +---router
 |       index.jsx
 |       PlatformAdminRoute.jsx

@@ -9,6 +9,7 @@ import subscriptionPaymentReducer from "../modules/subscription/store/subscripti
 import featureReducer from "../modules/platform/feature/store/feature.slice.js";
 import planFeatureReducer from "../modules/platform/plan-feature/store/plan-feature.slice.js";
 import accountReducer from "../modules/account/account/store/account.slice.js";
+import workspaceReducer from "../modules/workspace/workspace/store/workspace.slice.js";
 
 const store = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ const store = configureStore({
     feature: featureReducer,
     planFeature: planFeatureReducer,
     account: accountReducer,
+    workspace: workspaceReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

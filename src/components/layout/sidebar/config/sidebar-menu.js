@@ -85,6 +85,13 @@ export const SIDEBAR_MENU = [
         icon: "accounts",
       },
       {
+        key: "workspaces",
+        type: "item",
+        label: "Workspaces",
+        path: "/workspaces",
+        icon: "workspaces",
+      },
+      {
         key: "customers",
         type: "item",
         label: "Customers",

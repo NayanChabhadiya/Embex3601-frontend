@@ -22,6 +22,7 @@ import FeaturePage from "../modules/platform/feature/FeaturePage.jsx";
 import PlanFeaturePage from "../modules/platform/plan-feature/PlanFeaturePage.jsx";
 import PendingManualPaymentsPage from "../modules/platform/subscription-payment/PendingManualPaymentsPage.jsx";
 import AccountPage from "../modules/account/account/AccountPage.jsx";
+import WorkspacePage from "../modules/workspace/workspace/WorkspacePage.jsx";
 
 const router = createBrowserRouter([
   // PUBLIC ROUTES
@@ -79,6 +80,13 @@ const router = createBrowserRouter([
           {
             path: "/accounts",
             element: <AccountPage />,
+          },
+          // -----------------------------------------------------------------
+          // Workspaces
+          // -----------------------------------------------------------------
+          {
+            path: "/workspaces",
+            element: <WorkspacePage />,
           },
         ],
       },
