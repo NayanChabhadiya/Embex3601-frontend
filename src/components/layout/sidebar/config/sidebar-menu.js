@@ -34,7 +34,7 @@ export const SIDEBAR_MENU = [
         type: "item",
         label: "Users",
         path: "/users",
-        icon: "users",
+        icon: "customers",
         access: "platform-admin",
       },
       {
@@ -90,6 +90,13 @@ export const SIDEBAR_MENU = [
         label: "Workspaces",
         path: "/workspaces",
         icon: "workspaces",
+      },
+      {
+        key: "companies",
+        type: "item",
+        label: "Companies",
+        path: "/companies",
+        icon: "accounts",
       },
       {
         key: "customers",

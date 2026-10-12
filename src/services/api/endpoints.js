@@ -19,16 +19,14 @@ const API_ENDPOINTS = Object.freeze({
     BY_ID: (id) => `/users/${id}`,
   }),
 
-  // Accounts
-  ACCOUNT: Object.freeze({
-    BASE: "/accounts",
-    BY_ID: (id) => `/accounts/${id}`,
+  // Features
+  FEATURES: Object.freeze({
+    BASE: "/features",
   }),
 
-  // Workspaces
-  WORKSPACE: Object.freeze({
-    BASE: "/workspaces",
-    BY_ID: (id) => `/workspaces/${id}`,
+  // Plan Features
+  PLAN_FEATURES: Object.freeze({
+    BASE: "/plan-features",
   }),
 
   // Subscription Plans
@@ -52,14 +50,22 @@ const API_ENDPOINTS = Object.freeze({
     }),
   }),
 
-  // Features
-  FEATURES: Object.freeze({
-    BASE: "/features",
+  // Accounts
+  ACCOUNT: Object.freeze({
+    BASE: "/accounts",
+    BY_ID: (id) => `/accounts/${id}`,
   }),
 
-  // Plan Features
-  PLAN_FEATURES: Object.freeze({
-    BASE: "/plan-features",
+  // Workspaces
+  WORKSPACE: Object.freeze({
+    BASE: "/workspaces",
+    BY_ID: (id) => `/workspaces/${id}`,
+  }),
+
+  // Companies
+  COMPANY: Object.freeze({
+    BASE: "/companies",
+    BY_ID: (id) => `/companies/${id}`,
   }),
 });
 

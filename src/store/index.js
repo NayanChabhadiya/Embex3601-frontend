@@ -10,6 +10,7 @@ import featureReducer from "../modules/platform/feature/store/feature.slice.js";
 import planFeatureReducer from "../modules/platform/plan-feature/store/plan-feature.slice.js";
 import accountReducer from "../modules/account/account/store/account.slice.js";
 import workspaceReducer from "../modules/workspace/workspace/store/workspace.slice.js";
+import companyReducer from "../modules/company/store/company.slice.js";
 
 const store = configureStore({
   reducer: {
@@ -24,6 +25,7 @@ const store = configureStore({
     planFeature: planFeatureReducer,
     account: accountReducer,
     workspace: workspaceReducer,
+    company: companyReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

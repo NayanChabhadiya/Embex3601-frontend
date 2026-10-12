@@ -23,6 +23,7 @@ import PlanFeaturePage from "../modules/platform/plan-feature/PlanFeaturePage.js
 import PendingManualPaymentsPage from "../modules/platform/subscription-payment/PendingManualPaymentsPage.jsx";
 import AccountPage from "../modules/account/account/AccountPage.jsx";
 import WorkspacePage from "../modules/workspace/workspace/WorkspacePage.jsx";
+import CompanyPage from "../modules/company/CompanyPage.jsx";
 
 const router = createBrowserRouter([
   // PUBLIC ROUTES
@@ -87,6 +88,13 @@ const router = createBrowserRouter([
           {
             path: "/workspaces",
             element: <WorkspacePage />,
+          },
+          // -----------------------------------------------------------------
+          // Companies
+          // -----------------------------------------------------------------
+          {
+            path: "/companies",
+            element: <CompanyPage />,
           },
         ],
       },

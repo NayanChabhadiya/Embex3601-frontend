@@ -178,6 +178,24 @@ F:\EMBEX INTERNATIONAL PVT LTD\WEBSITE\EMBEX3601\EMBEX3601-FRONTEND\SRC
 |   |       \---validations
 |   |               account.validation.js
 |   |               
+|   +---company
+|   |   |   CompanyPage.jsx
+|   |   |   
+|   |   +---constants
+|   |   |       company.constants.js
+|   |   |       company.messages.js
+|   |   |       
+|   |   +---services
+|   |   |       company.service.js
+|   |   |       
+|   |   +---store
+|   |   |       company.selectors.js
+|   |   |       company.slice.js
+|   |   |       company.thunks.js
+|   |   |       
+|   |   \---validations
+|   |           company.validation.js
+|   |           
 |   +---identity
 |   |   +---auth
 |   |   |   +---components
