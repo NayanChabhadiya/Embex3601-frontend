@@ -248,6 +248,10 @@ const CompanyPage = () => {
 
     showToast({
       type: "error",
+      title:
+        errorPayload?.errorCode === "COMPANY_LIMIT_REACHED"
+          ? "Company Limit Reached"
+          : undefined,
       message: errorMessage,
     });
   };
